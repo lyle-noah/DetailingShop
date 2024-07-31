@@ -10,6 +10,6 @@ public class MyPageController {
     @GetMapping("/mypage")
     public String myPage(Model model) {
         // 필요한 데이터를 모델에 추가
-        return "mypage";
+        return "header/mypage"; // 템플릿 파일이 header 디렉토리에 있는 경우
     }
 }
