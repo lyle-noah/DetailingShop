@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.test;
+package com.green3rd.DetailingShop.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
