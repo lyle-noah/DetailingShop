@@ -39,7 +39,15 @@ dependencies {
 	/* ↓↓ Lombok 설치 ↓↓ */
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-
+	/* ↓↓ Validation 설치 ↓↓ */
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	/* ↓↓ Security 설치 ↓↓ */ 
+    implementation 'org.springframework.boot:spring-boot-starter-security'  
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' 
+    /* ↓↓ Commonmark 설치 ↓↓ */
+    implementation 'org.commonmark:commonmark:0.21.0'
+    /* ↓↓ Mail 설치 ↓↓ */                   
+    implementation 'org.springframework.boot:spring-boot-starter-mail'   
 }
 
 tasks.named('test') {
