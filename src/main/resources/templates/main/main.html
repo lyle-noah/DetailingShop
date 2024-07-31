@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Detailing Shop</title>
-    <link href="/css/output.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Detailing Shop</title>
+<link href="/css/output.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
 
-     Header 
-    <div th:replace="~{header/header.html::header}"></div>
+	<!-- Header -->
+	<div th:replace="~{header/header.html::header}"></div>
 
-     Main content 
-    <main class="container mx-auto px-4 py-16">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold text-blue-600 mb-8">Welcome to Car Detailing Shop</h1>
-            <p class="text-lg mb-4 text-gray-700">Discover the best car detailing products here.</p>
-            <a href="/products" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Shop Now</a>
-        </div>
-    </main>
+	<main class="container mx-auto px-4 py-16">
+		<div class="text-center">
+			<h1 class="text-4xl font-bold text-blue-600 mb-8">Welcome to Car
+				Detailing Shop</h1>
+			<p class="text-lg mb-4 text-gray-700">Discover the best car
+				detailing products here.</p>
+			<a href="/products"
+				class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Shop
+				Now</a>
+		</div>
+	</main>
 
-     Footer 
-    <div th:replace="~{footer/footer.html::footer}"></div>
+	<!-- Footer -->
+	<div th:replace="~{footer/footer.html::footer}"></div>
 
 </body>
 </html>
