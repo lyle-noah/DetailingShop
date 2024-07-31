@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.test;
+package com.green3rd.DetailingShop.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,6 @@ public class ProductController {
     public String productlist(Model model) {
         List<Product> productInfo = productRepository.findAll();
         model.addAttribute("products", productInfo);
-        return "forms/categorylist";
+        return "forms/autoSlider_form";
     }
 }

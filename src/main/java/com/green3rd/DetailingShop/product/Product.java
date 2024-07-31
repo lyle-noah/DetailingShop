@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.test;
+package com.green3rd.DetailingShop.product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
