@@ -47,7 +47,7 @@ public class AnswerController {
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("question", question);
-			return "question_detail";
+			return "board/question_detail";
 		}
 		Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
 		return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
@@ -61,7 +61,7 @@ public class AnswerController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
 		}
 		answerForm.setContent(answer.getContent());
-		return "answer_form";
+		return "board/answer_form";
 	}
 
 	@PreAuthorize("isAuthenticated()")
@@ -69,7 +69,7 @@ public class AnswerController {
 	public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult,
 			@PathVariable("id") Integer id, Principal principal) {
 		if (bindingResult.hasErrors()) {
-			return "answer_form";
+			return "board/answer_form";
 		}
 		Answer answer = this.answerService.getAnswer(id);
 		if (!answer.getAuthor().getUsername().equals(principal.getName())) {

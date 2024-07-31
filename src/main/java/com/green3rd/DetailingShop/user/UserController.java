@@ -30,18 +30,18 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
-        return "signup_form";
+        return "login/signup_form";
     }
 
     @PostMapping("/signup")
     public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "signup_form";
+            return "login/signup_form";
         }
 
         if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-            return "signup_form";
+            return "login/signup_form";
         }
 
         try {
@@ -49,18 +49,18 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
-            return "signup_form";
+            return "login/signup_form";
         } catch (Exception e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", e.getMessage());
-            return "signup_form";
+            return "login/signup_form";
         }
         return "redirect:/";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "forms/login_form";
+        return "login/login_form";
     }
 
     @GetMapping("/profile")
@@ -79,20 +79,20 @@ public class UserController {
     @GetMapping("/reset_password")
     public String showResetPasswordForm(Model model) {
         model.addAttribute("userResetPasswordForm", new UserResetPasswordForm());
-        return "password_reset_request_form";
+        return "login/password_reset_request_form";
     }
 
     @PostMapping("/reset_password")
     public String processResetPassword(@Valid UserResetPasswordForm userResetPasswordForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "password_reset_request_form";
+            return "login/password_reset_request_form";
         }
 
         String email = userResetPasswordForm.getEmail();
         String token = userService.createPasswordResetToken(email);
         if (token == null) {
             bindingResult.rejectValue("email", "emailNotFound", "등록된 이메일이 아닙니다.");
-            return "password_reset_request_form";
+            return "login/password_reset_request_form";
         }
 
         String resetLink = "http://localhost:8080/user/reset_password_confirm?token=" + token;
@@ -102,7 +102,7 @@ public class UserController {
         } catch (MessagingException e) {
             logger.error("비밀번호 재설정 링크 전송 실패: {}", email, e);
             bindingResult.reject("emailSendFailed", "이메일 전송에 실패했습니다.");
-            return "password_reset_request_form";
+            return "login/password_reset_request_form";
         }
 
         return "redirect:/user/login";
@@ -122,24 +122,24 @@ public class UserController {
         UserResetPasswordForm form = new UserResetPasswordForm();
         form.setToken(token);
         model.addAttribute("userResetPasswordForm", form);
-        return "password_reset_form";
+        return "login/password_reset_form";
     }
 
     @PostMapping("/reset_password_confirm")
     public String resetPasswordConfirm(@Valid UserResetPasswordForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "password_reset_form";
+            return "login/password_reset_form";
         }
 
         if (!form.getPassword1().equals(form.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-            return "password_reset_form";
+            return "login/password_reset_form";
         }
 
         boolean result = userService.resetPassword(form.getToken(), form.getPassword1());
         if (!result) {
             bindingResult.reject("resetFailed", "비밀번호 재설정에 실패했습니다.");
-            return "password_reset_form";
+            return "login/password_reset_form";
         }
 
         return "redirect:/user/login";
