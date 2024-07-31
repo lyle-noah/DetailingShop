@@ -13,7 +13,7 @@ public class ProductController {
 
     public final ProductRepository productRepository;
 
-    @GetMapping("/")
+    @GetMapping("/categorypage")
     public String productlist(Model model) {
         List<Product> productInfo = productRepository.findAll();
         model.addAttribute("products", productInfo);
