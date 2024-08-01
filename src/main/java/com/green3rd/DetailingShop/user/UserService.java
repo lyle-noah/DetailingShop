@@ -6,8 +6,6 @@ import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.green3rd.DetailingShop.basic.DataNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class UserService {
         if (siteUser.isPresent()) {
             return siteUser.get();
         } else {
-            throw new DataNotFoundException("siteuser not found");
+            throw new RuntimeException("User not found");
         }
     }
 
