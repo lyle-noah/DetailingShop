@@ -19,12 +19,17 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
-@Log4j2
 public class UserController {
+
+    private final UserRepository userRepository;
 
     private final UserService userService;
     private final JavaMailSender mailSender;
@@ -160,5 +165,17 @@ public class UserController {
         }
 
         return "redirect:/user/login";
+    }
+
+    @GetMapping("/testpage")
+    @ResponseBody
+    public String siteuser(Model model){
+        List<SiteUser> siteUsersInfo = userRepository.findAll();
+        model.addAttribute("UserInfo", siteUsersInfo);
+
+//        SiteUser siteUserName = new SiteUser();
+        System.out.println(siteUsersInfo.get(2).getUsername());
+
+        return "<h2>테스트 합니다.</h2>";
     }
 }

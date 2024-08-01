@@ -12,17 +12,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "site_user")
 public class SiteUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(unique = true)
-    private String username;
+	@Column(unique = true)
+	private String username;
+	private String password;
 
-    private String password;
-
-    @Column(unique = true)
-    private String email;
+	@Column(unique = true)
+	private String email;
 }
