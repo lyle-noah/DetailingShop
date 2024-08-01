@@ -17,6 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
@@ -25,7 +26,7 @@ public class SecurityConfig {
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 .formLogin((formLogin) -> formLogin.loginPage("/user/login")
-                        .defaultSuccessUrl("/mypage", true))  // 로그인 성공 후 마이페이지로 리다이렉트
+                        .defaultSuccessUrl("/user/mypage", true))  // 로그인 성공 후 마이페이지로 리다이렉트
                 .logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .logoutSuccessUrl("/").invalidateHttpSession(true));
         return http.build();

@@ -1,5 +1,7 @@
 package com.green3rd.DetailingShop.user;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,11 +20,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.LinkedList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -62,7 +59,7 @@ public class UserController {
             bindingResult.reject("signupFailed", e.getMessage());
             return "login/signup_form";
         }
-        return "redirect:/";
+        return "redirect:/user/mypage";
     }
 
     @GetMapping("/login")
@@ -92,11 +89,13 @@ public class UserController {
         }
 
         String username = authentication.getName();
-
+        logger.info("Authenticated username: {}", username);
         SiteUser user = userService.getUser(username);
+        logger.info("Retrieved user: {}", user.getUsername());
         model.addAttribute("user", user);
-        return "mypage";
+        return "header/mypage"; // 수정: 경로가 맞는지 확인
     }
+
 
     @GetMapping("/reset_password")
     public String showResetPasswordForm(Model model) {
@@ -168,14 +167,16 @@ public class UserController {
     }
 
     @GetMapping("/testpage")
-    @ResponseBody
     public String siteuser(Model model){
-        List<SiteUser> siteUsersInfo = userRepository.findAll();
-        model.addAttribute("UserInfo", siteUsersInfo);
-
-//        SiteUser siteUserName = new SiteUser();
-        System.out.println(siteUsersInfo.get(2).getUsername());
-
-        return "<h2>테스트 합니다.</h2>";
+        List<SiteUser> siteusersInfo = userRepository.findAll();
+        if (siteusersInfo.size() > 2) {
+            String username = siteusersInfo.get(2).getUsername();
+            model.addAttribute("username", username);
+            System.out.println(username); // 확인용 출력
+        } else {
+            model.addAttribute("username", "No user found at index 2");
+        }
+        return "header/testpage";
     }
+
 }
