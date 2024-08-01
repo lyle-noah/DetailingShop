@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface SearchRepository extends JpaRepository<Product, Integer> {
     //상품 목록 검색
-    List<Product> findByProduct_nameContaining(String productName);
+/*    List<Product> findByProduct_name(String product_name);*/
 }

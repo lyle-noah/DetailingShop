@@ -22,8 +22,5 @@ public class Product {
     private String Product_name;
     private int Product_price;
     private LocalDateTime Registration_date;
-    private String first_category;
-    private String second_category;
-    private String third_category;
     private String imgURL;
 }

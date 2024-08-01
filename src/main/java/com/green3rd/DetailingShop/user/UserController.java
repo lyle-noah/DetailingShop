@@ -92,7 +92,7 @@ public class UserController {
         }
 
         String username = authentication.getName();
-        log.info("그게먼데십덕아" + username);
+
         SiteUser user = userService.getUser(username);
         model.addAttribute("user", user);
         return "mypage";
