@@ -18,10 +18,12 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
+@Log4j2
 public class UserController {
 
     private final UserService userService;
@@ -73,7 +75,22 @@ public class UserController {
         String username = authentication.getName();
         SiteUser user = userService.getUser(username);
         model.addAttribute("user", user);
+        model.addAttribute("username", user.getUsername());
         return "profile";
+    }
+
+    @GetMapping("/mypage")
+    public String myPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/user/login";
+        }
+
+        String username = authentication.getName();
+        log.info("그게먼데십덕아" + username);
+        SiteUser user = userService.getUser(username);
+        model.addAttribute("user", user);
+        return "mypage";
     }
 
     @GetMapping("/reset_password")
