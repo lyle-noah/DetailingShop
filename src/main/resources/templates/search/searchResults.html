@@ -1,0 +1,23 @@
+
+<h1>Search Results</h1>
+
+<!-- 검색 결과가 없는 경우 -->
+<div th:if="${#lists.isEmpty(Searchinfo)}">
+    <p>No products found.</p>
+</div>
+
+<!-- 검색 결과가 있는 경우 -->
+<div th:if="${not #lists.isEmpty(Searchinfo)}">
+    <div th:each="product : ${Searchinfo}" class="product">
+        <!-- 상품 이름 -->
+        <h2 th:text="${product.product_name}">Product Name</h2>
+
+        <!-- 상품 가격 -->
+        <p>Price: <span th:text="${product.product_price}">Price</span></p>
+
+        <!-- 상품 이미지 -->
+        <img th:src="${product.imgURL}" alt="Product Image" />
+    </div>
+</div>
+</body>
+</html>
