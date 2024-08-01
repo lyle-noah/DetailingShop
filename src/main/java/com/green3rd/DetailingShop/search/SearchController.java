@@ -1,16 +1,11 @@
 package com.green3rd.DetailingShop.search;
 
 import com.green3rd.DetailingShop.product.Product;
-import com.green3rd.DetailingShop.product.ProductRepository;
-import com.green3rd.DetailingShop.user.SiteUser;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import java.util.List;
 
@@ -18,21 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchController {
 
-    private final ProductRepository productRepository;
+    private final SearchService searchService;
 
-    //검색창 페이지
-    @GetMapping("/search-page")
-    public  String showSearchPage() {
-        return  "search";
-    }
-
-    //검색
     @GetMapping("/search")
-    @ResponseBody
-        public  String searchbasket(Model model){
-        List<Product> searchbasketInfo= productRepository.findAll();
-        model.addAttribute("Searchinfo", searchbasketInfo);
-        System.out.println(searchbasketInfo.get(2).getProduct_name());
-        return "";
+    public String searchProducts(@RequestParam(name = "query", required = false, defaultValue = "") String query, Model model) {
+        List<Product> searchResults = searchService.searchProductsByName(query);
+        model.addAttribute("Searchinfo", searchResults);
+        return "search/searchResults"; // 검색 결과를 보여줄 뷰 이름
     }
 }
