@@ -21,5 +21,6 @@ public class SearchService {
         return productRepository.findAll().stream()
                 .filter(product -> product.getProduct_name() != null && product.getProduct_name().contains(name))
                 .collect(Collectors.toList());
+
     }
 }
