@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">검색 결과</h1>
+    <div class="search-form mb-8">
+        <form th:action="@{/search}" method="get" class="flex justify-center">
+            <input type="text" name="productName" placeholder="Product Name" class="input-text">
+            <input type="number" name="productPrice" placeholder="Product Price" class="input-text">
+            <input type="datetime-local" name="registrationDate" placeholder="Registration Date" class="input-text">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+        </form>
+    </div>
+    <ul class="product-list space-y-4">
+        <li th:each="product : ${products}" class="product-item bg-white p-4 rounded-lg shadow flex items-center">
+            <img th:src="${product.imgURL}" alt="Product Image" class="w-24 h-24 rounded mr-4">
+            <div>
+                <h2 th:text="${product.Product_name}" class="text-xl font-bold text-gray-700">상품 이름</h2>
+                <p class="text-gray-600"><strong>Price:</strong> <span th:text="${product.Product_price}">상품 가격</span></p>
+                <p class="text-gray-600"><strong>Registration Date:</strong> <span th:text="${product.Registration_date}">상품 등록일</span></p>
+            </div>
+        </li>
+    </ul>
+</div>
+<style>
+    .input-text {
+        padding: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .input-text:focus {
+        outline: none;
+        border-color: #3182ce;
+        box-shadow: 0 0 0 1px #3182ce;
+    }
+</style>
+</body>
+</html>
