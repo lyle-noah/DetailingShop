@@ -13,11 +13,11 @@
                 </div>
                 <!-- Primary Navbar items -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">외부관리</a>
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">내부관리</a>
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">휠&타이어</a>
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">타월&도구</a>
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">광택 폴리싱</a>
+                    <a href="/category/exterior" class="py-5 px-3 text-gray-700 hover:text-gray-900">외부관리</a>
+                    <a href="/category/interior" class="py-5 px-3 text-gray-700 hover:text-gray-900">내부관리</a>
+                    <a href="/category/wheel_tire" class="py-5 px-3 text-gray-700 hover:text-gray-900">휠&타이어</a>
+                    <a href="/category/towel_tool" class="py-5 px-3 text-gray-700 hover:text-gray-900">타월&도구</a>
+                    <a href="/category/glossy_policing" class="py-5 px-3 text-gray-700 hover:text-gray-900">광택 폴리싱</a>
                 </div>
             </div>
             <!-- Secondary Navbar items -->
@@ -44,11 +44,11 @@
     </div>
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden">
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">외부관리</a>
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">내부관리</a>
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">휠&타이어</a>
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">타월&도구</a>
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">광택 폴리싱</a>
+        <a href="/category/exterior" class="block py-2 px-4 text-sm hover:bg-gray-200">외부관리</a>
+        <a href="/category/interior" class="block py-2 px-4 text-sm hover:bg-gray-200">내부관리</a>
+        <a href="/category/wheel_tire" class="block py-2 px-4 text-sm hover:bg-gray-200">휠&타이어</a>
+        <a href="/category/towel_tool" class="block py-2 px-4 text-sm hover:bg-gray-200">타월&도구</a>
+        <a href="/category/glossy_policing" class="block py-2 px-4 text-sm hover:bg-gray-200">광택 폴리싱</a>
         <a href="/user/login" class="block py-2 px-4 text-sm hover:bg-gray-200" th:if="${user == null}">로그인</a>
         <a href="/user/signup" class="block py-2 px-4 text-sm text-white bg-blue-500 hover:bg-blue-700 rounded" th:if="${user == null}">회원가입</a>
         <a th:if="${user != null}" th:href="${requestURI == '/user/mypage' ? '/user/mypage' : '/mypage'}" class="block py-2 px-4 text-sm hover:bg-gray-200">
