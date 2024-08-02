@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타월&도구</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>타월&도구 - Car Detailing Shop</title>
+<link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-    <h1>타월&도구 페이지</h1>
+<body class="bg-gray-100">
+
+	<!-- Header -->
+	<div th:replace="~{header/header.html :: header}"></div>
+
+	<main class="container mx-auto px-4 py-16">
+		<div class="text-center">
+			<h1 class="text-4xl font-bold text-blue-600 mb-8">타월&도구</h1>
+			<p class="text-lg mb-4 text-gray-700">여기는 타월&도구 관리를 위한 페이지입니다.</p>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<div th:replace="~{footer/footer.html :: footer}"></div>
+
 </body>
 </html>
