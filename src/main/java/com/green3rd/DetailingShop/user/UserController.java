@@ -78,7 +78,12 @@ public class UserController {
         }
 
         String username = authentication.getName();
-        SiteUser user = userService.getUser(username);
+        SiteUser user;
+        try {
+            user = userService.getUser(username);
+        } catch (UserNotFoundException e) {
+            return "redirect:/user/login";
+        }
         model.addAttribute("user", user);
         model.addAttribute("username", user.getUsername());
         return "profile";
@@ -93,10 +98,15 @@ public class UserController {
 
         String username = authentication.getName();
         logger.info("Authenticated username: {}", username);
-        SiteUser user = userService.getUser(username);
+        SiteUser user;
+        try {
+            user = userService.getUser(username);
+        } catch (UserNotFoundException e) {
+            return "redirect:/user/login";
+        }
         logger.info("Retrieved user: {}", user.getUsername());
         model.addAttribute("user", user);
-        return "header/mypage"; // 수정: 경로가 맞는지 확인
+        return "header/mypage";
     }
 
     @GetMapping("/reset_password")

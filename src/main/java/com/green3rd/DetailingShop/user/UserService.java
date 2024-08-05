@@ -25,42 +25,32 @@ public class UserService {
     }
 
     public SiteUser getUser(String username) {
-        Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
-        if (siteUser.isPresent()) {
-            return siteUser.get();
-        } else {
-            throw new RuntimeException("User not found");
-        }
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     public String createPasswordResetToken(String email) {
-        Optional<SiteUser> siteUser = userRepository.findByEmail(email);
-        if (siteUser.isEmpty()) {
-            return null;
-        }
-
-        String token = UUID.randomUUID().toString();
-        PasswordResetToken resetToken = new PasswordResetToken();
-        resetToken.setToken(token);
-        resetToken.setUser(siteUser.get());
-        passwordResetTokenRepository.save(resetToken);
-
-        return token;
+        return userRepository.findByEmail(email)
+            .map(siteUser -> {
+                String token = UUID.randomUUID().toString();
+                PasswordResetToken resetToken = new PasswordResetToken();
+                resetToken.setToken(token);
+                resetToken.setUser(siteUser);
+                passwordResetTokenRepository.save(resetToken);
+                return token;
+            })
+            .orElse(null);
     }
 
     public boolean resetPassword(String token, String newPassword) {
-        PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token);
-        if (resetToken == null) {
-            return false;
-        }
-
-        SiteUser user = resetToken.getUser();
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-
-        // Optionally, delete the token after use
-        passwordResetTokenRepository.delete(resetToken);
-
-        return true;
+        return Optional.ofNullable(passwordResetTokenRepository.findByToken(token))
+            .map(resetToken -> {
+                SiteUser user = resetToken.getUser();
+                user.setPassword(passwordEncoder.encode(newPassword));
+                userRepository.save(user);
+                passwordResetTokenRepository.delete(resetToken);
+                return true;
+            })
+            .orElse(false);
     }
 }
