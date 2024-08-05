@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Car Detailing Shop</title>
-<link href="/css/output.css" rel="stylesheet">
-<link rel="stylesheet" href="css/autoSlide.css">
-<link rel="stylesheet" href="css/bestitem.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Car Detailing Shop</title>
+	<link href="/css/output.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/Slide_form01.css">
+	<link rel="stylesheet" href="css/bestitem.css">
+	<link rel="stylesheet" href="css/Slide_form02.css">
 </head>
 <body class="bg-gray-100">
 
-	<!-- Header -->
-	<div th:replace="~{header/header.html :: header}"></div>
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
 
-	<main class="container mx-auto px-4 py-16">
-		<div class="text-center">
-			<div th:replace="~{forms/autoSlider_form.html :: autoSlide}"></div>
-			<h1 class="text-4xl font-bold text-blue-600 mb-8">BEST! SELLER</h1>
-			<p class="text-lg mb-4 text-gray-700">베스트 셀러를 만나보세요.</p>
-			<a href="/products"
-				class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Shop
-				Now</a>
-			<div th:replace="~{forms/bestitem.html :: bestitem}"></div>
-
-		</div>
-		<script src="js/autoSlide.js"></script>
-	</main>
-	<!-- Footer -->
-	<div th:replace="~{footer/footer.html :: footer}"></div>
-	<script src="js/autoSlide.js"></script>
-	<script src="js/bestitem.js"></script>
+<main class="container mx-auto px-4 py-16">
+	<div class="text-center">
+		<div th:replace="~{forms/Slide_form01.html :: Slide_form01}"></div>
+		<h1 class="text-4xl font-bold text-blue-600 mb-8">BEST! SELLER</h1>
+		<p class="text-lg mb-4 text-gray-700">베스트 셀러를 만나보세요.</p>
+		<a href="/products"
+		   class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Shop
+			Now</a>
+		<div th:replace="~{forms/bestitem.html :: bestitem}"></div>
+		<div th:replace="~{forms/Slide_form02.html :: Slide_form02}"></div>
+	</div>
+</main>
+<!-- Footer -->
+<div th:replace="~{footer/footer.html :: footer}"></div>
+<script src="js/Slide_form01.js"></script>
+<script src="js/bestitem.js"></script>
+<script src="js/Slide_form02.js"></script>
 </body>
 </html>
