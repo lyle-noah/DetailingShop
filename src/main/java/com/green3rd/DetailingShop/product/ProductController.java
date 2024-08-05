@@ -20,6 +20,6 @@ public class ProductController {
     public String productlist(Model model) {
         List<Product> productInfo = productRepository.findAll();
         model.addAttribute("products", productInfo);
-        return "forms/autoSlider_form";
+        return "forms/bestitem.html";
     }
 }
