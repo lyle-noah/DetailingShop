@@ -7,11 +7,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -31,16 +29,16 @@ public class SecurityConfig {
                     .defaultSuccessUrl("/user/mypage", true))
             .logout((logout) -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                    .logoutSuccessHandler(logoutSuccessHandler())
+						/* .logoutSuccessHandler(logoutSuccessHandler()) */
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/user/login"))
-            .sessionManagement(sessionManagement -> sessionManagement
+                    .logoutSuccessUrl("/user/login"));
+ /*           .sessionManagement(sessionManagement -> sessionManagement
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(true)
                 .expiredUrl("/user/login?expired")
-            );
+            );*/
         return http.build();
     }
 
@@ -55,11 +53,10 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean
-    public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
-        SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
-        handler.setDefaultTargetUrl("/");
-        handler.setAlwaysUseDefaultTargetUrl(true);
-        return handler;
-    }
+	/*
+	 * @Bean public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
+	 * SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
+	 * handler.setDefaultTargetUrl("/"); handler.setAlwaysUseDefaultTargetUrl(true);
+	 * return handler; }
+	 */
 }
