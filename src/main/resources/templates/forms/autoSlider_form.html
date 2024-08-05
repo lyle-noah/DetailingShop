@@ -3,57 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Slider</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Car Wash Products Slider</title>
+    <link rel="stylesheet" href="css/autoSlide.css">
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-
-<div id="slider" class="relative w-full max-w-lg overflow-hidden rounded-lg shadow-lg">
-    <!-- Slider Images -->
-    <div class="slider-images relative h-64 w-full">
-        <img src="imgProduct/product0123.jpeg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000" />
-        <img src="imgProduct/product0124.jpeg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
-        <img src="imgProduct/product0125.jpeg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+<body>
+<div class="slider">
+    <div class="slides">
+        <div class="slide"><img src="imgProduct/product0003.jpg" alt="사진이 없습니다."></div>
+        <div class="slide"><img src="imgProduct/product0004.jpg" alt="사진이 없습니다."></div>
+        <div class="slide"><img src="imgProduct/product0005.jpg" alt="사진이 없습니다."></div>
+        <!-- Add more slides as needed -->
     </div>
-
-    <!-- Slider Controls -->
-    <div class="absolute inset-0 flex items-center justify-between p-4">
-        <button id="prev" class="bg-white p-2 rounded-full shadow-md">
-            &lt;
-        </button>
-        <button id="next" class="bg-white p-2 rounded-full shadow-md">
-            &gt;
-        </button>
+    <div class="navigation">
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+    </div>
+    <div class="dots">
+        <span class="dot" data-slide="0"></span>
+        <span class="dot" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
+        <!-- Add more dots corresponding to the slides -->
     </div>
 </div>
-
-<script>
-    const slider = document.querySelector('#slider');
-    const slides = slider.querySelectorAll('.slider-images img');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.style.opacity = i === index ? '1' : '0';
-        });
-    }
-
-    document.querySelector('#next').addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    });
-
-    document.querySelector('#prev').addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    });
-
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }, 3000); // Change slide every 3 seconds
-
-    showSlide(currentIndex); // Initialize the slider
-</script>
+<script src="js/autoSlide.js"></script>
 </body>
 </html>
