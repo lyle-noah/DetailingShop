@@ -18,16 +18,16 @@ import java.time.LocalDateTime;
 public class Product {
 
     @Id
-    private int index_id;
+    private int indexId;
 
     @Column(nullable = false)
-    private String Product_id;
+    private String ProductId;
 
-    private String Product_name;
-    private int Product_price;
-    private LocalDateTime Registration_date;
-    private String first_category;
-    private String second_category;
-    private String third_category;
+    private String ProductName;
+    private int ProductPrice;
+    private LocalDateTime RegistrationDate;
+    private String firstCategory;
+    private String secondCategory;
+    private String thirdCategory;
     private String imgURL;
 }
