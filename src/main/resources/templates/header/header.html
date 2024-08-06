@@ -22,7 +22,7 @@
             </div>
             <!-- Secondary Navbar items -->
             <div class="hidden md:flex items-center space-x-4">
-                <a href="/user/signup" class="py-2 px-3 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
+                <a href="/user/signup" class="py-5 px-3 text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
                 <a href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
                 <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
                 <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="py-5 px-3">
@@ -55,7 +55,7 @@
         <a href="/category/towel_tool" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
         <a href="/category/glossy_policing" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
         <a href="/user/login" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">로그인</a>
-        <a href="/user/signup" class="block py-2 px-4 text-sm text-white bg-blue-500 hover:bg-blue-700 rounded" th:if="${not #authorization.expression('isAuthenticated()')}">회원가입</a>
+        <a href="/user/signup" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원가입</a>
         <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">
             <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
         </a>
