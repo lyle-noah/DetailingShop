@@ -13,10 +13,10 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/Product")
+    @GetMapping("/product")
     public String getProducts(Model model) {
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = productService.getProductsByCategory();
         model.addAttribute("products", products);
-        return "Product";
+        return "category/products";
     }
 }

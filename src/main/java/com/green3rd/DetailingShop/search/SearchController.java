@@ -1,10 +1,13 @@
 package com.green3rd.DetailingShop.search;
 
 import com.green3rd.DetailingShop.product.Product;
+import com.green3rd.DetailingShop.product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -34,6 +37,5 @@ public class SearchController {
             model.addAttribute("products", products);
         }
         return "search/search";
-
     }
 }
