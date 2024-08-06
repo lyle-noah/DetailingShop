@@ -21,19 +21,18 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-            .csrf((csrf) -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"), new AntPathRequestMatcher("/user/logout")))
-            .headers((headers) -> headers.addHeaderWriter(
-                    new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-            .formLogin((formLogin) -> formLogin.loginPage("/user/login")
-                    .defaultSuccessUrl("/user/mypage", true))
-            .logout((logout) -> logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-						/* .logoutSuccessHandler(logoutSuccessHandler()) */
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/user/login"));
- /*           .sessionManagement(sessionManagement -> sessionManagement
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+                .csrf((csrf) -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"), new AntPathRequestMatcher("/user/logout")))
+                .headers((headers) -> headers.addHeaderWriter(
+                        new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+                .formLogin((formLogin) -> formLogin.loginPage("/user/login")
+                        .defaultSuccessUrl("/user/mypage", true))
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/")); // 메인 페이지로 리디렉션
+/*            .sessionManagement(sessionManagement -> sessionManagement
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(true)
@@ -53,10 +52,10 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-	/*
-	 * @Bean public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
-	 * SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
-	 * handler.setDefaultTargetUrl("/"); handler.setAlwaysUseDefaultTargetUrl(true);
-	 * return handler; }
-	 */
+    /*
+     * @Bean public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
+     * SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
+     * handler.setDefaultTargetUrl("/"); handler.setAlwaysUseDefaultTargetUrl(true);
+     * return handler; }
+     */
 }
