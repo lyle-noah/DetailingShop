@@ -1,8 +1,10 @@
-/* Slide_form02.css */
 .product-slider-container {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-slider {
@@ -13,6 +15,8 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: grab;
+    display: flex;
+    justify-content: center;
 }
 
 .product-slider:active {
@@ -29,12 +33,13 @@
     flex: 0 0 25%; /* 4개씩 보이도록 설정 */
     box-sizing: border-box;
     padding: 10px;
+    justify-content: center;
     transition: transform 0.3s ease;
 }
 
 .product-slide img {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -77,4 +82,3 @@
         flex: 0 0 50%; /* 작은 화면에서는 2개씩 보이도록 설정 */
     }
 }
-
