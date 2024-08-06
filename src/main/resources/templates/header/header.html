@@ -13,11 +13,11 @@
                 </div>
                 <!-- Primary Navbar items -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="/category/exterior" class="py-5 px-3 text-gray-700 hover:text-blue-500">외부관리</a>
-                    <a href="/category/interior" class="py-5 px-3 text-gray-700 hover:text-blue-500">내부관리</a>
-                    <a href="/category/wheel_tire" class="py-5 px-3 text-gray-700 hover:text-blue-500">휠&타이어</a>
-                    <a href="/category/towel_tool" class="py-5 px-3 text-gray-700 hover:text-blue-500">타월&도구</a>
-                    <a href="/category/glossy_policing" class="py-5 px-3 text-gray-700 hover:text-blue-500">광택 폴리싱</a>
+                    <a href="/product/외부관리" class="py-5 px-3 text-gray-700 hover:text-blue-500">외부관리</a>
+                    <a href="/product/내부관리" class="py-5 px-3 text-gray-700 hover:text-blue-500">내부관리</a>
+                    <a href="/product/휠&타이어" class="py-5 px-3 text-gray-700 hover:text-blue-500">휠&타이어</a>
+                    <a href="/product/타월&도구" class="py-5 px-3 text-gray-700 hover:text-blue-500">타월&도구</a>
+                    <a href="/product/광택폴리싱" class="py-5 px-3 text-gray-700 hover:text-blue-500">광택 폴리싱</a>
                 </div>
             </div>
             <!-- Secondary Navbar items -->
@@ -49,11 +49,11 @@
     </div>
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden">
-        <a href="/category/exterior" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">외부관리</a>
-        <a href="/category/interior" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">내부관리</a>
-        <a href="/category/wheel_tire" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
-        <a href="/category/towel_tool" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
-        <a href="/category/glossy_policing" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
+        <a href="/product/외부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">외부관리</a>
+        <a href="/product/내부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">내부관리</a>
+        <a href="/product/횔&타이어" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
+        <a href="/product/타월&도구" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
+        <a href="/product/광택폴리싱" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
         <a href="/user/login" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">로그인</a>
         <a href="/user/signup" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원가입</a>
         <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">
