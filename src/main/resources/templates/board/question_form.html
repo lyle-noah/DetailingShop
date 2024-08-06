@@ -7,6 +7,16 @@
     <!-- Tailwind CSS -->
     <link href="/css/output.css" rel="stylesheet">
     <title>질문 등록</title>
+    <style>
+        .btn-save {
+            background-color: #1E40AF; /* 파란색 배경 */
+            color: #FFFFFF; /* 흰색 텍스트 */
+        }
+
+        .btn-save:hover {
+            background-color: #1E3A8A; /* 호버 시 더 어두운 파란색 */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -26,7 +36,7 @@
             <label for="content" class="block text-gray-700 text-sm font-bold mb-2">내용</label>
             <textarea th:field="*{content}" class="form-textarea w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500" rows="10" id="content"></textarea>
         </div>
-        <input type="submit" value="저장하기" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 focus:outline-none focus:shadow-outline my-2">
+        <input type="submit" value="저장하기" class="btn-save px-4 py-2 rounded shadow hover:bg-blue-700 focus:outline-none focus:shadow-outline my-2">
     </form>
 </div>
 
