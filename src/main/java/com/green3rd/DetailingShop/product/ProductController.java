@@ -1,25 +1,22 @@
 package com.green3rd.DetailingShop.product;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-//@RequiredArgsConstructor 오류로 직접 생성자 주입
 @Controller
+@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    @GetMapping("/categorypage")
-    public String productlist(Model model) {
-        List<Product> productInfo = productRepository.findAll();
-        model.addAttribute("products", productInfo);
-        return "forms/Slide_form02.html";
+    @GetMapping("/Product")
+    public String getProducts(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "Product";
     }
 }
