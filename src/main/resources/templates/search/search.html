@@ -20,9 +20,9 @@
         <li th:each="product : ${products}" class="product-item bg-white p-4 rounded-lg shadow flex items-center">
             <img th:src="${product.imgURL}" alt="Product Image" class="w-24 h-24 rounded mr-4">
             <div>
-                <h2 th:text="${product.Product_name}" class="text-xl font-bold text-gray-700">상품 이름</h2>
-                <p class="text-gray-600"><strong>Price:</strong> <span th:text="${product.Product_price}">상품 가격</span></p>
-                <p class="text-gray-600"><strong>Registration Date:</strong> <span th:text="${product.Registration_date}">상품 등록일</span></p>
+                <h2 th:text="${product.ProductName}" class="text-xl font-bold text-gray-700">상품 이름</h2>
+                <p class="text-gray-600"><strong>Price:</strong> <span th:text="${product.ProductPrice}">상품 가격</span></p>
+                <p class="text-gray-600"><strong>Registration Date:</strong> <span th:text="${product.RegistrationDate}">상품 등록일</span></p>
             </div>
         </li>
     </ul>
