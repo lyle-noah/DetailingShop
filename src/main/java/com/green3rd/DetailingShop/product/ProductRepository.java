@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
-    List<Product> findAllByOrderByFirstCategoryAscSecondCategoryAscThirdCategoryAsc();
+    List<Product> findByFirstCategory(String firstCategory);
 }

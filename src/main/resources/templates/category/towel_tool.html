@@ -1,25 +1,36 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>타월&도구 - Car Detailing Shop</title>
-<link href="/css/output.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>타월&도구 - Car Detailing Shop</title>
+	<link rel="stylesheet" href="/css/output.css">
+	<link rel="stylesheet" href="/css/category_form01.css">
 </head>
 <body class="bg-gray-100">
 
-	<!-- Header -->
-	<div th:replace="~{header/header.html :: header}"></div>
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
 
-	<main class="container mx-auto px-4 py-16">
-		<div class="text-center">
-			<h1 class="text-4xl font-bold text-blue-600 mb-8">타월&도구</h1>
-			<p class="text-lg mb-4 text-gray-700">여기는 타월&도구 관리를 위한 페이지입니다.</p>
+<main class="container mx-auto px-4 py-16">
+	<div class="text-center">
+		<h1 class="text-4xl font-bold text-blue-600 mb-8">타월&도구</h1>
+		<p class="text-lg mb-4 text-gray-700">여기는 타월&도구 관리를 위한 페이지입니다.</p>
+	</div>
+
+	<div class="product-grid">
+		<div th:each="infor : ${productsInfor}" class="product-card">
+			<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
+			<div class="product-info">
+				<h3 th:text="${infor.productName}"></h3>
+				<p th:text="${infor.productPrice}"></p>
+				<p th:text="${infor.registrationDate}"></p>
+			</div>
 		</div>
-	</main>
+	</div>
+</main>
 
-	<!-- Footer -->
-	<div th:replace="~{footer/footer.html :: footer}"></div>
+<!-- Footer -->
+<div th:replace="~{footer/footer.html :: footer}"></div>
 
 </body>
 </html>
