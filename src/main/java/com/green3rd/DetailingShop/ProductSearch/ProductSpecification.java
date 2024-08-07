@@ -16,9 +16,4 @@ public class ProductSpecification {
     public static Specification<Product> hasProductPrice(Integer productPrice) {
         return (root, query, cb) -> cb.equal(root.get("ProductPrice"), productPrice);
     }
-
-    //제품 등록일 검색
-    public static Specification<Product> hasRegistrationDate(LocalDateTime registrationDate) {
-        return (root, query, cb) -> cb.equal(root.get("RegistrationDate"), registrationDate);
-    }
 }

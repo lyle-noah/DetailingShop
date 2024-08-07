@@ -24,16 +24,14 @@ public class SearchController {
     @GetMapping("/search")
     public String searchProducts(@RequestParam(required = false) String productName,
                                  @RequestParam(required = false) Integer productPrice,
-                                 @RequestParam(required = false) LocalDateTime registrationDate,
                                  Model model) {
         // 빈 결과를 반환하도록 수정
         if ((productName == null || productName.isEmpty()) &&
-                productPrice == null &&
-                registrationDate == null) {
+                productPrice == null) {
             model.addAttribute("products", Collections.emptyList());
         } else {
             // 검색 조건이 있을 시 searchService를 사용해 검색
-            List<Product> products = searchService.searchProducts(productName, productPrice, registrationDate);
+            List<Product> products = searchService.searchProducts(productName, productPrice);
             model.addAttribute("products", products);
         }
         return "search/search";
