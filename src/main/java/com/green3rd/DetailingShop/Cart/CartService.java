@@ -1,7 +1,6 @@
 package com.green3rd.DetailingShop.Cart;
 
 import com.green3rd.DetailingShop.LoginUser.SiteUser;
-import com.green3rd.DetailingShop.LoginUser.UserRepository;
 import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.ProductList.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -10,29 +9,33 @@ import java.util.Optional;
 
 @Service
 public class CartService {
+
     private final CartRepository cartRepository;
-    private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public CartService(CartRepository cartRepository, UserRepository userRepository, ProductRepository productRepository) {
+    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
         this.cartRepository = cartRepository;
-        this.userRepository = userRepository;
         this.productRepository = productRepository;
     }
 
-    public void addCart(SiteUser user, String productId) {
-        Cart cart = cartRepository.findBySiteUser(user);
+    public Cart getCartByUser(SiteUser siteUser) {
+        return cartRepository.findBySiteUser(siteUser);
+    }
+
+    public Cart addProductToCart(SiteUser siteUser, Long productId) {
+        Cart cart = cartRepository.findBySiteUser(siteUser);
         if (cart == null) {
             cart = new Cart();
-            cart.setSiteUser(user);
+            cart.setSiteUser(siteUser);
         }
-        Optional<Product> productOptional = productRepository.findById(Integer.parseInt(productId));
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            cart.getProducts().add(product);
-            cartRepository.save(cart);
+
+        Optional<Product> productOpt = productRepository.findById(productId.intValue());
+        if (productOpt.isPresent()) {
+            cart.getProducts().add(productOpt.get());
         } else {
-            throw new RuntimeException("상품을 찾을 수 없습니다.");
+            throw new RuntimeException("Product not found");
         }
+
+        return cartRepository.save(cart);
     }
 }

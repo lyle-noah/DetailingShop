@@ -3,10 +3,8 @@ package com.green3rd.DetailingShop.Cart;
 import com.green3rd.DetailingShop.LoginUser.SiteUser;
 import com.green3rd.DetailingShop.LoginUser.UserRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CartController {
@@ -20,14 +18,21 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public String moveCart(@RequestParam Long id, @RequestParam String ProductId) {
-        Optional<SiteUser> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            SiteUser user = userOptional.get();
-            cartService.addCart(user, ProductId);
-            return "cart/cart/";
-        } else {
-            throw new RuntimeException("User not found");
-        }
+    public String getCartPage(@RequestParam Long id, Model model) {
+        SiteUser siteUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Cart cart = cartService.getCartByUser(siteUser);
+        model.addAttribute("cart", cart);
+        return "cart/cart";
+    }
+
+    @PostMapping("/add-to-cart")
+    public String addToCart(@RequestParam Long productId, @RequestParam Long userId) {
+        SiteUser siteUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        cartService.addProductToCart(siteUser, productId);
+        return "redirect:/cart?id=" + userId; // 상품 추가 후 장바구니 페이지로 리다이렉션
     }
 }
