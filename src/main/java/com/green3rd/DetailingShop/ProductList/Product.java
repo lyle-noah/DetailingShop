@@ -1,9 +1,6 @@
 package com.green3rd.DetailingShop.ProductList;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,4 +27,8 @@ public class Product {
     private String secondCategory;
     private String thirdCategory;
     private String imgURL;
+
+    @Transient
+    private String formattedPrice; // 추가된 필드
+
 }

@@ -18,6 +18,7 @@ public class ProductController {
     @GetMapping("/외부관리")
     public String getProductExterior(Model model) {
         List<Product> products = productService.getProductsByCategory("외부관리");
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice()))); /*price 포멧 변경*/
         model.addAttribute("productsInfor", products);
         return "category/exterior";
     }
@@ -25,6 +26,7 @@ public class ProductController {
     @GetMapping("/내부관리")
     public String getProductInterior(Model model) {
         List<Product> products = productService.getProductsByCategory("내부관리");
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
         model.addAttribute("productsInfor", products);
         return "category/interior";
     }
@@ -32,6 +34,7 @@ public class ProductController {
     @GetMapping("/휠&타이어")
     public String getProductWheelTire(Model model) {
         List<Product> products = productService.getProductsByCategory("휠&타이어");
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
         model.addAttribute("productsInfor", products);
         return "category/wheel_tire";
     }
@@ -39,6 +42,7 @@ public class ProductController {
     @GetMapping("/타월&도구")
     public String getProductTowelTool(Model model) {
         List<Product> products = productService.getProductsByCategory("타월&도구");
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
         model.addAttribute("productsInfor", products);
         return "category/towel_tool";
     }
@@ -46,6 +50,7 @@ public class ProductController {
     @GetMapping("/광택폴리싱")
     public String getProductGlossyPolicing(Model model) {
         List<Product> products = productService.getProductsByCategory("광택 폴리싱");
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
         model.addAttribute("productsInfor", products);
         return "category/glossy_policing";
     }

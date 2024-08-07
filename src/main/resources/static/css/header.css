@@ -1,0 +1,16 @@
+.mobile-menu {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.mobile-menu.hidden {
+    display: none;
+}
+.mobile-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #4a5568; /* Gray-700 */
+}
+.mobile-menu a:hover {
+    color: #3182ce; /* Blue-500 */
+}
