@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>외부관리 용품 - Car Detailing Shop</title>
+	<title th:text="${firstCategoryName} + ' - Car Detailing Shop'">Product Category - Car Detailing Shop</title>
 	<link rel="stylesheet" href="/css/output.css">
 	<link rel="stylesheet" href="/css/category_form01.css">
 	<link rel="stylesheet" href="/css/dropDown_form01.css">
@@ -14,8 +14,8 @@
 
 <main class="container mx-auto px-4 py-16">
 	<div class="text-center">
-		<h1 class="text-4xl font-bold text-blue-600 mb-8">외부관리</h1>
-		<p class="text-lg mb-4 text-gray-700">여기는 외부관리를 위한 페이지입니다.</p>
+		<h1 class="text-4xl font-bold text-blue-600 mb-8" th:text="${firstCategoryName}">Category</h1>
+		<p class="text-lg mb-4 text-gray-700">여기는 <span th:text="${firstCategoryName}"></span> 상품 페이지입니다.</p>
 	</div>
 
 	<div class="product-grid">
