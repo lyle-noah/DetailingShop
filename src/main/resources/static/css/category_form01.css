@@ -41,13 +41,20 @@ body {
 
 .product-info {
     padding: 16px;
-    text-align: center;
+    text-align: left; /* 왼쪽 정렬로 변경 */
 }
 
 .product-info h3 {
-    font-size: 1.2em;
+    font-size: 12px; /* 글씨 폰트 크기 변경 */
     margin: 0 0 8px;
-    color: #333;
+    color: gray; /* 색상 변경 */
+}
+
+.product-info p.price {
+    font-size: 12px; /* 글씨 폰트 크기 변경 */
+    margin: 4px 0;
+    color: blue; /* 색상 변경 */
+    font-weight: bold; /* 굵기 변경 */
 }
 
 .product-info p {
