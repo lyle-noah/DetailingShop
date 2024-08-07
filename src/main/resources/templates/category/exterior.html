@@ -5,6 +5,7 @@
 	<title>외부관리 용품 - Car Detailing Shop</title>
 	<link rel="stylesheet" href="/css/output.css">
 	<link rel="stylesheet" href="/css/category_form01.css">
+	<link rel="stylesheet" href="/css/dropDown_form01.css">
 </head>
 <body class="bg-gray-100">
 
@@ -22,7 +23,7 @@
 			<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
 			<div class="product-info">
 				<h3 th:text="${infor.productName}"></h3>
-				<p class="price" th:text="${infor.productPrice}"></p>
+				<p class="price" th:text="${infor.formattedPrice}"></p>
 			</div>
 		</div>
 	</div>
@@ -30,6 +31,6 @@
 
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
-
+<script src="/js/dropDown_form01.js"></script>
 </body>
 </html>
