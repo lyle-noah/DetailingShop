@@ -1,39 +1,124 @@
-<!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<!doctype html>
+<html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>회원가입</title>
+    <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-color: #f0f4f8;
+          font-family: Arial, sans-serif;
+        }
+
+        .signup-container {
+          background-color: white;
+          padding: 2rem;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 400px;
+        }
+
+        .signup-container h2 {
+          text-align: center;
+          margin-bottom: 1.5rem;
+          font-size: 2rem;
+          color: #333;
+        }
+
+        .signup-container label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: bold;
+          color: #555;
+        }
+
+        .signup-container input[type="text"],
+        .signup-container input[type="password"],
+        .signup-container input[type="email"] {
+          width: 93%;
+          padding: 0.75rem;
+          margin-bottom: 1.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 1rem;
+          color: #333;
+        }
+
+        .signup-container button {
+          width: 100%;
+          padding: 0.75rem;
+          background-color: #2563eb;
+          border: none;
+          border-radius: 4px;
+          font-size: 1rem;
+          color: white;
+          cursor: pointer;
+          margin-bottom: 1.5rem;
+        }
+
+        .signup-container button:hover {
+          background-color: #1d4ed8;
+        }
+
+        .signup-container .alert {
+          background-color: #f8d7da;
+          color: #721c24;
+          padding: 0.75rem;
+          border: 1px solid #f5c6cb;
+          border-radius: 4px;
+          margin-bottom: 1.5rem;
+        }
+
+        .signup-container .exit-button {
+          width: auto;
+          padding: 0.5rem 1rem;
+          background-color: #ccc;
+          border: none;
+          border-radius: 4px;
+          font-size: 0.875rem;
+          color: #333;
+          cursor: pointer;
+        }
+
+        .signup-container .exit-button:hover {
+          background-color: #bbb;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
-<div layout:fragment="content" class="container mx-auto px-4 py-6">
-    <div class="border-b pb-4 mb-6">
-        <h4 class="text-2xl font-bold">회원가입</h4>
-    </div>
-    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+<body>
+<div class="signup-container">
+    <h2>회원가입</h2>
+    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
         <div th:replace="~{login/form_errors :: formErrorsFragment}"></div>
-        <div class="mb-4">
-            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">사용자ID</label>
-            <input type="text" th:field="*{username}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+        <div>
+            <label for="username">사용자ID</label>
+            <input type="text" th:field="*{username}" placeholder="사용자ID를 입력하세요">
         </div>
-        <div class="mb-4">
-            <label for="password1" class="block text-gray-700 text-sm font-bold mb-2">비밀번호</label>
-            <input type="password" th:field="*{password1}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+        <div>
+            <label for="password1">비밀번호</label>
+            <input type="password" th:field="*{password1}" placeholder="비밀번호를 입력하세요">
         </div>
-        <div class="mb-4">
-            <label for="password2" class="block text-gray-700 text-sm font-bold mb-2">비밀번호 확인</label>
-            <input type="password" th:field="*{password2}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+        <div>
+            <label for="password2">비밀번호 확인</label>
+            <input type="password" th:field="*{password2}" placeholder="비밀번호를 다시 입력하세요">
         </div>
-        <div class="mb-4">
-            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
-            <input type="email" th:field="*{email}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+        <div>
+            <label for="email">이메일</label>
+            <input type="email" th:field="*{email}" placeholder="이메일을 입력하세요">
         </div>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 focus:outline-none focus:shadow-outline">회원가입</button>
+        <div>
+            <button type="submit">회원가입</button>
+        </div>
     </form>
+    <button class="exit-button" onclick="window.location.href='/'">나가기</button>
 </div>
 </body>
 

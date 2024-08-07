@@ -178,7 +178,7 @@ public class UserController {
     }
 
     @GetMapping("/testpage")
-    public String siteuser(Model model){
+    public String siteuser(Model model) {
         List<SiteUser> siteusersInfo = userRepository.findAll();
         if (siteusersInfo.size() > 2) {
             String username = siteusersInfo.get(2).getUsername();
@@ -190,13 +190,13 @@ public class UserController {
         return "header/testpage";
     }
 
-	/*
-	 * @GetMapping("/logout") public String logout(HttpServletRequest request,
-	 * HttpServletResponse response) { Authentication authentication =
-	 * SecurityContextHolder.getContext().getAuthentication(); if (authentication !=
-	 * null) { new SecurityContextLogoutHandler().logout(request, response,
-	 * authentication); } return "redirect:/user/login"; }
-	 */
+    /*
+     * @GetMapping("/logout") public String logout(HttpServletRequest request,
+     * HttpServletResponse response) { Authentication authentication =
+     * SecurityContextHolder.getContext().getAuthentication(); if (authentication !=
+     * null) { new SecurityContextLogoutHandler().logout(request, response,
+     * authentication); } return "redirect:/user/login"; }
+     */
 
     @Autowired
     private HttpServletRequest request;
