@@ -22,8 +22,7 @@
 			<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
 			<div class="product-info">
 				<h3 th:text="${infor.productName}"></h3>
-				<p th:text="${infor.productPrice}"></p>
-				<p th:text="${infor.registrationDate}"></p>
+				<p class="price" th:text="${infor.productPrice}"></p>
 			</div>
 		</div>
 	</div>
