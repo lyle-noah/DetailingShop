@@ -22,8 +22,9 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
             Model model) {
 
-        List<Product> product = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory);
-        model.addAttribute("productsInfor", product);
+        List<Product> products = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory);
+        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
+        model.addAttribute("productsInfor", products);
         model.addAttribute("firstCategoryName", firstCategory);
         model.addAttribute("secondCategoryName", secondCategory);
         model.addAttribute("thirdCategoryName", thirdCategory);
