@@ -13,6 +13,6 @@ public class ProductService {
 
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByFirstCategory(category);
-    }gt
+    }
 
 }

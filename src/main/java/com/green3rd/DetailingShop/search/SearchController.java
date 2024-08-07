@@ -18,10 +18,12 @@ public class SearchController {
 
     private final SearchService searchService;
 
+
     public SearchController(SearchService searchService) {
         this.searchService = searchService;
     }
 
+    //get 요청
     @GetMapping("/search")
     public String searchProducts(@RequestParam(required = false) String productName,
                                  @RequestParam(required = false) Integer productPrice,
@@ -33,6 +35,7 @@ public class SearchController {
                 registrationDate == null) {
             model.addAttribute("products", Collections.emptyList());
         } else {
+            // 검색 조건이 있을 시 searchService를 사용해 검색
             List<Product> products = searchService.searchProducts(productName, productPrice, registrationDate);
             model.addAttribute("products", products);
         }
