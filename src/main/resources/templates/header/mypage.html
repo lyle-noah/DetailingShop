@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
     <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/dropDown_form01.css">
     <style>
         .custom-img-size {
@@ -20,7 +21,7 @@
     </style>
 </head>
 <body>
-    <div th:replace="~{header/header :: header}"></div>
+    <div th:replace="~{header/header.html :: header}"></div>
     <main class="container mx-auto px-8 py-16">
         <div class="center-container">
             <h1 class="text-4xl font-bold text-center mb-8">마이 쇼핑</h1>
@@ -102,6 +103,7 @@
         </div>
     </main>
     <div th:replace="~{footer/footer :: footer}"></div>
+    <script src="/js/header.js"></script>
     <script src="/js/dropDown_form01.js"></script>
 </body>
 </html>

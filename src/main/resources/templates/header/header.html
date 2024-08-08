@@ -1,65 +1,62 @@
-<nav th:fragment="header" class="bg-white shadow-lg">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <!-- Logo -->
-                <div class="flex items-center space-x-2">
-                    <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-blue-500">
-                        <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span class="font-bold text-2xl">Car Detailing Shop</span>
+<header class="header" th:fragment="header">
+    <nav  class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-blue-500">
+                            <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="font-bold text-2xl">Car Detailing Shop</span>
+                        </a>
+                    </div>
+                    <!-- Primary Navbar items -->
+                    <div class="hidden md:flex items-center space-x-1">
+                        <div th:replace="~{forms/dropDown_form01.html :: dropDown}"></div>
+                    </div>
+                </div>
+                <!-- Secondary Navbar items -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/user/signup" class="py-5 px-3 text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
+                    <a href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
+                    <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
+                    <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="py-5 px-3">
+                        <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
+                    </a>
+                    <a th:if="${not #authorization.expression('isAuthenticated()')}" href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500">
+                        <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
+                    </a>
+                    <a href="/question/list" class="py-5 px-3 text-gray-700 hover:text-blue-500">Q&A</a>
+                    <!-- 검색 아이콘 -->
+                    <a href="/search" class="py-5 px-3 text-gray-700 hover:text-blue-500">
+                        <img src="/img/icon/search-icon.png" alt="Search Icon" class="h-6 w-6" style="background-color: transparent;">
                     </a>
                 </div>
-                <!-- Primary Navbar items -->
-                <div class="hidden md:flex items-center space-x-1">
-                    <div th:replace="~{forms/dropDown_form01.html :: dropDown}"></div>
-<!--                    <a href="/product/외부관리" class="py-5 px-3 text-gray-700 hover:text-blue-500">외부관리</a>
-                    <a href="/product/내부관리" class="py-5 px-3 text-gray-700 hover:text-blue-500">내부관리</a>
-                    <a href="/product/휠&타이어" class="py-5 px-3 text-gray-700 hover:text-blue-500">휠&타이어</a>
-                    <a href="/product/타월&도구" class="py-5 px-3 text-gray-700 hover:text-blue-500">타월&도구</a>
-                    <a href="/product/광택폴리싱" class="py-5 px-3 text-gray-700 hover:text-blue-500">광택 폴리싱</a>-->
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button">
+                        <svg class="w-6 h-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <!-- Secondary Navbar items -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="/user/signup" class="py-5 px-3 text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
-                <a href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
-                <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
-                <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="py-5 px-3">
-                    <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
-                </a>
-                <a th:if="${not #authorization.expression('isAuthenticated()')}" href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500">
-                    <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
-                </a>
-                <a href="/question/list" class="py-5 px-3 text-gray-700 hover:text-blue-500">Q&A</a>
-                <!-- 검색 아이콘 -->
-                <a href="/search" class="py-5 px-3 text-gray-700 hover:text-blue-500">
-                    <img src="/img/icon/search-icon.png" alt="Search Icon" class="h-6 w-6" style="background-color: transparent;">
-                </a>
-            </div>
-            <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button class="mobile-menu-button">
-                    <svg class="w-6 h-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
         </div>
-    </div>
-    <!-- Mobile menu -->
-    <div class="mobile-menu hidden md:hidden">
-        <a href="/product/외부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">외부관리</a>
-        <a href="/product/내부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">내부관리</a>
-        <a href="/product/횔&타이어" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
-        <a href="/product/타월&도구" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
-        <a href="/product/광택폴리싱" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
-        <a href="/user/login" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">로그인</a>
-        <a href="/user/signup" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원가입</a>
-        <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">
-            <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
-        </a>
-        <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/logout}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">로그아웃</a>
-    </div>
-</nav>
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <a href="/product/외부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">외부관리</a>
+            <a href="/product/내부관리" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">내부관리</a>
+            <a href="/product/횔&타이어" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
+            <a href="/product/타월&도구" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
+            <a href="/product/광택폴리싱" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
+            <a href="/user/login" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">로그인</a>
+            <a href="/user/signup" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원가입</a>
+            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">
+                <img class="w-8 h-8 rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile Picture">
+            </a>
+            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/logout}" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">로그아웃</a>
+        </div>
+    </nav>
+</header>

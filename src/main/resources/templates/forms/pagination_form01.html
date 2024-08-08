@@ -1,0 +1,20 @@
+<!-- 페이지네이션 -->
+<div th:fragment="pagination" class="pagination-container">
+    <ul class="pagination">
+        <li th:classappend="${currentPage == 0} ? 'disabled' : ''">
+            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=0&size=${size}">First</a>
+        </li>
+        <li th:classappend="${currentPage == 0} ? 'disabled' : ''">
+            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${currentPage - 1}&size=${size}">Previous</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${i}&size=${size}" th:text="${i + 1}"></a>
+        </li>
+        <li th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
+            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${currentPage + 1}&size=${size}">Next</a>
+        </li>
+        <li th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
+            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${totalPages - 1}&size=${size}">Last</a>
+        </li>
+    </ul>
+</div>
