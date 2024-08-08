@@ -11,11 +11,15 @@ body {
     margin: 0 auto;
 }
 
+.header-content {
+    text-align: center;
+}
+
 .product-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22%, 1fr));
     gap: 16px;
-    justify-content: center;
+    justify-content: start; /* 중앙 정렬을 기본으로 하되 마지막 행을 왼쪽 정렬 */
 }
 
 .product-card {
@@ -25,11 +29,10 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s;
-    width: calc(22% - 15px);
     margin: 8px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ensures that product-info stays at the bottom */
+    justify-content: space-between;
 }
 
 .product-card:hover {
@@ -45,44 +48,95 @@ body {
 .product-info {
     padding: 16px;
     text-align: center;
-    margin-top: auto; /* Ensures that the product-info stays at the bottom */
+    margin-top: auto;
 }
 
 .product-info h3 {
     font-size: 12px;
     margin: 0 0 8px;
     color: #333;
-    text-align: left; /* Left align */
+    text-align: left;
 }
 
 .product-info .price {
     font-size: 12px;
     color: #007bff;
     font-weight: bold;
-    text-align: left; /* Left align */
+    text-align: left;
 }
 
 .product-info p {
     margin: 4px 0;
     color: #666;
-    text-align: left; /* Left align */
+    text-align: left;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
-    .product-card {
-        width: calc(33.33% - 16px);
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
     }
 }
 
 @media (max-width: 768px) {
-    .product-card {
-        width: calc(50% - 16px);
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
     }
 }
 
 @media (max-width: 480px) {
-    .product-card {
-        width: 100%;
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     }
+}
+
+/* 상품이미지 마우스 호버시 애니메이션 및 WISH, ADD 링크 추가 */
+.product-image-wrapper {
+    position: relative;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    flex-direction: row; /* 수직 정렬에서 수평 정렬로 변경 */
+}
+
+.overlay .btn {
+    margin: 0px 5px; /* 좌우 간격 설정 */
+    padding: 10px 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.overlay .btn:hover {
+    background: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+
+.product-card:hover .overlay {
+    opacity: 1;
+}
+
+.product-card:hover img {
+    filter: brightness(0.7);
 }

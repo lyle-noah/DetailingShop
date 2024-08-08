@@ -4,8 +4,10 @@
 	<meta charset="UTF-8">
 	<title th:text="${firstCategoryName} + ' - Car Detailing Shop'">Product Category - Car Detailing Shop</title>
 	<link rel="stylesheet" href="/css/output.css">
-	<link rel="stylesheet" href="/css/category_form01.css">
+	<link rel="stylesheet" href="/css/header.css">
 	<link rel="stylesheet" href="/css/dropDown_form01.css">
+	<link rel="stylesheet" href="/css/category_form01.css">
+	<link rel="stylesheet" href="/css/pagination_form01.css">
 </head>
 <body class="bg-gray-100">
 
@@ -13,24 +15,36 @@
 <div th:replace="~{header/header.html :: header}"></div>
 
 <main class="container mx-auto px-4 py-16">
-	<div class="text-center">
+	<div class="text-center header-content">
 		<h1 class="text-4xl font-bold text-blue-600 mb-8" th:text="${firstCategoryName}">Category</h1>
 		<p class="text-lg mb-4 text-gray-700">여기는 <span th:text="${firstCategoryName}"></span> 상품 페이지입니다.</p>
 	</div>
 
 	<div class="product-grid">
 		<div th:each="infor : ${productsInfor}" class="product-card">
-			<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
+			<div class="product-image-wrapper">
+				<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
+				<div class="overlay">
+					<a href="#" class="btn">WISH</a>
+					<a href="#" class="btn">ADD</a>
+				</div>
+			</div>
 			<div class="product-info">
 				<h3 th:text="${infor.productName}"></h3>
 				<p class="price" th:text="${infor.formattedPrice}"></p>
 			</div>
 		</div>
 	</div>
+
+	<!-- 페이지네이션 삽입 -->
+	<div th:replace="~{forms/pagination_form01.html :: pagination}"></div>
+
 </main>
 
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
+
+<script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 </body>
 </html>

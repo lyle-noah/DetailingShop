@@ -20,14 +20,21 @@ public class ProductController {
             @RequestParam String firstCategory,
             @RequestParam(required = false, defaultValue = "") String secondCategory,
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
+            @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
+            @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
             Model model) {
 
-        List<Product> products = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory);
-        products.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
-        model.addAttribute("productsInfor", products);
+        Page<Product> productPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
+        productPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
+
+        // 제품의 페이지 데이터를 모델에 추가
+        model.addAttribute("productsInfor", productPage.getContent());
         model.addAttribute("firstCategoryName", firstCategory);
         model.addAttribute("secondCategoryName", secondCategory);
         model.addAttribute("thirdCategoryName", thirdCategory);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("totalItems", productPage.getTotalElements());
 
         if (!thirdCategory.isEmpty()) {
             return "category/thirdCategory";
