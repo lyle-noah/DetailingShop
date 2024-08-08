@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 
@@ -19,4 +20,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
 
     // Find products by first, second, and third categories
     Page<Product> findByFirstCategoryAndSecondCategoryAndThirdCategory(String firstCategory, String secondCategory, String thirdCategory, Pageable pageable);
+
 }
