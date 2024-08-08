@@ -24,17 +24,37 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
             Model model) {
 
-        Page<Product> productPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
-        productPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
+        Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
+        productsPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
+
+        // 페이지네이션 정보
+        int currentPage = productsPage.getNumber();
+        int totalPages = productsPage.getTotalPages();
+        List<Product> products = productsPage.getContent();
+
+        // 페이지네이션 범위 계산
+        int startPage = Math.max(0, currentPage - 2);
+        int endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        if (endPage - startPage < 4) {
+            if (startPage == 0) {
+                endPage = Math.min(totalPages - 1, startPage + 4);
+            } else if (endPage == totalPages - 1) {
+                startPage = Math.max(0, endPage - 4);
+            }
+        }
 
         // 제품의 페이지 데이터를 모델에 추가
-        model.addAttribute("productsInfor", productPage.getContent());
+        model.addAttribute("productsInfor", products);
         model.addAttribute("firstCategoryName", firstCategory);
         model.addAttribute("secondCategoryName", secondCategory);
         model.addAttribute("thirdCategoryName", thirdCategory);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("totalItems", productPage.getTotalElements());
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         if (!thirdCategory.isEmpty()) {
             return "category/thirdCategory";

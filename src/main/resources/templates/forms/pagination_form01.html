@@ -1,20 +1,26 @@
 <!-- 페이지네이션 -->
 <div th:fragment="pagination" class="pagination-container">
     <ul class="pagination">
+        <!-- 5페이지씩 앞으로 이동 -->
+        <li th:classappend="${currentPage <= 4} ? 'disabled' : ''">
+            <a th:href="@{/products(firstCategory=${firstCategoryName}, secondCategory=${secondCategoryName}, thirdCategory=${thirdCategoryName}, page=${currentPage - 5 < 0 ? 0 : currentPage - 5}, size=${size})}"><<</a>
+        </li>
+        <!-- 한 페이지씩 앞으로 이동 -->
         <li th:classappend="${currentPage == 0} ? 'disabled' : ''">
-            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=0&size=${size}">First</a>
+            <a th:href="@{/products(firstCategory=${firstCategoryName}, secondCategory=${secondCategoryName}, thirdCategory=${thirdCategoryName}, page=${currentPage - 1}, size=${size})}"><</a>
         </li>
-        <li th:classappend="${currentPage == 0} ? 'disabled' : ''">
-            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${currentPage - 1}&size=${size}">Previous</a>
+        <!-- 페이지 번호 -->
+        <li th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a th:href="@{/products(firstCategory=${firstCategoryName}, secondCategory=${secondCategoryName}, thirdCategory=${thirdCategoryName}, page=${i}, size=${size})}"
+               th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
         </li>
-        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${i}&size=${size}" th:text="${i + 1}"></a>
-        </li>
+        <!-- 한 페이지씩 뒤로 이동 -->
         <li th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
-            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${currentPage + 1}&size=${size}">Next</a>
+            <a th:href="@{/products(firstCategory=${firstCategoryName}, secondCategory=${secondCategoryName}, thirdCategory=${thirdCategoryName}, page=${currentPage + 1}, size=${size})}">></a>
         </li>
-        <li th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
-            <a th:href="?firstCategory=${firstCategoryName}&secondCategory=${secondCategoryName}&thirdCategory=${thirdCategoryName}&page=${totalPages - 1}&size=${size}">Last</a>
+        <!-- 5페이지씩 뒤로 이동 -->
+        <li th:classappend="${currentPage >= totalPages - 5} ? 'disabled' : ''">
+            <a th:href="@{/products(firstCategory=${firstCategoryName}, secondCategory=${secondCategoryName}, thirdCategory=${thirdCategoryName}, page=${currentPage + 5 >= totalPages ? totalPages - 1 : currentPage + 5}, size=${size})}">>></a>
         </li>
     </ul>
 </div>
