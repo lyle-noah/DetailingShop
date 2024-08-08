@@ -1,97 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Your Cart</title>
+    <title>Cart</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f8f8f8;
             margin: 0;
             padding: 0;
         }
+
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 80%;
+            margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-top: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
-            color: #343a40;
             margin-bottom: 20px;
-            font-size: 24px;
         }
-        .cart-header {
-            display: grid;
-            grid-template-columns: 3fr 1fr 1fr;
-            gap: 10px;
-            border-bottom: 2px solid #dee2e6;
-            padding-bottom: 10px;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        .add-product-form {
+            text-align: center;
             margin-bottom: 20px;
-            font-weight: bold;
-            color: #495057;
         }
-        .cart-item {
-            display: grid;
-            grid-template-columns: 3fr 1fr 1fr;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #dee2e6;
+
+        .add-product-form input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
         }
-        .cart-item:last-child {
-            border-bottom: none;
+
+        .add-product-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-        .product-name, .product-quantity, .product-price {
-            text-align: center;
-            color: #495057;
-        }
-        .product-price {
-            color: #28a745;
-        }
-        .total-price {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            padding: 20px 0;
-            border-top: 2px solid #dee2e6;
-            margin-top: 20px;
-            font-size: 18px;
-            color: #343a40;
-        }
-        .empty-cart {
-            text-align: center;
-            color: #868e96;
-            font-size: 18px;
-            margin-top: 20px;
+
+        .add-product-form button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Your Cart</h1>
-    <div th:if="${cart != null && cart.products != null && !cart.products.isEmpty()}">
-        <div class="cart-header">
-            <div>Product Name</div>
-            <div>Quantity</div>
-            <div>Price</div>
-        </div>
-        <div th:each="product : ${cart.products}" class="cart-item">
-            <div class="product-name" th:text="${product.productName}">Product Name</div>
-            <div class="product-quantity" th:text="${product.quantity}">1</div>
-            <div class="product-price" th:text="${product.productPrice}">Price</div>
-        </div>
-        <div class="total-price">
-            <div>Total</div>
-            <div th:text="${#numbers.formatDecimal(cart.products.stream().mapToDouble(p -> p.productPrice).sum(), 2, 2)}">0.00</div>
-        </div>
+    <div class="add-product-form">
+        <form action="/cart/add" method="post">
+            <input type="text" name="productId" placeholder="Enter Product ID" required>
+            <button type="submit">Add to Cart</button>
+        </form>
     </div>
-    <div th:if="${cart == null || cart.products == null || cart.products.isEmpty()}" class="empty-cart">
-        <p>Your cart is empty</p>
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${cart == null || cart.products == null || #lists.isEmpty(cart.products)}">
+            <td colspan="3">Your cart is empty.</td>
+        </tr>
+        <tr th:each="product : ${cart.products}">
+            <td th:text="${product.name}">Product Name</td>
+            <td th:text="${product.price}">Price</td>
+            <td>1</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

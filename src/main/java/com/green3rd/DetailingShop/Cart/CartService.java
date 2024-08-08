@@ -5,7 +5,6 @@ import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.ProductList.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,22 +20,29 @@ public class CartService {
 
     // 사용자 정보로 장바구니 조회
     public Cart getUser(SiteUser user) {
-        return cartRepository.findBySiteUser(user);
-    }
-    // 상품 추가
-    public Cart addCart(SiteUser user, String productId) {
         Cart cart = cartRepository.findBySiteUser(user);
-        // 장바구니 없을 시 새로 생성
         if (cart == null) {
             cart = new Cart();
             cart.setSiteUser(user);
+            cart = cartRepository.save(cart);
+        }
+        return cart;
+    }
+
+    // 상품 추가
+    public Cart addCart(SiteUser user, String productId) {
+        Cart cart = getUser(user);
+
+        // productId를 Integer로 변환
+        Integer productIdInt;
+        try {
+            productIdInt = Integer.parseInt(productId);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("상품 ID는 정수여야 합니다.");
         }
 
-        // 모든 제품을 검색하고, 해당 productId를 가진 제품을 필터링
-        List<Product> products = productRepository.findAll();
-        Optional<Product> productOpt = products.stream()
-                .filter(product -> productId.equals(product.getProductId()))
-                .findFirst();
+        // 특정 productId를 가진 제품을 검색
+        Optional<Product> productOpt = productRepository.findById(productIdInt);
 
         // 제품 존재 시 장바구니 추가
         if (productOpt.isPresent()) {
