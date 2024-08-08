@@ -17,22 +17,26 @@ public class CartController {
         this.userRepository = userRepository;
     }
 
+    // 장바구니 페이지
     @GetMapping("/cart")
-    public String getCartPage(@RequestParam Long id, Model model) {
-        SiteUser siteUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Cart cart = cartService.getCartByUser(siteUser);
+    public String cartPage(@RequestParam("userId") Long userId, Model model) {
+        // ID로 사용자 정보 조회
+        SiteUser siteUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+        // 사용자 장바구니 정보 가져오기
+        Cart cart = cartService.getUser(siteUser);
         model.addAttribute("cart", cart);
         return "cart/cart";
     }
 
-    @PostMapping("/add-to-cart")
-    public String addToCart(@RequestParam Long productId, @RequestParam Long userId) {
-        SiteUser siteUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        cartService.addProductToCart(siteUser, productId);
-        return "redirect:/cart?id=" + userId; // 상품 추가 후 장바구니 페이지로 리다이렉션
+    // 장바구니 상품 추가
+    @PostMapping("/cart/add")
+    @ResponseBody
+    public Cart addCart(@RequestParam("userId") Long userId, @RequestParam("productId") String productId) {
+        // ID로 사용자 정보 조회
+        SiteUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자가 없습니다"));
+        // 상품 추가
+        return cartService.addCart(user, productId);
     }
 }
