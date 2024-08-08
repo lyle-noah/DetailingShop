@@ -7,6 +7,27 @@
     <link href="/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/dropDown_form01.css">
     <style>
+        body {
+            background-image: url('/img/background/carimg004.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5); /* Adjust the opacity value as needed */
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .custom-img-size {
             width: 50px;
             height: 50px;
@@ -20,88 +41,88 @@
     </style>
 </head>
 <body>
-    <div th:replace="~{header/header :: header}"></div>
-    <main class="container mx-auto px-8 py-16">
-        <div class="center-container">
-            <h1 class="text-4xl font-bold text-center mb-8">마이 쇼핑</h1>
+<div th:replace="~{header/header :: header}"></div>
+<main class="container mx-auto px-8 py-16">
+    <div class="center-container">
+        <h1 class="text-4xl font-bold text-center mb-8">마이 쇼핑</h1>
 
-            <!-- Profile Section -->
-            <div class="w-full max-w-2xl bg-white rounded-lg border border-gray-200 shadow-md p-6 mb-8">
-                <div class="flex items-center space-x-4">
-                    <img class="custom-img-size rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile picture">
-                    <div>
-                        <h2 class="text-2xl font-semibold">
-                            안녕하세요. 
-                            <span th:text="${user.username}">사용자</span> 님!
-                        </h2>
-                        <p class="text-gray-500">고객님의 회원등급은 일반회원 입니다.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Info Section -->
-            <div class="w-full max-w-4xl grid grid-cols-3 gap-4 text-center mb-8">
-                <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
-                    <div class="text-xl font-bold">5,000원</div>
-                    <div class="text-gray-500">총상품구매 적립금</div>
-                </div>
-                <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
-                    <div class="text-xl font-bold">0개</div>
-                    <div class="text-gray-500">쿠폰</div>
-                </div>
-                <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
-                    <div class="text-xl font-bold">0원(0회)</div>
-                    <div class="text-gray-500">총주문</div>
-                </div>
-            </div>
-
-            <!-- Order Status Section -->
-            <div class="w-full max-w-4xl bg-white rounded-lg border border-gray-200 shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold mb-4">나의 주문처리 현황 (최근 3개월 기준)</h3>
-                <div class="grid grid-cols-4 gap-4 text-center">
-                    <div>
-                        <div class="text-2xl font-bold">0</div>
-                        <div class="text-gray-500">입금전</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold">0</div>
-                        <div class="text-gray-500">배송준비중</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold">0</div>
-                        <div class="text-gray-500">배송중</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold">0</div>
-                        <div class="text-gray-500">배송완료</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Info Section -->
-            <div class="w-full max-w-4xl grid grid-cols-2 gap-8">
-                <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
-                    <h3 class="text-xl font-bold mb-4">나의 쇼핑 정보</h3>
-                    <ul class="text-gray-700 space-y-2">
-                        <li>주문내역 조회</li>
-                        <li>상품구매 적립금 내역</li>
-                        <li>쿠폰 내역</li>
-                        <li>배송 주소록 관리</li>
-                        <li>정기배송 관리</li>
-                    </ul>
-                </div>
-                <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
-                    <h3 class="text-xl font-bold mb-4">활동 정보</h3>
-                    <ul class="text-gray-700 space-y-2">
-                        <li>최근 본 상품</li>
-                        <li>나의 위시리스트</li>
-                        <li>나의 게시글</li>
-                    </ul>
+        <!-- Profile Section -->
+        <div class="w-full max-w-2xl bg-white rounded-lg border border-gray-200 shadow-md p-6 mb-8">
+            <div class="flex items-center space-x-4">
+                <img class="custom-img-size rounded-full shadow-lg" src="/img/icon/profile2.jpg" alt="Profile picture">
+                <div>
+                    <h2 class="text-2xl font-semibold">
+                        안녕하세요.
+                        <span th:text="${user.username}">사용자</span> 님!
+                    </h2>
+                    <p class="text-gray-500">고객님의 회원등급은 일반회원 입니다.</p>
                 </div>
             </div>
         </div>
-    </main>
-    <div th:replace="~{footer/footer :: footer}"></div>
-    <script src="/js/dropDown_form01.js"></script>
+
+        <!-- Info Section -->
+        <div class="w-full max-w-4xl grid grid-cols-3 gap-4 text-center mb-8">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
+                <div class="text-xl font-bold">5,000원</div>
+                <div class="text-gray-500">총상품구매 적립금</div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
+                <div class="text-xl font-bold">0개</div>
+                <div class="text-gray-500">쿠폰</div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
+                <div class="text-xl font-bold">0원(0회)</div>
+                <div class="text-gray-500">총주문</div>
+            </div>
+        </div>
+
+        <!-- Order Status Section -->
+        <div class="w-full max-w-4xl bg-white rounded-lg border border-gray-200 shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4">나의 주문처리 현황 (최근 3개월 기준)</h3>
+            <div class="grid grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-2xl font-bold">0</div>
+                    <div class="text-gray-500">입금전</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">0</div>
+                    <div class="text-gray-500">배송준비중</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">0</div>
+                    <div class="text-gray-500">배송중</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">0</div>
+                    <div class="text-gray-500">배송완료</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info Section -->
+        <div class="w-full max-w-4xl grid grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4">나의 쇼핑 정보</h3>
+                <ul class="text-gray-700 space-y-2">
+                    <li>주문내역 조회</li>
+                    <li>상품구매 적립금 내역</li>
+                    <li>쿠폰 내역</li>
+                    <li>배송 주소록 관리</li>
+                    <li>정기배송 관리</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4">활동 정보</h3>
+                <ul class="text-gray-700 space-y-2">
+                    <li>최근 본 상품</li>
+                    <li>나의 위시리스트</li>
+                    <li>나의 게시글</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{footer/footer :: footer}"></div>
+<script src="/js/dropDown_form01.js"></script>
 </body>
 </html>
