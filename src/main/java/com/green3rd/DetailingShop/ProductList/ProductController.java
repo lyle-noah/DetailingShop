@@ -2,6 +2,7 @@ package com.green3rd.DetailingShop.ProductList;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,24 +18,52 @@ public class ProductController {
 
     @GetMapping("/products")
     public String getProductByCategory(
-            @RequestParam String firstCategory,
+            @RequestParam(required = false, defaultValue = "") String firstCategory,
             @RequestParam(required = false, defaultValue = "") String secondCategory,
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
             @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
+            @RequestParam(defaultValue = "productName,asc") String sort, // 상품 정렬(기본값: 오름차순 정보)
             Model model) {
 
-        Page<Product> productPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
-        productPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
+        Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
+        productsPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
 
-        // 제품의 페이지 데이터를 모델에 추가
-        model.addAttribute("productsInfor", productPage.getContent());
+        // 페이지네이션 정보
+        int currentPage = productsPage.getNumber();
+        int totalPages = productsPage.getTotalPages();
+        List<Product> products = productsPage.getContent();
+
+        // 페이지네이션 범위 계산
+        int startPage = Math.max(0, currentPage - 2);
+        int endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        if (endPage - startPage < 4) {
+            if (startPage == 0) {
+                endPage = Math.min(totalPages - 1, startPage + 4);
+            } else if (endPage == totalPages - 1) {
+                startPage = Math.max(0, endPage - 4);
+            }
+        }
+
+        // 상품 수량 정보
+        int totalProducts = (int)productsPage.getTotalElements();
+
+        // 제품의 데이터를 모델에 전달
+        model.addAttribute("productsInfor", products);
         model.addAttribute("firstCategoryName", firstCategory);
         model.addAttribute("secondCategoryName", secondCategory);
         model.addAttribute("thirdCategoryName", thirdCategory);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("totalItems", productPage.getTotalElements());
+
+        // 제품 페이지 정보와 연산 정보값을 모델에 전달
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        // 제품의 수량 데이터를 모델에 전달
+        model.addAttribute("totalProducts", totalProducts);
 
         if (!thirdCategory.isEmpty()) {
             return "category/thirdCategory";
