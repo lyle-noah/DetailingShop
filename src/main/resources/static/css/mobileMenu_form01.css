@@ -1,0 +1,29 @@
+/* mobileMenu_form01.css */
+
+.mobile-menu {
+    /* 기본 스타일 설정 */
+}
+
+.mobile-menu-item {
+    /* 기본 스타일 설정 */
+}
+
+.custom-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.custom-submenu.open {
+    max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 콘텐츠가 표시되도록 함 */
+}
+
+.custom-submenu-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.custom-submenu-content.open {
+    max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 콘텐츠가 표시되도록 함 */
+}
