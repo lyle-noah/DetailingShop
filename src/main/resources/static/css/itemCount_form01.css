@@ -1,0 +1,16 @@
+.item-count-container {
+    text-align: left; /* 왼쪽 정렬 */
+    margin-top: 20px; /* 위 여백 */
+    margin-bottom: 20px; /* 아래 여백 */
+    padding: 0 20px;
+}
+
+.item-count-text {
+    font-size: 16px; /* 기본 폰트 사이즈 설정 */
+    color: black; /* 전체 텍스트 색상 */
+}
+
+.item-count-number {
+    color: #007BFF; /* 숫자 부분의 색상 (파란색) */
+    font-weight: bold; /* 숫자 부분의 폰트 두께를 볼드 처리 */
+}
