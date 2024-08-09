@@ -1,52 +1,78 @@
-// mobileMenu_form01.js
+document.addEventListener('DOMContentLoaded', function() {
+    const toggles = document.querySelectorAll('.dropdown-toggle');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const submenuToggles = document.querySelectorAll('.submenu-toggle');
-
-    submenuToggles.forEach(toggle => {
+    toggles.forEach(toggle => {
         toggle.addEventListener('click', function() {
-            const submenu = this.nextElementSibling;
-            const isOpen = submenu.classList.contains('open');
+            const target = document.querySelector(this.getAttribute('data-target'));
 
-            // 모든 서브메뉴를 닫습니다.
-            document.querySelectorAll('.custom-submenu.open').forEach(openSubmenu => {
-                openSubmenu.classList.remove('open');
-                openSubmenu.style.maxHeight = null;
-            });
+            // 애니메이션 중복 실행 방지
+            if (target.classList.contains('animating')) {
+                return;
+            }
 
-            // 현재 클릭된 서브메뉴만 열거나 닫습니다.
-            if (!isOpen) {
-                submenu.classList.add('open');
-                submenu.style.maxHeight = submenu.scrollHeight + "px";
+            if (target.classList.contains('open')) {
+                closeMenu(target);
             } else {
-                submenu.classList.remove('open');
-                submenu.style.maxHeight = null;
+                closeSiblingMenus(target);
+                openMenu(target);
             }
         });
     });
 
-    // 서브메뉴 트리거를 선택합니다.
-    const customSubmenuToggles = document.querySelectorAll('.custom-submenu-toggle');
+    function openMenu(menu) {
+        const parentMenuItem = menu.closest('.mobile-menu-item');
 
-    customSubmenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const submenuContent = this.nextElementSibling;
-            const isOpen = submenuContent.classList.contains('open');
+        // 상태를 animating으로 설정하여 중복 클릭 방지
+        menu.classList.add('animating');
+        parentMenuItem.style.height = (parentMenuItem.scrollHeight + menu.scrollHeight) + "px";
 
-            // 모든 서브서브메뉴를 닫습니다.
-            document.querySelectorAll('.custom-submenu-content.open').forEach(openSubmenuContent => {
-                openSubmenuContent.classList.remove('open');
-                openSubmenuContent.style.maxHeight = null;
-            });
+        menu.style.display = "block";
+        menu.style.overflow = "hidden";
+        menu.style.maxHeight = "0";
+        menu.style.transition = "max-height 0.5s ease-in-out";
 
-            // 현재 클릭된 서브서브메뉴만 열거나 닫습니다.
-            if (!isOpen) {
-                submenuContent.classList.add('open');
-                submenuContent.style.maxHeight = submenuContent.scrollHeight + "px";
-            } else {
-                submenuContent.classList.remove('open');
-                submenuContent.style.maxHeight = null;
+        requestAnimationFrame(() => {
+            menu.style.maxHeight = menu.scrollHeight + "px";
+        });
+
+        menu.addEventListener('transitionend', function() {
+            menu.style.maxHeight = "none";
+            menu.style.overflow = "visible";
+            menu.classList.add('open');
+            menu.classList.remove('animating'); // 애니메이션 완료 후 animating 상태 제거
+        }, { once: true });
+    }
+
+    function closeMenu(menu) {
+        const parentMenuItem = menu.closest('.mobile-menu-item');
+
+        // 상태를 animating으로 설정하여 중복 클릭 방지
+        menu.classList.add('animating');
+        parentMenuItem.style.height = (parentMenuItem.scrollHeight - menu.scrollHeight) + "px";
+
+        menu.style.overflow = "hidden";
+        menu.style.maxHeight = menu.scrollHeight + "px";
+        menu.style.transition = "max-height 0.5s ease-in-out";
+
+        requestAnimationFrame(() => {
+            menu.style.maxHeight = "0";
+        });
+
+        menu.addEventListener('transitionend', function() {
+            menu.style.display = "none";
+            menu.classList.remove('open');
+            menu.classList.remove('animating'); // 애니메이션 완료 후 animating 상태 제거
+        }, { once: true });
+    }
+
+    function closeSiblingMenus(exceptTarget) {
+        const parentMenu = exceptTarget.parentElement.parentElement;
+        const siblingMenus = parentMenu.querySelectorAll('.dropdown-menu');
+
+        siblingMenus.forEach(menu => {
+            if (menu !== exceptTarget && menu.classList.contains('open')) {
+                closeMenu(menu);
             }
         });
-    });
+    }
 });

@@ -1,29 +1,43 @@
-/* mobileMenu_form01.css */
-
+/* 모바일 메뉴 스타일 */
 .mobile-menu {
-    /* 기본 스타일 설정 */
+    /* 전체 메뉴 스타일 */
 }
 
 .mobile-menu-item {
-    /* 기본 스타일 설정 */
+    /* 개별 메뉴 아이템 스타일 */
+    font-size: 13px; /* 기본 폰트 크기 */
+    position: relative; /* 드롭다운 메뉴 위치 설정 */
 }
 
-.custom-submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
+.mobile-menu-item > .flex > a {
+    font-size: 15px; /* 1차 메뉴의 폰트 크기 */
+    font-weight: 600; /* 1차 메뉴의 폰트 두께 */
 }
 
-.custom-submenu.open {
-    max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 콘텐츠가 표시되도록 함 */
+.dropdown-toggle {
+    /* ▼ 버튼 스타일 */
+    cursor: pointer;
 }
 
-.custom-submenu-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
+.dropdown-menu {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute; /* 절대 위치 사용 */
+    left: 0;
+    top: 100%; /* 부모의 아래쪽에 위치 */
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+    z-index: 1000; /* 메뉴가 다른 요소들 위에 표시되도록 z-index 설정 */
 }
 
-.custom-submenu-content.open {
-    max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 콘텐츠가 표시되도록 함 */
+.dropdown-menu.open {
+    display: block; /* 드롭다운 메뉴 열림 */
+}
+
+.mobile-menu-item .dropdown-menu .mobile-menu-item {
+    padding-left: 20px; /* 2차 메뉴 들여쓰기 */
+}
+
+.mobile-menu-item .dropdown-menu .dropdown-menu {
+    padding-left: 40px; /* 3차 메뉴 들여쓰기 */
 }
