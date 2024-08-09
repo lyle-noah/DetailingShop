@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center; /* 가운데 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
-    gap: 2rem; /* space-x-4와 동일한 간격 */
+    gap: 4rem; /* space-x-4와 동일한 간격 */
     background-color: #fff; /* 배경 색상 추가 */
 }
 
