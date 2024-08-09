@@ -43,13 +43,7 @@ public class CartController {
         cartService.addCart(user,IndexId);
         return "redirect:/cart";
     }
-
-
-    @GetMapping("/cart/test")
-    public String testCart(){
-        return "category/test.html";
-    }
-
-
-
 }
+
+
+

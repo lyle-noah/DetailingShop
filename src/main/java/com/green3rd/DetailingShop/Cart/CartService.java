@@ -31,19 +31,19 @@ public class CartService {
     }
 
     // 상품 추가
-    public Cart addCart(SiteUser user, String productId) {
+    public Cart addCart(SiteUser user, String IndexId) {
         Cart cart = getUser(user);
 
         // productId를 Integer로 변환
         Integer productIdInt;
         try {
-            productIdInt = Integer.parseInt(productId);
+            productIdInt = Integer.parseInt(IndexId);
         } catch (NumberFormatException e) {
             throw new RuntimeException("상품 ID는 정수여야 합니다.");
         }
 
         // 특정 productId를 가진 제품을 검색
-        Optional<Product> productOpt = productRepository.findById(productIdInt);
+        Optional<Product> productOpt = productRepository.findById(Integer.valueOf(IndexId));
 
         // 제품 존재 시 장바구니 추가
         if (productOpt.isPresent()) {
