@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'검색결과 - ' + ${query}">Search Results</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/category_form01.css">
+    <link rel="stylesheet" href="/css/pagination_form01.css">
+    <link rel="stylesheet" href="/css/itemCount_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form02.css">
+</head>
+<body class="bg-gray-100">
+
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
+
+<main class="container mx-auto px-4 py-16">
+    <div class="text-center header-content">
+        <h1 class="text-4xl font-bold text-black-600 mb-8" th:text="'상품검색: ' + ${query}">Search Results</h1>
+        <!-- 검색창 삽입 -->
+        <div th:replace="~{forms/search_form02.html :: searchProduct02}"></div>
+        <div th:replace="~{forms/itemCount_form01.html :: itemCount}"></div>
+    </div>
+
+    <div class="product-grid">
+        <div th:each="infor : ${searchResult}" class="product-card">
+            <div class="product-image-wrapper">
+                <img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
+                <div class="overlay">
+                    <a href="#" class="btn">WISH</a>
+                    <a href="#" class="btn">ADD</a>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 th:text="${infor.productName}"></h3>
+                <p class="price" th:text="${infor.formattedPrice}"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 페이지네이션 삽입 -->
+    <div th:replace="~{forms/pagination_form02.html :: pagination02}"></div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{footer/footer.html :: footer}"></div>
+
+<script src="/js/header.js"></script>
+<script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+</body>
+</html>

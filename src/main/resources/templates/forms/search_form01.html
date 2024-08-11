@@ -1,0 +1,17 @@
+<!-- main 페이지 검색 모달 -->
+<div th:fragment="searchProduct01">
+    <div id="search-overlay" class="fixed inset-0 hidden z-50"></div>
+    <div id="search-modal" class="fixed top-0 left-0 w-full bg-white p-8 hidden z-60 shadow-lg">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold mb-4">SEARCH</h2>
+            <div class="flex">
+                <form th:action="@{/search}" method="get" class="flex justify-center w-full">
+                    <input type="text" name="productName" class="w-7/10 border-2 border-gray-300 p-2 rounded-l-md" placeholder="Search...">
+                    <button type="submit" id="search-button" class="bg-blue-500 text-white px-4 py-2 rounded-r-md">
+                        <img src="/img/icon/icon_Search.png" alt="Search" class="h-6 w-6">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

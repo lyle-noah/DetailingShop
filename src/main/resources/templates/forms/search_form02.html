@@ -1,0 +1,11 @@
+<!-- 검색결과 페이지 검색창 삽입 -->
+<div th:fragment="searchProduct02">
+    <div class="search-container">
+        <form th:action="@{/search}" method="get" class="flex justify-center w-full">
+            <input type="text" name="productName" placeholder="Search..." class="w-7/10">
+            <button type="submit" id="search-button">
+                <img src="/img/icon/icon_Search.png" alt="Search">
+            </button>
+        </form>
+    </div>
+</div>

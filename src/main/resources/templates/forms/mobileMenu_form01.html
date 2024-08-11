@@ -1,146 +1,302 @@
 <div th:fragment="mobileMenu" class="mobile-menu hidden md:hidden bg-white shadow-lg">
-    <!-- 외부관리 -->
+    <!-- 1차 카테고리: 외부관리 -->
     <div class="mobile-menu-item border-b border-gray-200 relative">
         <div class="flex justify-between items-center py-2 px-4">
-            <a href="#" class="text-sm text-gray-700 hover:text-blue-500">외부관리</a>
-            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown1">▼</button>
+            <a href="/products?firstCategory=외부관리" class="text-sm text-gray-700 hover:text-blue-500">외부관리</a>
+            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown1">+</button>
         </div>
         <div id="dropdown1" class="dropdown-menu hidden flex-col w-full bg-white border-t border-gray-200 shadow-lg">
             <!-- 2차 카테고리: 카샴푸&세정제 -->
             <div class="mobile-menu-item border-t border-gray-200 relative">
                 <div class="flex justify-between items-center py-2 px-4">
-                    <a href="#" class="text-sm text-gray-700 hover:text-blue-500">카샴푸&세정제</a>
-                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown2">▼</button>
+                    <a href="/products?firstCategory=외부관리&secondCategory=카샴푸/세정제" class="text-sm text-gray-700 hover:text-blue-500">카샴푸/세정제</a>
+                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown2">+</button>
                 </div>
                 <div id="dropdown2" class="dropdown-menu hidden flex-col pl-4 bg-white border-t border-gray-200 shadow-lg">
+                    <!-- 3차 카테고리: 카샴푸 -->
                     <div class="flex justify-between items-center py-2 px-4">
-                        <a href="#" class="text-sm text-gray-700 hover:text-blue-500">카샴푸</a>
+                        <a href="/products?firstCategory=외부관리&secondCategory=카샴푸/세정제&thirdCategory=카샴푸" class="text-sm text-gray-700 hover:text-blue-500">카샴푸</a>
                     </div>
+                    <!-- 3차 카테고리: 다목적세정제/프리워시 -->
                     <div class="flex justify-between items-center py-2 px-4">
-                        <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">다목적세정제&프리워시</a>
+                        <a href="/products?firstCategory=외부관리&secondCategory=카샴푸/세정제&thirdCategory=다목적세정제/프리워시" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">다목적세정제/프리워시</a>
                     </div>
+                    <!-- 3차 카테고리: 벌레&타르/물때/제거 -->
                     <div class="flex justify-between items-center py-2 px-4">
-                        <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">벌레&타르&물때&제거</a>
+                        <a href="/products?firstCategory=외부관리&secondCategory=카샴푸/세정제&thirdCategory=벌레/타르/물때제거" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">벌레&타르/물때/제거</a>
                     </div>
+                    <!-- 3차 카테고리: 탈지제 -->
                     <div class="flex justify-between items-center py-2 px-4">
-                        <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">탈지제</a>
+                        <a href="/products?firstCategory=외부관리&secondCategory=카샴푸/세정제&thirdCategory=탈지제" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">탈지제</a>
                     </div>
                 </div>
             </div>
             <!-- 2차 카테고리: 왁스&실런트&코팅 -->
             <div class="mobile-menu-item border-t border-gray-200 relative">
                 <div class="flex justify-between items-center py-2 px-4">
-                    <a href="#" class="text-sm text-gray-700 hover:text-blue-500">왁스&실런트&코팅</a>
-                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown3">▼</button>
+                    <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅" class="text-sm text-gray-700 hover:text-blue-500">왁스/실런트/코팅</a>
+                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown3">+</button>
                 </div>
                 <div id="dropdown3" class="dropdown-menu hidden flex-col pl-4 bg-white border-t border-gray-200 shadow-lg">
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">퀵디테일러&물왁스</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">고체왁스</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">크림형왁스&실런트</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유리막관리제</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유리막코팅</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">글레이즈</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">습식 코팅제</a>
+                    <!-- 3차 카테고리: 퀵디테일러/물왁스 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=퀵디테일러/물왁스" class="text-sm text-gray-700 hover:text-blue-500">퀵디테일러/물왁스</a>
+                    </div>
+                    <!-- 3차 카테고리: 고체왁스 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=고체왁스" class="text-sm text-gray-700 hover:text-blue-500">고체왁스</a>
+                    </div>
+                    <!-- 3차 카테고리: 크림형왁스/실런트 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=크림형왁스/실런트" class="text-sm text-gray-700 hover:text-blue-500">크림형왁스/실런트</a>
+                    </div>
+                    <!-- 3차 카테고리: 유리막관리제 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=유리막관리제" class="text-sm text-gray-700 hover:text-blue-500">유리막관리제</a>
+                    </div>
+                    <!-- 3차 카테고리: 유리막코팅 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=유리막코팅" class="text-sm text-gray-700 hover:text-blue-500">유리막코팅</a>
+                    </div>
+                    <!-- 3차 카테고리: 글레이즈 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=글레이즈" class="text-sm text-gray-700 hover:text-blue-500">글레이즈</a>
+                    </div>
+                    <!-- 3차 카테고리: 습식코팅제 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=왁스/실런트/코팅&thirdCategory=습식코팅제" class="text-sm text-gray-700 hover:text-blue-500">습식코팅제</a>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">철분제거&클레이</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">플라스틱&고무&금속</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">페인트클렌저</a>
+            <!-- 2차 카테고리: 철분제거&클레이 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=외부관리&secondCategory=철분제거%26클레이" class="text-sm text-gray-700 hover:text-blue-500">철분제거/클레이</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 플라스틱&고무&금속 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=외부관리&secondCategory=플라스틱/고무/금속" class="text-sm text-gray-700 hover:text-blue-500">플라스틱/고무/금속</a>
+                 </div>
+            </div>
+            <!-- 2차 카테고리: 페인트클렌저 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=외부관리&secondCategory=페인트클렌저" class="text-sm text-gray-700 hover:text-blue-500">페인트클렌저</a>
+                </div>
+            </div>
             <!-- 2차 카테고리: 유리관리 -->
             <div class="mobile-menu-item border-t border-gray-200 relative">
                 <div class="flex justify-between items-center py-2 px-4">
-                    <a href="#" class="text-sm text-gray-700 hover:text-blue-500">유리관리</a>
-                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown4">▼</button>
+                    <a href="/products?firstCategory=외부관리&secondCategory=유리관리" class="text-sm text-gray-700 hover:text-blue-500">유리관리</a>
+                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown4">+</button>
                 </div>
                 <div id="dropdown4" class="dropdown-menu hidden flex-col pl-4 bg-white border-t border-gray-200 shadow-lg">
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유리세정제</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유막제거제</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유리발수코팅제</a>
+                    <!-- 3차 카테고리: 유리세정제 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=유리관리&thirdCategory=유리세정제" class="text-sm text-gray-700 hover:text-blue-500">유리세정제</a>
+                    </div>
+                    <!-- 3차 카테고리: 유막제거제 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=유리관리&thirdCategory=유막제거제" class="text-sm text-gray-700 hover:text-blue-500">유막제거제</a>
+                    </div>
+                    <!-- 3차 카테고리: 유리발수코팅제 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=외부관리&secondCategory=유리관리&thirdCategory=유리발수코팅제" class="text-sm text-gray-700 hover:text-blue-500">유리발수코팅제</a>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">컨버터블&무광&랩핑</a>
+            <!-- 2차 카테고리: 컨버터블&무광&랩핑 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/product/컨버터블&무광&랩핑" class="text-sm text-gray-700 hover:text-blue-500">컨버터블/무광/랩핑</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- 내부관리 -->
+    <!-- 1차 카테고리: 내부관리 -->
     <div class="mobile-menu-item border-b border-gray-200 relative">
         <div class="flex justify-between items-center py-2 px-4">
-            <a href="#" class="text-sm text-gray-700 hover:text-blue-500">내부관리</a>
-            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown5">▼</button>
+            <a href="/products?firstCategory=내부관리" class="text-sm text-gray-700 hover:text-blue-500">내부관리</a>
+            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown5">+</button>
         </div>
         <div id="dropdown5" class="dropdown-menu hidden flex-col w-full bg-white border-t border-gray-200 shadow-lg">
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">실내세정제</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">가죽관리</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">실내용 드레싱</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">방향제&탈취제</a>
+            <!-- 2차 카테고리: 실내세정제 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=내부관리&secondCategory=실내세정제" class="text-sm text-gray-700 hover:text-blue-500">실내세정제</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 가죽관리 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=내부관리&secondCategory=가죽관리" class="text-sm text-gray-700 hover:text-blue-500">가죽관리</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 실내용 드레싱 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=내부관리&secondCategory=실내용드레싱" class="text-sm text-gray-700 hover:text-blue-500">실내용 드레싱</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 방향제&탈취제 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=내부관리&secondCategory=방향제/탈취제" class="text-sm text-gray-700 hover:text-blue-500">방향제/탈취제</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- 휠&타이어 -->
+    <!-- 1차 카테고리: 휠&타이어 -->
     <div class="mobile-menu-item border-b border-gray-200 relative">
-        <div class="flex justify-between items-center py-2 px-4">
-            <a href="#" class="text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
-            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown6">▼</button>
-        </div>
+            <div class="flex justify-between items-center py-2 px-4">
+                <a href="/products?firstCategory=휠%26타이어" class="text-sm text-gray-700 hover:text-blue-500">휠&타이어</a>
+                <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown6">+</button>
+            </div>
         <div id="dropdown6" class="dropdown-menu hidden flex-col w-full bg-white border-t border-gray-200 shadow-lg">
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠&타이어 클리너</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">타이어&트림 왁스</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">휠코팅&기타</a>
+            <!-- 2차 카테고리: 휠&타이어 클리너 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=휠%26타이어&secondCategory=휠/타이어 클리너" class="text-sm text-gray-700 hover:text-blue-500">휠/타이어 클리너</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 타이어&트림 왁스 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=휠%26타이어&secondCategory=타이어/트림 왁스" class="text-sm text-gray-700 hover:text-blue-500">타이어/트림 왁스</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 휠코팅&기타 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=휠%26타이어&secondCategory=휠코팅/기타" class="text-sm text-gray-700 hover:text-blue-500">휠코팅/기타</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- 타월&도구 -->
+    <!-- 1차 카테고리: 타월&도구 -->
     <div class="mobile-menu-item border-b border-gray-200 relative">
         <div class="flex justify-between items-center py-2 px-4">
-            <a href="#" class="text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
-            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown7">▼</button>
+            <a href="/products?firstCategory=타월%26도구" class="text-sm text-gray-700 hover:text-blue-500">타월&도구</a>
+            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown7">+</button>
         </div>
         <div id="dropdown7" class="dropdown-menu hidden flex-col w-full bg-white border-t border-gray-200 shadow-lg">
             <!-- 2차 카테고리: 세차용 타월 -->
             <div class="mobile-menu-item border-t border-gray-200 relative">
                 <div class="flex justify-between items-center py-2 px-4">
-                    <a href="#" class="text-sm text-gray-700 hover:text-blue-500">세차용 타월</a>
-                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown8">▼</button>
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=세차용 타월" class="text-sm text-gray-700 hover:text-blue-500">세차용 타월</a>
+                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown8">+</button>
                 </div>
                 <div id="dropdown8" class="dropdown-menu hidden flex-col pl-4 bg-white border-t border-gray-200 shadow-lg">
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">드라잉 타월</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">버핑&다용도 타월</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">유리 타월&기타</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">휠&실내용 타월</a>
+                    <!-- 3차 카테고리: 드라잉 타월 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=세차용 타월&thirdCategory=드라잉 타월" class="text-sm text-gray-700 hover:text-blue-500">드라잉 타월</a>
+                    </div>
+                    <!-- 3차 카테고리: 버핑/다용도 타월 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=세차용 타월&thirdCategory=버핑/다용도 타월" class="text-sm text-gray-700 hover:text-blue-500">버핑/다용도 타월</a>
+                    </div>
+                    <!-- 3차 카테고리: 유리 타월/기타 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=세차용 타월&thirdCategory=유리 타월 / 기타" class="text-sm text-gray-700 hover:text-blue-500">유리 타월/기타</a>
+                    </div>
+                    <!-- 3차 카테고리: 휠/실내용 타월 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=세차용 타월&thirdCategory=휠/실내용 타월" class="text-sm text-gray-700 hover:text-blue-500">휠/실내용 타월</a>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">워시미트&패드</a>
+            <!-- 2차 카테고리: 워시미트&패드 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=워시미트/패드" class="text-sm text-gray-700 hover:text-blue-500">워시미트/패드</a>
+                </div>
+            </div>
             <!-- 2차 카테고리: 브러쉬 -->
             <div class="mobile-menu-item border-t border-gray-200 relative">
                 <div class="flex justify-between items-center py-2 px-4">
-                    <a href="#" class="text-sm text-gray-700 hover:text-blue-500">브러쉬</a>
-                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown9">▼</button>
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=브러쉬" class="text-sm text-gray-700 hover:text-blue-500">브러쉬</a>
+                    <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown9">+</button>
                 </div>
                 <div id="dropdown9" class="dropdown-menu hidden flex-col pl-4 bg-white border-t border-gray-200 shadow-lg">
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">디테일링 브러쉬</a>
-                    <a href="#" class="block py-2 pr-4 text-sm text-gray-700 hover:text-blue-500">휠 전용 브러쉬</a>
+                    <!-- 3차 카테고리: 디테일링 브러쉬 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=브러쉬&thirdCategory=디테일링 브러쉬" class="text-sm text-gray-700 hover:text-blue-500">디테일링 브러쉬</a>
+                    </div>
+                    <!-- 3차 카테고리: 휠 전용 브러쉬 -->
+                    <div class="flex justify-between items-center py-2 px-4">
+                        <a href="/products?firstCategory=타월%26도구&secondCategory=브러쉬&thirdCategory=휠 전용 브러쉬" class="text-sm text-gray-700 hover:text-blue-500">휠 전용 브러쉬</a>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">어플리케이터</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">버킷&악세사리</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">폼랜스&분무기</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">타월세정제</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500 border-t border-gray-200">장갑&기타</a>
+            <!-- 2차 카테고리: 어플리케이터 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=어플리케이터" class="text-sm text-gray-700 hover:text-blue-500">어플리케이터</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 버킷&악세사리 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=버킷/액세서리" class="text-sm text-gray-700 hover:text-blue-500">버킷/악세사리</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 폼랜스&분무기 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=폼랜스/분무기" class="text-sm text-gray-700 hover:text-blue-500">폼랜스/분무기</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 타월세정제 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=타월세정제" class="text-sm text-gray-700 hover:text-blue-500">타월세정제</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 장갑&기타 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=타월%26도구&secondCategory=장갑/기타" class="text-sm text-gray-700 hover:text-blue-500">장갑/기타</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- 광택 폴리싱 -->
+    <!-- 1차 카테고리: 광택 폴리싱 -->
     <div class="mobile-menu-item border-b border-gray-200 relative">
         <div class="flex justify-between items-center py-2 px-4">
-            <a href="#" class="text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
-            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown10">▼</button>
+            <a href="/products?firstCategory=광택 폴리싱" class="text-sm text-gray-700 hover:text-blue-500">광택 폴리싱</a>
+            <button class="dropdown-toggle text-xl text-gray-700 hover:text-blue-500 focus:outline-none" data-target="#dropdown10">+</button>
         </div>
         <div id="dropdown10" class="dropdown-menu hidden flex-col w-full bg-white border-t border-gray-200 shadow-lg">
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">폴리셔&광택기</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택용 패드</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">컴파운드</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">기타 전자기기</a>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:text-blue-500">광택 부자재</a>
+            <!-- 2차 카테고리: 폴리셔&광택기 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=광택 폴리싱&secondCategory=폴리셔/광택기" class="text-sm text-gray-700 hover:text-blue-500">폴리셔/광택기</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 광택용 패드 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=광택 폴리싱&secondCategory=광택용 패드" class="text-sm text-gray-700 hover:text-blue-500">광택용 패드</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 컴파운드 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=광택 폴리싱&secondCategory=컴파운드" class="text-sm text-gray-700 hover:text-blue-500">컴파운드</a>
+                </div>
+            </div>
+            <!-- 2차 카테고리: 기타 전자기기 -->
+            <div class="mobile-menu-item border-t border-gray-200 relative">
+                <div class="flex justify-between items-center py-2 px-4">
+                    <a href="/products?firstCategory=광택 폴리싱&secondCategory=기타 전자기기" class="text-sm text-gray-700 hover:text-blue-500">기타 전자기기</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

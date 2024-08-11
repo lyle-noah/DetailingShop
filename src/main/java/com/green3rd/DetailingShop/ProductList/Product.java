@@ -18,15 +18,17 @@ public class Product {
     private int indexId;
 
     @Column(nullable = false)
-    private String ProductId;
+    private String productId;
 
-    private String ProductName;
-    private int ProductPrice;
-    private LocalDateTime RegistrationDate;
+    private String productName;
+    private int productPrice;
+    private LocalDateTime registrationDate;
     private String firstCategory;
     private String secondCategory;
     private String thirdCategory;
-    private String imgURL;
+    private String imgurl;
+
+    private String description; // 검색으로 인한 추가된 필드
 
     @Transient
     private String formattedPrice; // 추가된 필드

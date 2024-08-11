@@ -23,7 +23,6 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
             @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
-            @RequestParam(defaultValue = "productName,asc") String sort, // 상품 정렬(기본값: 오름차순 정보)
             Model model) {
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);

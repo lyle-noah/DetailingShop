@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 //검색 조건 정의
 public class ProductSpecification {
 
-    //제품 이름 검색
-    public static Specification<Product> hasProductName(String productName) {
-        return (root, query, cb) -> cb.like(root.get("ProductName"), "%" + productName + "%");
-    }
-
-    //제품 가격 검색
-    public static Specification<Product> hasProductPrice(Integer productPrice) {
-        return (root, query, cb) -> cb.equal(root.get("ProductPrice"), productPrice);
+    public static Specification<Product> containsTextInProductFields(String text) {
+        return (root, query, criteriaBuilder) -> {
+            String likePattern = "%" + text.toLowerCase() + "%";
+            return criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), likePattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern)
+            );
+        };
     }
 }

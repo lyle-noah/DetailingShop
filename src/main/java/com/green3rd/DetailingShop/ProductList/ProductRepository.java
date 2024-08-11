@@ -1,13 +1,11 @@
 package com.green3rd.DetailingShop.ProductList;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
-import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 
@@ -21,4 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
     // Find products by first, second, and third categories
     Page<Product> findByFirstCategoryAndSecondCategoryAndThirdCategory(String firstCategory, String secondCategory, String thirdCategory, Pageable pageable);
 
+    // 검색페이지 페이지네이션 적용
+    Page<Product> findAll(Specification<Product> spec, Pageable pageable);
 }

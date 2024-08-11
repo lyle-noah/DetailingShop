@@ -9,8 +9,12 @@
 	<link rel="stylesheet" href="/css/dropDown_form01.css">
 	<link rel="stylesheet" href="/css/pagination_form01.css">
 	<link rel="stylesheet" href="/css/itemCount_form01.css">
+	<link rel="stylesheet" href="/css/mobileMenu_form01.css">
+	<link rel="stylesheet" href="/css/search_form01.css">
 </head>
 <body class="bg-gray-100">
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
 
 <!-- Header -->
 <div th:replace="~{header/header.html :: header}"></div>
@@ -24,7 +28,7 @@
 	<div class="product-grid">
 		<div th:each="infor : ${productsInfor}" class="product-card">
 			<div class="product-image-wrapper">
-				<img th:src="@{${infor.imgURL}}" alt="사진이 없습니다.">
+				<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
 				<div class="overlay">
 					<a href="#" class="btn">WISH</a>
 					<a href="#" class="btn">ADD</a>
@@ -37,12 +41,14 @@
 		</div>
 	</div>
 	<!-- 페이지네이션 삽입 -->
-	<div th:replace="~{forms/pagination_form01.html :: pagination}"></div>
+	<div th:replace="~{forms/pagination_form01.html :: pagination01}"></div>
 </main>
 
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
 </body>
 </html>

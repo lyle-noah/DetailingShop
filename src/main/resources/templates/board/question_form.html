@@ -8,6 +8,8 @@
     <link href="/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
     <title>질문 등록</title>
     <style>
         .btn-save {
@@ -22,7 +24,10 @@
 </head>
 
 <body class="bg-gray-100">
-<!-- 네비게이션 바 포함 -->
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- Header -->
 <div th:replace="~{header/header.html :: header}"></div>
 
 <div layout:fragment="content" class="container mx-auto px-4 py-6">
@@ -52,6 +57,8 @@
 <div th:replace="~{footer/footer :: footer}"></div>
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
 </body>
 
 </html>
