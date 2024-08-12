@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String secondCategory,
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
-            @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
+            @RequestParam(defaultValue = "10") int size, // 페이지 크기 (기본값: 10)
             Model model) {
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);

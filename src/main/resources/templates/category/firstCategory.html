@@ -25,6 +25,7 @@
 		<div th:replace="~{forms/itemCount_form01.html :: itemCount}"></div>
 	</div>
 
+
 	<div class="product-grid">
 		<div th:each="infor : ${productsInfor}" class="product-card">
 			<a th:href="@{/product/{indexId}(indexId=@{${infor.indexId}})}">
