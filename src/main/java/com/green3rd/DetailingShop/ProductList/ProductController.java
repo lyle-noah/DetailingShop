@@ -1,12 +1,16 @@
 package com.green3rd.DetailingShop.ProductList;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -71,5 +75,13 @@ public class ProductController {
         } else {
             return "category/firstCategory";
         }
+    }
+
+    @PostMapping("/products/{indexId}/toggleLike")
+    public String toggleLike(@PathVariable int indexId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        productService.toggleLike(indexId);
+        String referer = request.getHeader("Referer"); // 이전 페이지 URL을 가져옵니다.
+        redirectAttributes.addFlashAttribute("message", "Like state updated!");
+        return "redirect:" + referer;  // 현재 보고 있는 페이지로 리다이렉트합니다.
     }
 }

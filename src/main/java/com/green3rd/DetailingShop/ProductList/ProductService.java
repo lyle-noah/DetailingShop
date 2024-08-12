@@ -1,5 +1,6 @@
 package com.green3rd.DetailingShop.ProductList;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,5 +34,12 @@ public class ProductService {
     public String formatPrice(int price) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
         return currencyFormat.format(price);
+    }
+    @Transactional
+    public void toggleLike(int indexId) {
+        Product product = productRepository.findById(indexId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid indexId Id:" + indexId));
+        product.setLikeState(!product.isLikeState());
+        productRepository.save(product);
     }
 }

@@ -30,7 +30,12 @@
 			<div class="product-image-wrapper">
 				<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
 				<div class="overlay">
-					<a href="#" class="btn">WISH</a>
+					<form th:action="@{/products/{indexId}/toggleLike(indexId=${infor.indexId})}" method="post">
+						<button type="submit" class="btn">
+							<span th:text="${infor.likeState ? '♥' : '♡'}"></span> WISH
+						</button>
+					</form>
+					<!--<a href="#" class="btn">WISH</a>-->
 					<a href="#" class="btn">ADD</a>
 				</div>
 			</div>

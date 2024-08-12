@@ -33,4 +33,6 @@ public class Product {
     @Transient
     private String formattedPrice; // 추가된 필드
 
+    private boolean likeState = false; // 기본값은 false로 설정
+
 }
