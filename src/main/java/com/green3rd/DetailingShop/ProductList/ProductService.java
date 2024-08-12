@@ -17,7 +17,8 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public Page<Product> getProductsByCategory(String firstCategory, String secondCategory, String thirdCategory, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size); // 페이지네이션을 위한 Pageable 객체 생성
+
+        Pageable pageable = PageRequest.of(page, size);
 
         if (!secondCategory.isEmpty() && !thirdCategory.isEmpty()) {
             return productRepository.findByFirstCategoryAndSecondCategoryAndThirdCategory(firstCategory, secondCategory, thirdCategory, pageable);
@@ -29,9 +30,14 @@ public class ProductService {
         return Page.empty();
     }
 
-    /* 제품 가격타입(ex.2000) -> (ex.2,000원) 변경 변수*/
+    /* 제품 가격타입(ex.2000) -> (ex.2,000원) 변경 변수 */
     public String formatPrice(int price) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
         return currencyFormat.format(price);
+    }
+
+    // 상품 ID 상세 정보 조회
+    public Product getProductByID(int indexId) {
+        return  productRepository.findById(indexId).orElse(null);
     }
 }

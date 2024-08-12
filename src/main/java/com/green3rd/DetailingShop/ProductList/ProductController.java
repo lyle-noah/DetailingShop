@@ -6,9 +6,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +27,7 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String secondCategory,
             @RequestParam(required = false, defaultValue = "") String thirdCategory,
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
-            @RequestParam(defaultValue = "10") int size,  // 페이지 크기 (기본값: 10)
+            @RequestParam(defaultValue = "10") int size, // 페이지 크기 (기본값: 10)
             Model model) {
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
@@ -46,7 +51,7 @@ public class ProductController {
         }
 
         // 상품 수량 정보
-        int totalProducts = (int)productsPage.getTotalElements();
+        int totalProducts = (int) productsPage.getTotalElements();
 
         // 제품의 데이터를 모델에 전달
         model.addAttribute("productsInfor", products);
@@ -72,4 +77,15 @@ public class ProductController {
             return "category/firstCategory";
         }
     }
-}
+        //상세 페이지 조회
+        @GetMapping("/product/{indexId}")
+        public String getProductDetail(@PathVariable int indexId, Model model) {
+            Product product=productService.getProductByID(indexId);
+            if(product == null) {
+                return "error/404";
+            }
+            product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+            model.addAttribute("product",product);
+            return "main/detail.html";
+        }
+    }

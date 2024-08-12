@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Detailing Shop</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/category_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+<body class="bg-gray-100">
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
+
+<main class="container mx-auto px-4 py-16">
+    <!-- Breadcrumbs -->
+    <nav class="mb-4 text-sm text-gray-500">
+        <a href="/" class="text-gray-500 hover:text-gray-800">홈</a> /
+        <span th:text="${product.firstCategory}"></span> /
+        <span th:text="${product.productName}"></span>
+    </nav>
+
+    <!-- Product Details Section -->
+    <div class="flex flex-col lg:flex-row items-start lg:items-start space-y-8 lg:space-y-0 lg:space-x-16">
+        <!-- Product Image -->
+        <div class="w-full lg:w-1/2">
+            <img th:src="@{${product.imgurl}}" alt="Product Image" class="rounded-lg shadow-lg w-full">
+            <p class="mt-2 text-center text-sm text-gray-500">🔍 마우스를 올려보세요.</p>
+        </div>
+
+        <!-- Product Info -->
+        <div class="w-full lg:w-1/2">
+            <h1 class="text-3xl font-semibold mb-4" th:text="${product.productName}"></h1>
+
+            <!-- Price -->
+            <div class="mb-4">
+                <span class="text-3xl font-bold text-gray-900" th:text="${product.formattedPrice}"></span>
+            </div>
+
+            <!-- Shipping Info -->
+            <div class="mb-4 text-sm text-gray-600">
+                <p>국내·해외배송: 국내배송</p>
+                <p>배송방법: 택배</p>
+                <p>배송비: 3,000원 (30,000원 이상 구매 시 무료)</p>
+            </div>
+
+            <!-- Quantity Selector -->
+            <div class="mb-4">
+                <label for="quantity" class="block text-sm font-medium text-gray-700">수량:</label>
+                <div class="flex items-center mt-1">
+                    <button class="px-3 py-1 bg-gray-200 text-gray-600 rounded-l">-</button>
+                    <input id="quantity" type="text" value="1" class="text-center w-12 border border-gray-300 py-1">
+                    <button class="px-3 py-1 bg-gray-200 text-gray-600 rounded-r">+</button>
+                </div>
+            </div>
+
+            <!-- Total Price -->
+            <div class="mb-4 text-2xl font-bold text-gray-900">
+                TOTAL (QUANTITY): <span th:text="${product.formattedPrice}"></span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-4">
+                <button class="w-full lg:w-1/3 bg-blue-600 text-white py-2 rounded-md text-lg hover:bg-blue-700 transition">
+                    BUY IT NOW
+                </button>
+                <button class="w-full lg:w-1/3 bg-gray-200 text-gray-700 py-2 rounded-md text-lg hover:bg-gray-300 transition">
+                    CART
+                </button>
+                <button class="w-full lg:w-1/3 bg-gray-200 text-gray-700 py-2 rounded-md text-lg hover:bg-gray-300 transition">
+                    WISH LIST
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{footer/footer.html :: footer}"></div>
+
+<script src="/js/header.js"></script>
+<script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
+
+
+</body>
+</html>
