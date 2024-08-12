@@ -6,9 +6,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -46,7 +48,7 @@ public class ProductController {
         }
 
         // 상품 수량 정보
-        int totalProducts = (int)productsPage.getTotalElements();
+        int totalProducts = (int) productsPage.getTotalElements();
 
         // 제품의 데이터를 모델에 전달
         model.addAttribute("productsInfor", products);
@@ -72,4 +74,15 @@ public class ProductController {
             return "category/firstCategory";
         }
     }
-}
+        //상세 페이지 조회
+        @GetMapping("/product/{indexId}")
+        public String getProductDetail(@PathVariable int indexId, Model model) {
+            Product product=productService.getProductByID(indexId);
+            if(product == null) {
+                return "error/404";
+            }
+            product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+            model.addAttribute("product",product);
+            return "main/detail.html";
+        }
+    }

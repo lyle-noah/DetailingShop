@@ -34,4 +34,9 @@ public class ProductService {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
         return currencyFormat.format(price);
     }
+
+    // 상품 ID 상세 정보 조회
+    public Product getProductByID(int indexId) {
+        return  productRepository.findById(indexId).orElse(null);
+    }
 }
