@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5f5; /* 배경을 단색으로 변경 */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
+<main class="container mx-auto px-4 py-8 lg:py-16">
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold">마이 쇼핑</h1>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <!-- 왼쪽 사이드바 -->
+        <div class="lg:col-span-1 space-y-12">
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-6">나의 쇼핑 정보</h3>
+                <ul class="space-y-4 text-gray-700">
+                    <li><a href="/user/orderhistory" class="text-blue-600 hover:underline">주문내역 조회</a></li>
+                    <li><a href="#points-history" class="text-blue-600 hover:underline">상품구매 적립금 내역</a></li>
+                    <li><a href="#coupons" class="text-blue-600 hover:underline">쿠폰 내역</a></li>
+                    <li><a href="#address-book" class="text-blue-600 hover:underline">배송 주소록 관리</a></li>
+                    <li><a href="#subscriptions" class="text-blue-600 hover:underline">정기배송 관리</a></li>
+                </ul>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-6">활동 정보</h3>
+                <ul class="space-y-4 text-gray-700">
+                    <li><a href="#recent-products" class="text-blue-600 hover:underline">최근 본 상품</a></li>
+                    <li><a href="#wishlist" class="text-blue-600 hover:underline">나의 위시리스트</a></li>
+                    <li><a href="#posts" class="text-blue-600 hover:underline">나의 게시글</a></li>
+                </ul>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-6">나의 정보</h3>
+                <ul class="space-y-4 text-gray-700">
+                    <li><a href="#profile" class="text-blue-600 hover:underline">회원 정보 수정</a></li>
+                    <li><a href="#logout" class="text-blue-600 hover:underline">로그아웃</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 메인 컨텐츠 -->
+        <div class="lg:col-span-3 space-y-12">
+            <!-- Profile Section -->
+            <div class="bg-white p-8 rounded-lg shadow-md flex items-center space-x-6">
+                <img class="w-24 h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
+                <div>
+                    <h2 class="text-3xl font-semibold">
+                        안녕하세요. <span th:text="${user.username}">사용자</span> 님!
+                    </h2>
+                    <p class="text-gray-500 mt-2">고객님의 회원등급은 일반회원 입니다.</p>
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="text-2xl font-bold">5,000원</div>
+                    <div class="text-gray-500 mt-2">총상품구매 적립금</div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="text-2xl font-bold">0개</div>
+                    <div class="text-gray-500 mt-2">쿠폰</div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="text-2xl font-bold">0원(0회)</div>
+                    <div class="text-gray-500 mt-2">총주문</div>
+                </div>
+            </div>
+
+            <!-- Order Status Section -->
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-2xl font-bold mb-6">나의 주문처리 현황 (최근 3개월 기준)</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-gray-500 mt-2">입금전</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-gray-500 mt-2">배송준비중</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-gray-500 mt-2">배송중</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-gray-500 mt-2">배송완료</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{footer/footer :: footer}"></div>
+<script src="/js/header.js"></script>
+<script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
+</body>
+</html>

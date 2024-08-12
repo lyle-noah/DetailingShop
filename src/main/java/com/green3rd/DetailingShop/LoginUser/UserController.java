@@ -105,7 +105,7 @@ public class UserController {
         }
         logger.info("Retrieved user: {}", user.getUsername());
         model.addAttribute("user", user);
-        return "header/mypage";
+        return "mypage/mypage";
     }
 
     @GetMapping("/reset_password")
@@ -175,6 +175,11 @@ public class UserController {
         }
 
         return "redirect:/user/login";
+    }
+
+    @GetMapping("/orderhistory")
+    public String orderHistory() {
+        return "mypage/orderhistory";
     }
 
     @GetMapping("/testpage")
