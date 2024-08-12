@@ -140,3 +140,11 @@ body {
 .product-card:hover img {
     filter: brightness(0.7);
 }
+
+.product-card .overlay .btn {
+    background: transparent;
+    border: none;
+    color: #f00;  /* 좋아요 버튼 색상 */
+    font-size: 1.5rem; /* 적당한 크기 */
+    cursor: pointer;
+}
