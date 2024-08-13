@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Viewed Products</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
+
+<main class="container mx-auto px-4 py-8 lg:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <!-- 왼쪽 사이드바 -->
+        <div class="lg:col-span-1 space-y-12">
+            <div th:replace="~{mypage/sidebar.html :: sidebar}"></div>
+        </div>
+
+        <!-- 메인 컨텐츠 -->
+        <div class="lg:col-span-3 space-y-12">
+            <!-- 최근 본 상품 섹션 -->
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-6">최근 본 상품</h3>
+                <div class="space-y-8">
+                    <!-- 상품 항목 -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <img src="/img/sample_product1.png" alt="Product Image" class="w-20 h-20 rounded">
+                            <div>
+                                <h4 class="text-lg font-semibold">루나텍폴리시 문라이트 스플래시 고체왁스</h4>
+                                <p class="text-gray-500 line-through">74,000원</p>
+                                <p class="text-gray-900 font-bold">74,000원</p>
+                                <p class="text-gray-500 text-sm">적립금 740원 (1%)</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button class="bg-gray-200 px-4 py-2 rounded">장바구니</button>
+                            <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
+                        </div>
+                    </div>
+
+                    <!-- 상품 항목 -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <img src="/img/sample_product2.png" alt="Product Image" class="w-20 h-20 rounded">
+                            <div>
+                                <h4 class="text-lg font-semibold">루미너스 아쿠아 습식코팅제 고농축 원액 500ml</h4>
+                                <p class="text-gray-500 line-through">39,900원</p>
+                                <p class="text-gray-900 font-bold">39,900원</p>
+                                <p class="text-gray-500 text-sm">적립금 400원 (1%)</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button class="bg-gray-200 px-4 py-2 rounded">장바구니</button>
+                            <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
+                        </div>
+                    </div>
+
+                    <!-- 상품 항목 -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <img src="/img/sample_product3.png" alt="Product Image" class="w-20 h-20 rounded">
+                            <div>
+                                <h4 class="text-lg font-semibold">오토그루밍 메가 드라잉 타월 (90X73)</h4>
+                                <p class="text-gray-500 line-through">25,000원</p>
+                                <p class="text-gray-900 font-bold">25,000원</p>
+                                <p class="text-gray-500 text-sm">적립금 250원 (1%)</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button class="bg-gray-200 px-4 py-2 rounded">장바구니</button>
+                            <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="mt-8 flex justify-center">
+                    <a href="#" class="px-4 py-2 text-gray-500">&laquo;</a>
+                    <a href="#" class="px-4 py-2 bg-black text-white rounded">1</a>
+                    <a href="#" class="px-4 py-2 text-gray-500">&raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{footer/footer :: footer}"></div>
+<script src="/js/header.js"></script>
+<script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
+</body>
+</html>

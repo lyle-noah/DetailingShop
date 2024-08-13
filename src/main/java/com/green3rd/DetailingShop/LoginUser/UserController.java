@@ -182,6 +182,11 @@ public class UserController {
         return "mypage/orderhistory";
     }
 
+    @GetMapping("/recentview")
+    public String recentview() {
+        return "mypage/recentview";
+    }
+
     @GetMapping("/testpage")
     public String siteuser(Model model) {
         List<SiteUser> siteusersInfo = userRepository.findAll();
