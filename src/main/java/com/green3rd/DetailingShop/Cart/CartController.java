@@ -22,8 +22,8 @@ public class CartController {
 
     // 장바구니 페이지
     @GetMapping("/cart")
-    public String CartPage(@RequestParam(name = "userId",defaultValue = "1") Long userId, Model model) {
-        SiteUser user = userRepository.findById(userId).orElse(null);
+    public String CartPage(@RequestParam(name = "siteUsername",defaultValue = "1") Long siteUsername, Model model) {
+        SiteUser user = userRepository.findById(siteUsername).orElse(null);
         Cart cart = cartService.getUser(user);
         model.addAttribute("cart", cart);
         return "cart/cart";
@@ -31,9 +31,9 @@ public class CartController {
 
     // 장바구니 상품 추가
     @PostMapping("/cart/add")
-    public String addCart(@RequestParam(required = true) Long userId, @RequestParam String productId) {
-        SiteUser user = userRepository.findById(userId).orElse(null);
+    public String addCart(@RequestParam(required = true) Long siteUsername, @RequestParam String productId) {
+        SiteUser user = userRepository.findById(siteUsername).orElse(null);
         cartService.addCart(user, productId);
-        return "redirect:/cart?userId=" + userId;
+        return "redirect:/cart?userId=" + siteUsername;
     }
 }

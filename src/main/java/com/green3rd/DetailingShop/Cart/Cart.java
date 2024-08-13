@@ -20,10 +20,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 유저와 카트 1:1
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private SiteUser user;
 
+    // 카트와 상품 1:N
     @OneToMany
     @JoinColumn(name = "cart_id")
     private List<Product> products;
