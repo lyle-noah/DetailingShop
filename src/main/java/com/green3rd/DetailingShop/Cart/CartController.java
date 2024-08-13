@@ -31,7 +31,7 @@ public class CartController {
 
     // 장바구니 상품 추가
     @PostMapping("/cart/add")
-    public String addCart(@RequestParam Long userId, @RequestParam String productId) {
+    public String addCart(@RequestParam(required = true) Long userId, @RequestParam String productId) {
         SiteUser user = userRepository.findById(userId).orElse(null);
         cartService.addCart(user, productId);
         return "redirect:/cart?userId=" + userId;
