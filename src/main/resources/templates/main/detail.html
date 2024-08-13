@@ -84,6 +84,52 @@
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
+<script>
+    // 요소 선택
+    const quantityInput = document.getElementById('quantity');
+    const minusButton = quantityInput.previousElementSibling;
+    const plusButton = quantityInput.nextElementSibling;
+    const totalPriceElement = document.querySelector('.text-2xl.font-bold.text-gray-900 span');
+    const unitPrice = parseFloat(document.querySelector('.text-3xl.font-bold.text-gray-900').textContent.replace(/[^0-9.-]+/g,""));
+
+    // 수량 변경 시 총 가격 업데이트 함수
+    function updateTotalPrice() {
+        const quantity = parseInt(quantityInput.value);
+        const totalPrice = (unitPrice * quantity).toLocaleString();  // 총 가격 계산 및 포맷팅
+        totalPriceElement.textContent = `₩${totalPrice}`;
+    }
+
+    // 마이너스 버튼 클릭 이벤트
+    minusButton.addEventListener('click', () => {
+        let quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1;
+            updateTotalPrice();
+        }
+    });
+
+    // 플러스 버튼 클릭 이벤트
+    plusButton.addEventListener('click', () => {
+        let quantity = parseInt(quantityInput.value);
+        quantityInput.value = quantity + 1;
+        updateTotalPrice();
+    });
+
+    // 수량 입력 필드 직접 수정 시 이벤트
+    quantityInput.addEventListener('input', () => {
+        let quantity = parseInt(quantityInput.value);
+        if (isNaN(quantity) || quantity < 1) {
+            quantityInput.value = 1;
+        }
+        updateTotalPrice();
+    });
+
+    // 초기 총 가격 설정
+    updateTotalPrice();
+
+</script>
+
+
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
