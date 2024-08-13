@@ -8,7 +8,7 @@
 <body>
 <div class="container mt-5">
     <h1>Your Cart</h1>
-    <div th:if="${cart != null}">
+    <div th:if="${cart != null and #lists.isNotEmpty(cart.products)}">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -26,7 +26,7 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${cart == null}">
+    <div th:if="${cart == null or #lists.isEmpty(cart.products)}">
         <p>Your cart is empty.</p>
     </div>
     <a href="/" class="btn btn-primary">Continue Shopping</a>
