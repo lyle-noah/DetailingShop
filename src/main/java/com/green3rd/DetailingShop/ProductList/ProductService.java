@@ -40,9 +40,8 @@ public class ProductService {
     }
 
     public void toggleLikeState(int indexId) {
-        Product product = productRepository.findById(indexId).orElseThrow(() -> new IllegalArgumentException("Invalid product ID"));
+        Product product = productRepository.findById(indexId).orElseThrow(() -> new IllegalArgumentException("Invalid index ID"));
         product.setLikeState(!product.isLikeState());
         productRepository.save(product);
     }
-
 }

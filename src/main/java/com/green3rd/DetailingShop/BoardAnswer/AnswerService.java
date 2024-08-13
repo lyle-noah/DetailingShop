@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.green3rd.DetailingShop.basic.DataNotFoundException;
+import com.green3rd.DetailingShop.security.DataNotFoundException;
 import com.green3rd.DetailingShop.BoardQuestion.Question;
 import com.green3rd.DetailingShop.LoginUser.SiteUser;
 

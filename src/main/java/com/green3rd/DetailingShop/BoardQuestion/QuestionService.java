@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.green3rd.DetailingShop.basic.DataNotFoundException;
+import com.green3rd.DetailingShop.security.DataNotFoundException;
 import com.green3rd.DetailingShop.BoardAnswer.Answer;
 import com.green3rd.DetailingShop.LoginUser.SiteUser;
 

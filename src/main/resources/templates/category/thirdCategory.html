@@ -32,7 +32,9 @@
 					<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
 				</a>
 				<div class="overlay">
-					<button class="btn">WISH</button>
+					<form th:action="@{/product/like/{indexId}(indexId=@{${infor.indexId}})}" method="post">
+						<button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
+					</form>
 					<button class="btn">ADD</button>
 				</div>
 			</div>

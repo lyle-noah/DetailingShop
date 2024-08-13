@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.basic;
+package com.green3rd.DetailingShop.security;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;

@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.basic;
+package com.green3rd.DetailingShop.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
