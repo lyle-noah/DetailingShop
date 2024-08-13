@@ -1,6 +1,5 @@
 package com.green3rd.DetailingShop.ProductList;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,11 +39,10 @@ public class ProductService {
         return  productRepository.findById(indexId).orElse(null);
     }
 
-    @Transactional
-    public void toggleLike(int indexId) {
-        Product product = productRepository.findById(indexId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid indexId Id:" + indexId));
+    public void toggleLikeState(int indexId) {
+        Product product = productRepository.findById(indexId).orElseThrow(() -> new IllegalArgumentException("Invalid product ID"));
         product.setLikeState(!product.isLikeState());
         productRepository.save(product);
     }
+
 }

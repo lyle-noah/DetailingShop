@@ -28,11 +28,8 @@ public class Product {
     private String thirdCategory;
     private String imgurl;
 
-    private String description; // 검색으로 인한 추가된 필드
-
     @Transient
     private String formattedPrice; // 추가된 필드
 
-    private boolean likeState = false; // 기본값은 false로 설정
-
+    private boolean likeState = false;
 }

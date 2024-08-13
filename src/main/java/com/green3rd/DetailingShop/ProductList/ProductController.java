@@ -3,15 +3,15 @@ package com.green3rd.DetailingShop.ProductList;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,23 +75,22 @@ public class ProductController {
             return "category/firstCategory";
         }
     }
-        //상세 페이지 조회
-        @GetMapping("/product/{indexId}")
-        public String getProductDetail(@PathVariable int indexId, Model model) {
-            Product product=productService.getProductByID(indexId);
-            if(product == null) {
-                return "error/404";
-            }
-            product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
-            model.addAttribute("product",product);
-            return "main/detail.html";
-        }
 
-    @PostMapping("/products/{indexId}/toggleLike")
-    public String toggleLike(@PathVariable int indexId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        productService.toggleLike(indexId);
-        String referer = request.getHeader("Referer"); // 이전 페이지 URL을 가져옵니다.
-        redirectAttributes.addFlashAttribute("message", "Like state updated!");
-        return "redirect:" + referer;  // 현재 보고 있는 페이지로 리다이렉트합니다.
+    //상세 페이지 조회
+    @GetMapping("/product/{indexId}")
+    public String getProductDetail(@PathVariable int indexId, Model model) {
+        Product product = productService.getProductByID(indexId);
+        if (product == null) {
+            return "error/404";
+        }
+        product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+        model.addAttribute("product", product);
+        return "main/detail.html";
+    }
+
+    @PostMapping("/product/like/{indexId}")
+    public String toggleLike(@PathVariable int indexId, @RequestHeader("Referer") String referer) {
+        productService.toggleLikeState(indexId);
+        return "redirect:" + referer;
     }
 }

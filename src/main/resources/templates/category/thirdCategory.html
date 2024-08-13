@@ -27,9 +27,10 @@
 
 	<div class="product-grid">
 		<div th:each="infor : ${productsInfor}" class="product-card">
-			<a th:href="@{/product/{indexId}(indexId=@{${infor.indexId}})}">
-			<div class="product-image-wrapper">
-				<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
+			<div class="product-image-container">
+				<a th:href="@{/product/{indexId}(indexId=${infor.indexId})}">
+					<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
+				</a>
 				<div class="overlay">
 					<button class="btn">WISH</button>
 					<button class="btn">ADD</button>
@@ -39,7 +40,6 @@
 				<h3 th:text="${infor.productName}"></h3>
 				<p class="price" th:text="${infor.formattedPrice}"></p>
 			</div>
-			</a>
 		</div>
 	</div>
 	<!-- 페이지네이션 삽입 -->

@@ -1,27 +1,37 @@
-/* category_form01.css */
+/* 기본 스타일 */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f7f7f7;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .header-content {
     text-align: center;
 }
 
+h1 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+/* 제품 그리드 */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(22%, 1fr));
     gap: 16px;
-    justify-content: start; /* 중앙 정렬을 기본으로 하되 마지막 행을 왼쪽 정렬 */
+    justify-content: start;
+    margin-top: 20px;
 }
 
+/* 제품 카드 */
 .product-card {
     background: #fff;
     border: 1px solid #ddd;
@@ -29,46 +39,95 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s;
-    margin: 8px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
 }
 
-.product-card img {
+/* 제품 이미지 컨테이너 */
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 이미지 */
+.product-image-container img {
     width: 100%;
     height: auto;
     object-fit: cover;
+    transition: filter 0.3s ease;
+    cursor: pointer;
 }
 
+/* 이미지에만 어두워지는 효과 적용 */
+.product-image-container:hover img {
+    filter: brightness(0.8);
+}
+
+/* 오버레이 */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 버튼 사이의 간격 */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* 오버레이 자체는 클릭 이벤트를 받지 않음 */
+}
+
+.product-image-container:hover .overlay {
+    opacity: 1; /* 이미지에만 오버레이 표시 */
+}
+
+.overlay .btn {
+    padding: 10px 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    z-index: 2;
+    pointer-events: auto;
+    border: none; /* 버튼의 기본 스타일을 초기화 */
+    cursor: pointer;
+}
+
+.overlay .btn:hover {
+    background: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+
+/* 제품 정보 */
 .product-info {
     padding: 16px;
-    text-align: center;
-    margin-top: auto;
+    text-align: left;
+    flex-grow: 1;
 }
 
 .product-info h3 {
-    font-size: 12px;
+    font-size: 1rem;
     margin: 0 0 8px;
     color: #333;
-    text-align: left;
 }
 
 .product-info .price {
-    font-size: 12px;
+    font-size: 1.125rem;
     color: #007bff;
     font-weight: bold;
-    text-align: left;
 }
 
 .product-info p {
     margin: 4px 0;
     color: #666;
-    text-align: left;
 }
 
 /* 반응형 디자인 */
@@ -88,63 +147,4 @@ body {
     .product-grid {
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     }
-}
-
-/* 상품이미지 마우스 호버시 애니메이션 및 WISH, ADD 링크 추가 */
-.product-image-wrapper {
-    position: relative;
-}
-
-.product-image-wrapper img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: all 0.3s ease;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: all 0.3s ease;
-    flex-direction: row; /* 수직 정렬에서 수평 정렬로 변경 */
-}
-
-.overlay .btn {
-    margin: 0px 5px; /* 좌우 간격 설정 */
-    padding: 10px 20px;
-    color: white;
-    background: rgba(0, 0, 0, 0.7);
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-}
-
-.overlay .btn:hover {
-    background: rgba(255, 255, 255, 0.7);
-    color: black;
-}
-
-.product-card:hover .overlay {
-    opacity: 1;
-}
-
-.product-card:hover img {
-    filter: brightness(0.7);
-}
-
-.product-card .overlay .btn {
-    background: transparent;
-    border: none;
-    color: #f00;  /* 좋아요 버튼 색상 */
-    font-size: 1.5rem; /* 적당한 크기 */
-    cursor: pointer;
 }
