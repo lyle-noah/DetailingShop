@@ -11,8 +11,7 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) -> {
             String likePattern = "%" + text.toLowerCase() + "%";
             return criteriaBuilder.or(
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), likePattern),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern)
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("productName")), likePattern)
             );
         };
     }

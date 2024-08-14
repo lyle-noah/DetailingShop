@@ -10,31 +10,41 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
 
     private final RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // targetUrl 파라미터 확인
         String targetUrl = request.getParameter("targetUrl");
 
-        if (targetUrl != null && !targetUrl.isEmpty()) {
-            // targetUrl이 존재하면 해당 URL로 리다이렉트
-            response.sendRedirect(targetUrl);
+        if (targetUrl == null) {
+            logger.warn("targetUrl is null");
+        } else {
+            logger.info("Received targetUrl: " + targetUrl);
         }
 
-        // targetUrl이 없으면 세션에 저장된 URL을 가져옴
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        if (savedRequest != null) {
-            targetUrl = savedRequest.getRedirectUrl();
+        if (targetUrl != null && !targetUrl.isEmpty()) {
+            logger.info("Redirecting to targetUrl: " + targetUrl);
             response.sendRedirect(targetUrl);
             return;
         }
 
-        // 기본적으로 메인 페이지로 리다이렉트
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
+        if (savedRequest != null) {
+            targetUrl = savedRequest.getRedirectUrl();
+            logger.info("Redirecting to SavedRequest URL: " + targetUrl);
+            response.sendRedirect(targetUrl);
+            return;
+        }
+
+        logger.info("Redirecting to default URL: /");
         response.sendRedirect("/");
     }
 }
