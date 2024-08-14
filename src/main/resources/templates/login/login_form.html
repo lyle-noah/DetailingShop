@@ -109,6 +109,9 @@
 <div class="login-container">
   <h2>로그인</h2>
   <form th:action="@{/user/login}" method="post">
+    <!-- targetUrl을 숨겨진 필드로 추가 -->
+    <input type="hidden" name="targetUrl" th:value="${param.targetUrl}">
+
     <div th:if="${param.error}">
       <div class="alert" role="alert">
         <span class="block sm:inline">사용자ID 또는 비밀번호를 확인해 주세요.</span>
