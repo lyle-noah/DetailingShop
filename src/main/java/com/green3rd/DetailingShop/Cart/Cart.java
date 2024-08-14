@@ -7,6 +7,7 @@ import lombok.ToString;
 import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.LoginUser.SiteUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,5 @@ public class Cart {
     // 카트와 상품 1:N
     @OneToMany
     @JoinColumn(name = "cart_id")
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>(); // products 리스트 초기화
 }
