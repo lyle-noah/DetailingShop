@@ -45,11 +45,9 @@ public class CartController {
             cart = new Cart();
             cart.setProducts(new ArrayList<>());  // 빈 리스트로 초기화
         }
-        // 모델에 장바구니와 총 가격을 추가하여 뷰로 전달
+        // 모델에 장바구니 추가
         model.addAttribute("cart", cart);
-        int totalPrice = cart.getProducts().stream().mapToInt(Product::getProductPrice).sum();
-        model.addAttribute("totalPrice", totalPrice);
-        return "cart/cart";  // cart.html 템플릿을 반환
+        return "cart/cart";
     }
 
     // 장바구니 추가
@@ -63,8 +61,34 @@ public class CartController {
             return "redirect:/login";  // 유저가 없으면 로그인 페이지로 리다이렉트
         }
         // 장바구니에 상품 추가
-        cartService.addCart(user, productId);
+        cartService.addCart(user,productId);
         // 장바구니 페이지로 리다이렉트
         return "redirect:/cart";
     }
+
+//    // 장바구니 수량 변경
+//    @PostMapping("/cart/update")
+//    public String updateCart(@RequestParam String productId) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String siteUsername = authentication.getName();
+//        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+//        if (user == null) {
+//            return  "redirect:/login";
+//        }
+//        cartService.updateCart(user,productId);
+//        return "redirect:/cart";
+//    }
+
+//    // 장바구니 삭제
+//    @PostMapping("/cart/delete")
+//    public String deleteCart(@RequestParam String productId) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String siteUsername = authentication.getName();
+//        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+//        if (user == null) {
+//            return "redirect:/login";
+//        }
+//        cartService.deleteCart(user,productId);
+//        return "redirect:/cart";
+//    }
 }

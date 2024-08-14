@@ -39,6 +39,11 @@ public class CartService {
             cart.setProducts(new ArrayList<>());  // 새로 생성된 Cart에 빈 리스트로 초기화
         }
 
+        // 중복 상품 체크
+        if (!cart.getProducts().contains(product)) {
+            cart.getProducts().add(product);
+        }
+
         // 장바구니 제품 목록 가져오기
         List<Product> products = cart.getProducts();
         products.add(product);
