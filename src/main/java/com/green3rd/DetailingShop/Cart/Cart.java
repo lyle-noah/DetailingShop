@@ -27,7 +27,7 @@ public class Cart {
     private SiteUser user;
 
     // 카트와 상품 1:N
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "cart_id")
     private List<Product> products = new ArrayList<>(); // products 리스트 초기화
 }

@@ -43,10 +43,8 @@ public class CartService {
         if (!cart.getProducts().contains(product)) {
             cart.getProducts().add(product);
         }
-
-        // 장바구니 제품 목록 가져오기
-        List<Product> products = cart.getProducts();
-        products.add(product);
+        // List<Product> products = cart.getProducts();  // 이 부분 불필요
+        // products.add(product);  // 이 부분 제거
         cartRepository.save(cart);
     }
 }
