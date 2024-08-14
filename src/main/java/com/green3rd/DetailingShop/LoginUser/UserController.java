@@ -177,15 +177,7 @@ public class UserController {
         return "redirect:/user/login";
     }
 
-    @GetMapping("/orderhistory")
-    public String orderHistory() {
-        return "mypage/orderhistory";
-    }
 
-    @GetMapping("/recentview")
-    public String recentview() {
-        return "mypage/recentview";
-    }
 
     @GetMapping("/testpage")
     public String siteuser(Model model) {

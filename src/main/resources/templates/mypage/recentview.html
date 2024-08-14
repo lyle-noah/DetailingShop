@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recent Viewed Products</title>
-    <link href="/css/output.css" rel="stylesheet">
+    <title>최근 본 상품</title>
+    <link rel="stylesheet" href="/css/output.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/dropDown_form01.css">
     <link rel="stylesheet" href="/css/mobileMenu_form01.css">
@@ -32,15 +31,17 @@
             <div class="bg-white p-8 rounded-lg shadow-md">
                 <h3 class="text-xl font-bold mb-6">최근 본 상품</h3>
                 <div class="space-y-8">
-                    <!-- 상품 항목 -->
-                    <div class="flex items-center justify-between">
+                    <!-- 상품 목록을 동적으로 렌더링 -->
+                    <div th:each="product : ${productsInfor}" class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
-                            <img src="/img/sample_product1.png" alt="Product Image" class="w-20 h-20 rounded">
+                            <!-- 상품 이미지를 클릭하면 상세 페이지로 이동 -->
+                            <a th:href="@{/product/{indexId}(indexId=${product.indexId})}">
+                                <img th:src="@{${product.imgurl}}" alt="Product Image" class="w-20 h-20 rounded">
+                            </a>
                             <div>
-                                <h4 class="text-lg font-semibold">루나텍폴리시 문라이트 스플래시 고체왁스</h4>
-                                <p class="text-gray-500 line-through">74,000원</p>
-                                <p class="text-gray-900 font-bold">74,000원</p>
-                                <p class="text-gray-500 text-sm">적립금 740원 (1%)</p>
+                                <a th:href="@{/product/{indexId}(indexId=${product.indexId})}" class="text-lg font-semibold" th:text="${product.productName}">상품 이름</a>
+                                <p class="text-gray-500 line-through" th:text="${product.formattedPrice}">정가</p>
+                                <p class="text-gray-900 font-bold" th:text="${product.formattedPrice}">판매가</p>
                             </div>
                         </div>
                         <div class="flex space-x-4">
@@ -48,47 +49,6 @@
                             <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
                         </div>
                     </div>
-
-                    <!-- 상품 항목 -->
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <img src="/img/sample_product2.png" alt="Product Image" class="w-20 h-20 rounded">
-                            <div>
-                                <h4 class="text-lg font-semibold">루미너스 아쿠아 습식코팅제 고농축 원액 500ml</h4>
-                                <p class="text-gray-500 line-through">39,900원</p>
-                                <p class="text-gray-900 font-bold">39,900원</p>
-                                <p class="text-gray-500 text-sm">적립금 400원 (1%)</p>
-                            </div>
-                        </div>
-                        <div class="flex space-x-4">
-                            <button class="bg-gray-200 px-4 py-2 rounded">장바구니</button>
-                            <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
-                        </div>
-                    </div>
-
-                    <!-- 상품 항목 -->
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <img src="/img/sample_product3.png" alt="Product Image" class="w-20 h-20 rounded">
-                            <div>
-                                <h4 class="text-lg font-semibold">오토그루밍 메가 드라잉 타월 (90X73)</h4>
-                                <p class="text-gray-500 line-through">25,000원</p>
-                                <p class="text-gray-900 font-bold">25,000원</p>
-                                <p class="text-gray-500 text-sm">적립금 250원 (1%)</p>
-                            </div>
-                        </div>
-                        <div class="flex space-x-4">
-                            <button class="bg-gray-200 px-4 py-2 rounded">장바구니</button>
-                            <button class="bg-black text-white px-4 py-2 rounded">주문하기</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 페이지네이션 -->
-                <div class="mt-8 flex justify-center">
-                    <a href="#" class="px-4 py-2 text-gray-500">&laquo;</a>
-                    <a href="#" class="px-4 py-2 bg-black text-white rounded">1</a>
-                    <a href="#" class="px-4 py-2 text-gray-500">&raquo;</a>
                 </div>
             </div>
         </div>

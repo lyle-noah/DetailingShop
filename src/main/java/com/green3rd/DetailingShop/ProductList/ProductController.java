@@ -1,17 +1,14 @@
 package com.green3rd.DetailingShop.ProductList;
 
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession; // 추가된 import
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
+import java.util.LinkedList; // 추가된 import
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -76,16 +73,36 @@ public class ProductController {
         }
     }
 
-    //상세 페이지 조회
+    // 상세 페이지 조회
     @GetMapping("/product/{indexId}")
-    public String getProductDetail(@PathVariable int indexId, Model model) {
+    public String getProductDetail(@PathVariable int indexId, Model model, HttpSession session) {
         Product product = productService.getProductByID(indexId);
         if (product == null) {
             return "error/404";
         }
         product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
         model.addAttribute("product", product);
-        return "main/detail.html";
+
+        // 최근 본 상품 리스트를 세션에서 가져옴
+        List<Product> recentProducts = (List<Product>) session.getAttribute("recentProducts");
+        if (recentProducts == null) {
+            recentProducts = new LinkedList<>();
+        }
+
+        // 이미 리스트에 있는지 확인 후, 없으면 추가
+        boolean alreadyViewed = recentProducts.stream()
+                .anyMatch(p -> p.getIndexId() == product.getIndexId());
+        if (!alreadyViewed) {
+            if (recentProducts.size() >= 5) {
+                recentProducts.remove(0); // 최대 5개의 최근 본 상품을 유지하기 위해 리스트의 첫 번째 요소 제거
+            }
+            recentProducts.add(product);
+        }
+
+        // 세션에 업데이트된 리스트 저장
+        session.setAttribute("recentProducts", recentProducts);
+
+        return "main/detail";
     }
 
     @PostMapping("/product/like/{indexId}")
