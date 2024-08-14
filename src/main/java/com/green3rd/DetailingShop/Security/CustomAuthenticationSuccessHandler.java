@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.security;
+package com.green3rd.DetailingShop.Security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

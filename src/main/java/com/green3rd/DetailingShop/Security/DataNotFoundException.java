@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.security;
+package com.green3rd.DetailingShop.Security;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
