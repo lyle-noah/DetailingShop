@@ -19,14 +19,19 @@
                 <!-- Secondary Navbar items -->
                 <div class="hidden md:flex items-center space-x-1">
                     <a href="/user/signup" class="py-5 px-3 text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
-                    <a href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
-                    <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
-                    <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="py-5 px-3">
-                        <img class="w-8 h-8 shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile Picture">
+                    <!-- 로그인 버튼 -->
+                    <a th:href="@{/user/login}" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">
+                        로그인
                     </a>
-                    <a href="/user/mypage" class="py-5 px-3 text-gray-700 hover:text-blue-500">
+                    <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
+                    <!-- 마이페이지 버튼 -->
+                    <a th:href="@{/user/login(targetUrl='/user/mypage')}" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">
                         <img class="h-6 w-6" src="/img/icon/icon_Profile.png" alt="Profile Picture">
                     </a>
+                    <a th:href="@{/user/mypage}" class="py-5 px-3" th:if="${#authorization.expression('isAuthenticated()')}">
+                        <img class="h-6 w-6" src="/img/icon/icon_Profile.png" alt="Profile Picture">
+                    </a>
+                    <!-- 게시판 아이콘 -->
                     <a href="/question/list" class="py-5 px-3 text-gray-700 hover:text-blue-500">
                         <img class="h-6 w-6" src="/img/icon/icon_Board.png" alt="Profile Picture">
                     </a>
