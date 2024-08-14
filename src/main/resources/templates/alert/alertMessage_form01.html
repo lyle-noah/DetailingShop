@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>알림</title>
+    <script type="text/javascript">
+        // 페이지가 로드되면 알림 메시지를 띄우고 지정된 URL로 이동합니다.
+        window.onload = function() {
+            alert("[[${message}]]");
+            window.location = "[[${url}]]";
+        }
+    </script>
+</head>
+<body>
+<!-- 페이지가 로드되면 바로 리다이렉트되므로 내용은 필요하지 않음 -->
+</body>
+</html>

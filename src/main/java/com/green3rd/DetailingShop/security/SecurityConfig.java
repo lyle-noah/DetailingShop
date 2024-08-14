@@ -21,24 +21,26 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                .csrf((csrf) -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"),
-                                                             new AntPathRequestMatcher("/user/logout")))
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() // 전체페이지 접근 허용
+                        .anyRequest().authenticated()) // 그 외의 경로는 인증 필요
+
+                .csrf((csrf) -> csrf.ignoringRequestMatchers(
+                        new AntPathRequestMatcher("/h2-console/**"),
+                        new AntPathRequestMatcher("/user/logout")))
+
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+
                 .formLogin((formLogin) -> formLogin.loginPage("/user/login")
-                        .defaultSuccessUrl("/user/mypage", true))
+/*                        .defaultSuccessUrl("/user/mypage", true))*/
+                        .successHandler(new CustomAuthenticationSuccessHandler()))
+
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/")); // 메인 페이지로 리디렉션
-/*            .sessionManagement(sessionManagement -> sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-                .expiredUrl("/user/login?expired")
-            );*/
+
         return http.build();
     }
 
@@ -53,10 +55,8 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /*
-     * @Bean public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
-     * SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
-     * handler.setDefaultTargetUrl("/"); handler.setAlwaysUseDefaultTargetUrl(true);
-     * return handler; }
-     */
+    @Bean
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler(); // 사용자 정의 성공 핸들러를 빈으로 등록
+    }
 }
