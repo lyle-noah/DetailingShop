@@ -35,7 +35,11 @@
 					<form th:action="@{/product/like/{indexId}(indexId=${infor.indexId})}" method="post">
 						<button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
 					</form>
-					<button class="btn">ADD</button>
+					<form th:action="@{/cart/add}" method="post">
+						<input type="hidden" name="productId" th:value="${infor.indexId}" />
+						<input type="hidden" name="userId" th:value="${userId}" />
+						<button type="submit" class="btn">ADD</button>
+					</form>
 				</div>
 			</div>
 			<div class="product-info">

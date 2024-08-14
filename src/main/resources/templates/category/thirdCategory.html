@@ -33,7 +33,11 @@
 				</a>
 				<div class="overlay">
 					<button class="btn">WISH</button>
-					<button class="btn">ADD</button>
+					<form th:action="@{/cart/add}" method="post">
+						<input type="hidden" name="productId" th:value="${infor.indexId}" />
+						<input type="hidden" name="userId" th:value="${userId}" />
+						<button type="submit" class="btn">ADD</button>
+					</form>
 				</div>
 			</div>
 			<div class="product-info">
