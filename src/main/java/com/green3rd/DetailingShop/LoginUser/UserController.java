@@ -2,6 +2,7 @@ package com.green3rd.DetailingShop.LoginUser;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -89,10 +92,13 @@ public class UserController {
     }
 
     @GetMapping("/mypage")
-    public String myPage(Model model) {
+    public String myPage(HttpServletRequest request,
+                         HttpServletResponse response,
+                         Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/user/login";
+            // 로그인이 필요한 경우, 로그인 페이지로 리다이렉트하면서 targetUrl 파라미터에 원래 요청 URL을 포함
+            return "redirect:/user/login?targetUrl=" + request.getRequestURI();
         }
 
         String username = authentication.getName();

@@ -39,10 +39,10 @@ public class ProductService {
         return  productRepository.findById(indexId).orElse(null);
     }
 
+    // 좋아요 상태를인식하고 이를 DB에 실시간으로 저장해줌.
     public void toggleLikeState(int indexId) {
-        Product product = productRepository.findById(indexId).orElseThrow(() -> new IllegalArgumentException("Invalid product ID"));
+        Product product = productRepository.findById(indexId).orElseThrow(() -> new IllegalArgumentException("Invalid index ID"));
         product.setLikeState(!product.isLikeState());
         productRepository.save(product);
     }
-
 }

@@ -1,8 +1,14 @@
 package com.green3rd.DetailingShop.ProductList;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import jakarta.servlet.http.HttpSession; // 추가된 import
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,22 +16,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedList; // 추가된 import
 import java.util.List;
 
+
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
+    private final RequestCache requestCache = new HttpSessionRequestCache();
 
     @GetMapping("/products")
     public String getProductByCategory(
-            @RequestParam(required = false, defaultValue = "") String firstCategory,
-            @RequestParam(required = false, defaultValue = "") String secondCategory,
-            @RequestParam(required = false, defaultValue = "") String thirdCategory,
+            // 상품 목록 페이지를 반환합니다.
+            @RequestParam(required = false, defaultValue = "") String firstCategory, // 첫 번째 카테고리 필터
+            @RequestParam(required = false, defaultValue = "") String secondCategory, // 두 번째 카테고리 필터
+            @RequestParam(required = false, defaultValue = "") String thirdCategory, // 세 번째 카테고리 필터
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
             @RequestParam(defaultValue = "10") int size, // 페이지 크기 (기본값: 10)
-            Model model) {
+            Model model) { // 위 내용들을 뷰에 전달할 데이터 모델
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
+        // DB에서 가격정보 포멧은 int형으로 단순 10000 이런식으로 표기되어있기에 원화표시의 포멧을 넣기위한 설정임.
         productsPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
 
         // 페이지네이션 정보
@@ -105,8 +115,23 @@ public class ProductController {
         return "main/detail";
     }
 
+    // 좋아요 버튼 기능
     @PostMapping("/product/like/{indexId}")
-    public String toggleLike(@PathVariable int indexId, @RequestHeader("Referer") String referer) {
+    public String toggleLike(@PathVariable int indexId,
+                             @RequestHeader("Referer") String referer,
+                             HttpServletRequest request, HttpServletResponse response,
+                             Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || auth.getName().equals("anonymousUser")) {
+            // 사용자가 로그인하지 않은 경우, 요청 URL을 세션에 저장
+            requestCache.saveRequest(request, response);
+            model.addAttribute("message", "로그인 후 관심상품에 등록해주세요");
+            model.addAttribute("url", "/user/login");
+            return "alert/alertMessage_form01";
+        }
+
+        // 사용자가 로그인된 상태일 경우 좋아요 상태를 토글
         productService.toggleLikeState(indexId);
         return "redirect:" + referer;
     }

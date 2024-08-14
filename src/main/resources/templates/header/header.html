@@ -24,7 +24,7 @@
                     <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/user/mypage}" class="py-5 px-3">
                         <img class="w-8 h-8 shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile Picture">
                     </a>
-                    <a th:if="${not #authorization.expression('isAuthenticated()')}" href="/user/login" class="py-5 px-3 text-gray-700 hover:text-blue-500">
+                    <a href="/user/mypage" class="py-5 px-3 text-gray-700 hover:text-blue-500">
                         <img class="h-6 w-6" src="/img/icon/icon_Profile.png" alt="Profile Picture">
                     </a>
                     <a href="/question/list" class="py-5 px-3 text-gray-700 hover:text-blue-500">
