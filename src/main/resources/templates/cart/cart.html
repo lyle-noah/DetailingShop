@@ -29,7 +29,7 @@
         <h1 class="text-4xl font-bold text-blue-600">장바구니</h1>
     </div>
 
-    <!-- 수정된 HTML 코드 -->
+    <!-- 장바구니가 비어있지 않을 때 -->
     <div th:if="${cart.products != null and cart.products.size() > 0}">
         <table class="w-full bg-white border border-gray-300 rounded-lg shadow-lg">
             <thead class="bg-gray-800 text-white">
@@ -40,6 +40,7 @@
                 <th class="p-4 text-right">Price (KRW)</th>
                 <th class="p-4 text-center">Quantity</th>
                 <th class="p-4 text-right">Total (KRW)</th>
+                <th class="p-4 text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -51,9 +52,21 @@
                 <td class="p-4" th:text="${product.productName}">Product Name</td>
                 <td class="p-4 text-right text-blue-600 font-bold" th:text="'₩' + ${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')}">Price</td>
                 <td class="p-4 text-center">
-                    <input type="number" value="1" min="1" class="w-12 p-1 border rounded text-center">
+                    <!-- 상품 수량 변경 폼 -->
+                    <form th:action="@{/cart/update}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.indexId}" />
+                        <input type="number" name="quantity" th:value="${product.quantity}" min="1" class="w-12 p-1 border rounded text-center"/>
+                        <button type="submit" class="ml-2 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
+                    </form>
                 </td>
-                <td class="p-4 text-right text-blue-600 font-bold" th:text="'₩' + ${#numbers.formatDecimal(product.productPrice * 1, 0, 'COMMA', 0, 'POINT')}">Total</td>
+                <td class="p-4 text-right text-blue-600 font-bold" th:text="'₩' + ${#numbers.formatDecimal(product.productPrice * product.quantity, 0, 'COMMA', 0, 'POINT')}">Total</td>
+                <td class="p-4 text-center">
+                    <!-- 상품 삭제 폼 -->
+                    <form th:action="@{/cart/delete}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.indexId}" />
+                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

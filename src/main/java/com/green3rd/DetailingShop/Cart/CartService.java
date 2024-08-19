@@ -27,7 +27,7 @@ public class CartService {
     public void addCart(User user, String productId) {
         Integer intProductId = Integer.parseInt(productId);  // String -> Integer 변환
         Product product = productRepository.findById(intProductId)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
 
         Cart cart = cartRepository.findByUser(user).orElse(null);
         if (cart == null) {
@@ -44,5 +44,33 @@ public class CartService {
         // List<Product> products = cart.getProducts();  // 이 부분 불필요
         // products.add(product);  // 이 부분 제거
         cartRepository.save(cart);
+    }
+
+    // 장바구니 상품 수량 변경
+    public void updateCart(SiteUser user, String productId , int quantity) {
+        Integer intProductId = Integer.parseInt(productId);
+        Cart cart = cartRepository.findByUser(user).orElse(null);
+
+        if(cart != null && quantity > 0) {
+            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
+            for (int i = 0 ; i < quantity; i++) {
+                Product product = productRepository.findById(intProductId).orElseThrow(()->
+                        new IllegalArgumentException("상품을 찾을 수 없습니다."));
+                    cart.getProducts().add(product);
+            }
+            cartRepository.save(cart);
+        }
+    }
+
+    // 장바구니 상품 삭제
+    public void deleteCart(SiteUser user, String productId) {
+        Integer intProductId = Integer.parseInt(productId);
+        Cart cart = cartRepository.findByUser(user).orElse(null);
+
+        if(cart != null) {
+            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
+            cartRepository.save(cart);
+        }
+
     }
 }
