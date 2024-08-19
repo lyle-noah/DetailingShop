@@ -1,8 +1,11 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.User;
 
 import java.util.Optional;
 import java.util.UUID;
 
+import com.green3rd.DetailingShop.Security.UserNotFoundException;
+import com.green3rd.DetailingShop.UserPassword.PasswordResetToken;
+import com.green3rd.DetailingShop.UserPassword.PasswordResetTokenRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +18,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public SiteUser create(String username, String email, String password) {
-        SiteUser user = new SiteUser();
+    public User create(String username, String email, String password) {
+        User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
@@ -24,7 +27,7 @@ public class UserService {
         return user;
     }
 
-    public SiteUser getUser(String username) {
+    public User getUser(String username) {
         return userRepository.findByUsername(username)
             .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
@@ -45,7 +48,7 @@ public class UserService {
     public boolean resetPassword(String token, String newPassword) {
         return Optional.ofNullable(passwordResetTokenRepository.findByToken(token))
             .map(resetToken -> {
-                SiteUser user = resetToken.getUser();
+                User user = resetToken.getUser();
                 user.setPassword(passwordEncoder.encode(newPassword));
                 userRepository.save(user);
                 passwordResetTokenRepository.delete(resetToken);

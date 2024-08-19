@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.UserCreate;
 
 import lombok.Getter;
 

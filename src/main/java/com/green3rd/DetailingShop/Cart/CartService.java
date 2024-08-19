@@ -1,13 +1,11 @@
 package com.green3rd.DetailingShop.Cart;
 
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
+import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.ProductList.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-
-import java.util.List;
 
 @Service
 public class CartService {
@@ -21,12 +19,12 @@ public class CartService {
     }
 
     // 유저 장바구니 조회
-    public Cart getUser(SiteUser user) {
+    public Cart getUser(User user) {
         return cartRepository.findByUser(user).orElse(null);
     }
 
     // 장바구니 상품 추가
-    public void addCart(SiteUser user, String productId) {
+    public void addCart(User user, String productId) {
         Integer intProductId = Integer.parseInt(productId);  // String -> Integer 변환
         Product product = productRepository.findById(intProductId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));

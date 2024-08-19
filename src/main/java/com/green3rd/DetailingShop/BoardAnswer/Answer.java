@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.green3rd.DetailingShop.BoardQuestion.Question;
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
+import com.green3rd.DetailingShop.User.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,10 +33,10 @@ public class Answer {
 	private Question question;
 
 	@ManyToOne
-	private SiteUser author;
+	private User author;
 
 	private LocalDateTime modifyDate;
 
 	@ManyToMany
-	Set<SiteUser> voter;
+	Set<User> voter;
 }

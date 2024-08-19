@@ -1,7 +1,10 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.User;
 
 import java.util.List;
 
+import com.green3rd.DetailingShop.Security.UserNotFoundException;
+import com.green3rd.DetailingShop.UserCreate.UserCreateForm;
+import com.green3rd.DetailingShop.UserPassword.PasswordResetForm;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,7 +81,7 @@ public class UserController {
         }
 
         String username = authentication.getName();
-        SiteUser user;
+        User user;
         try {
             user = userService.getUser(username);
         } catch (UserNotFoundException e) {
@@ -103,7 +104,7 @@ public class UserController {
 
         String username = authentication.getName();
         logger.info("Authenticated username: {}", username);
-        SiteUser user;
+        User user;
         try {
             user = userService.getUser(username);
         } catch (UserNotFoundException e) {
@@ -116,17 +117,17 @@ public class UserController {
 
     @GetMapping("/reset_password")
     public String showResetPasswordForm(Model model) {
-        model.addAttribute("userResetPasswordForm", new UserResetPasswordForm());
+        model.addAttribute("userResetPasswordForm", new PasswordResetForm());
         return "login/password_reset_request_form";
     }
 
     @PostMapping("/reset_password")
-    public String processResetPassword(@Valid UserResetPasswordForm userResetPasswordForm, BindingResult bindingResult) {
+    public String processResetPassword(@Valid PasswordResetForm passwordResetForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "login/password_reset_request_form";
         }
 
-        String email = userResetPasswordForm.getEmail();
+        String email = passwordResetForm.getEmail();
         String token = userService.createPasswordResetToken(email);
         if (token == null) {
             bindingResult.rejectValue("email", "emailNotFound", "등록된 이메일이 아닙니다.");
@@ -157,14 +158,14 @@ public class UserController {
 
     @GetMapping("/reset_password_confirm")
     public String showResetPasswordConfirmForm(String token, Model model) {
-        UserResetPasswordForm form = new UserResetPasswordForm();
+        PasswordResetForm form = new PasswordResetForm();
         form.setToken(token);
         model.addAttribute("userResetPasswordForm", form);
         return "login/password_reset_form";
     }
 
     @PostMapping("/reset_password_confirm")
-    public String resetPasswordConfirm(@Valid UserResetPasswordForm form, BindingResult bindingResult) {
+    public String resetPasswordConfirm(@Valid PasswordResetForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "login/password_reset_form";
         }
@@ -187,7 +188,7 @@ public class UserController {
 
     @GetMapping("/testpage")
     public String siteuser(Model model) {
-        List<SiteUser> siteusersInfo = userRepository.findAll();
+        List<User> siteusersInfo = userRepository.findAll();
         if (siteusersInfo.size() > 2) {
             String username = siteusersInfo.get(2).getUsername();
             model.addAttribute("username", username);

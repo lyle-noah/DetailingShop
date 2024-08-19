@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.green3rd.DetailingShop.BoardAnswer.AnswerForm;
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
-import com.green3rd.DetailingShop.LoginUser.UserService;
+import com.green3rd.DetailingShop.User.User;
+import com.green3rd.DetailingShop.User.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -58,8 +58,8 @@ public class QuestionController {
 		if (bindingResult.hasErrors()) {
 			return "board/question_form";
 		}
-		SiteUser siteUser = this.userService.getUser(principal.getName());
-		this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
+		User user = this.userService.getUser(principal.getName());
+		this.questionService.create(questionForm.getSubject(), questionForm.getContent(), user);
 		return "redirect:/question/list"; // 질문 저장 후 질문 목록으로 이동
 	}
 
@@ -105,8 +105,8 @@ public class QuestionController {
 	@GetMapping("/vote/{id}")
 	public String questionVote(Principal principal, @PathVariable("id") Integer id) {
 		Question question = this.questionService.getQuestion(id);
-		SiteUser siteUser = this.userService.getUser(principal.getName());
-		this.questionService.vote(question, siteUser);
+		User user = this.userService.getUser(principal.getName());
+		this.questionService.vote(question, user);
 		return String.format("redirect:/question/detail/%s", id);
 	}
 }

@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.UserPassword;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

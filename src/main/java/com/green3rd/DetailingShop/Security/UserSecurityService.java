@@ -1,12 +1,14 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.Security;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.green3rd.DetailingShop.User.User;
+import com.green3rd.DetailingShop.User.UserRepository;
+import com.green3rd.DetailingShop.UserCreate.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,14 +25,14 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<SiteUser> _siteUser = this.userRepository.findByUsername(username);
+        Optional<User> _siteUser = this.userRepository.findByUsername(username);
         if (_siteUser.isEmpty()) {
             log.error("User not found with username: {}", username);
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
-        SiteUser siteUser = _siteUser.get();
-        log.info("User found with username: {}", siteUser.getUsername());
-        log.info("User password: {}", siteUser.getPassword());  // 추가된 로그
+        User user = _siteUser.get();
+        log.info("User found with username: {}", user.getUsername());
+        log.info("User password: {}", user.getPassword());  // 추가된 로그
         List<GrantedAuthority> authorities = new ArrayList<>();
         if ("admin".equals(username)) {
             authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
@@ -38,6 +40,6 @@ public class UserSecurityService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
         }
         log.info("User authorities: {}", authorities);  // 추가된 로그
-        return new User(siteUser.getUsername(), siteUser.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 }

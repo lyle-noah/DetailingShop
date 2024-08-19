@@ -1,7 +1,7 @@
 package com.green3rd.DetailingShop.Cart;
 
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
-import com.green3rd.DetailingShop.LoginUser.UserRepository;
+import com.green3rd.DetailingShop.User.User;
+import com.green3rd.DetailingShop.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.ArrayList;
-import com.green3rd.DetailingShop.ProductList.Product;
 
 @Controller
 public class CartController {
@@ -35,7 +34,7 @@ public class CartController {
         }
         // 로그인된 사용자의 이름 가져오기
         String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
             return "redirect:/login";  // 만약 사용자를 찾지 못한 경우 로그인 페이지로 리다이렉트
         }
@@ -56,7 +55,7 @@ public class CartController {
         // 인증된 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
             return "redirect:/login";  // 유저가 없으면 로그인 페이지로 리다이렉트
         }

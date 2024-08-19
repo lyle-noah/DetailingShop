@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.green3rd.DetailingShop.BoardAnswer.Answer;
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
+import com.green3rd.DetailingShop.User.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,12 +40,12 @@ public class Question {
 	private List<Answer> answerList;
 
 	@ManyToOne
-	private SiteUser author;
+	private User author;
 
 	private LocalDateTime modifyDate;
 
 	@ManyToMany
-	Set<SiteUser> voter;
+	Set<User> voter;
 //	조회 수
 	@NotNull
 	@Column(columnDefinition = "integer default 0")

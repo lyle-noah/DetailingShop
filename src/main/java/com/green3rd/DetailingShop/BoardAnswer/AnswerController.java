@@ -19,8 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.green3rd.DetailingShop.BoardQuestion.Question;
 import com.green3rd.DetailingShop.BoardQuestion.QuestionService;
-import com.green3rd.DetailingShop.LoginUser.SiteUser;
-import com.green3rd.DetailingShop.LoginUser.UserService;
+import com.green3rd.DetailingShop.User.User;
+import com.green3rd.DetailingShop.User.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,12 +51,12 @@ public class AnswerController {
     public String createAnswer(Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm,
             BindingResult bindingResult, Principal principal) {
         Question question = this.questionService.getQuestion(id);
-        SiteUser siteUser = this.getUserService().getUser(principal.getName());
+        User user = this.getUserService().getUser(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
             return "board/question_detail";
         }
-        Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
+        Answer answer = this.answerService.create(question, answerForm.getContent(), user);
         return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
     }
 
@@ -101,8 +101,8 @@ public class AnswerController {
     @GetMapping("/vote/{id}")
     public String answerVote(Principal principal, @PathVariable("id") Integer id) {
         Answer answer = this.answerService.getAnswer(id);
-        SiteUser siteUser = this.getUserService().getUser(principal.getName());
-        this.answerService.vote(answer, siteUser);
+        User user = this.getUserService().getUser(principal.getName());
+        this.answerService.vote(answer, user);
         return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
     }
 

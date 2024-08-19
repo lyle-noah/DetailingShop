@@ -1,5 +1,6 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.UserPassword;
 
+import com.green3rd.DetailingShop.User.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,5 +20,5 @@ public class PasswordResetToken {
     private String token;
 
     @ManyToOne
-    private SiteUser user;
+    private User user;
 }

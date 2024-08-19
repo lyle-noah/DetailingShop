@@ -1,4 +1,4 @@
-package com.green3rd.DetailingShop.LoginUser;
+package com.green3rd.DetailingShop.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @ToString
-public class SiteUser {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
