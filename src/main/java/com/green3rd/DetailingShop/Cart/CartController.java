@@ -31,13 +31,13 @@ public class CartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 인증되지 않았거나 로그인된 사용자가 없는 경우
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/login";  // 로그인 페이지로 리다이렉트
+            return "redirect:/login";
         }
         // 로그인된 사용자의 이름 가져오기
         String siteUsername = authentication.getName();
         SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
-            return "redirect:/login";  // 만약 사용자를 찾지 못한 경우 로그인 페이지로 리다이렉트
+            return "redirect:/login";
         }
         // 유저의 장바구니 가져오기
         Cart cart = cartService.getUser(user);
@@ -58,37 +58,36 @@ public class CartController {
         String siteUsername = authentication.getName();
         SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
-            return "redirect:/login";  // 유저가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/login";
         }
         // 장바구니에 상품 추가
         cartService.addCart(user,productId);
-        // 장바구니 페이지로 리다이렉트
         return "redirect:/cart";
     }
 
-//    // 장바구니 수량 변경
-//    @PostMapping("/cart/update")
-//    public String updateCart(@RequestParam String productId) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String siteUsername = authentication.getName();
-//        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
-//        if (user == null) {
-//            return  "redirect:/login";
-//        }
-//        cartService.updateCart(user,productId);
-//        return "redirect:/cart";
-//    }
+    // 장바구니 상품 수량 변경
+    @PostMapping("/cart/update")
+    public String updateCart(@RequestParam String productId, @RequestParam int quantity) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String siteUsername = authentication.getName();
+        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        if (user == null) {
+            return  "redirect:/login";
+        }
+        cartService.updateCart(user, productId, quantity);
+        return "redirect:/cart";
+    }
 
-//    // 장바구니 삭제
-//    @PostMapping("/cart/delete")
-//    public String deleteCart(@RequestParam String productId) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String siteUsername = authentication.getName();
-//        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
-//        if (user == null) {
-//            return "redirect:/login";
-//        }
-//        cartService.deleteCart(user,productId);
-//        return "redirect:/cart";
-//    }
+    // 장바구니 상품 삭제
+    @PostMapping("/cart/delete")
+    public String deleteCart(@RequestParam String productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String siteUsername = authentication.getName();
+        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        if (user == null) {
+            return "redirect:/login";
+        }
+        cartService.deleteCart(user,productId);
+        return "redirect:/cart";
+    }
 }
