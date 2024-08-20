@@ -44,8 +44,10 @@ public class CartController {
             cart = new Cart();
             cart.setProducts(new ArrayList<>());  // 빈 리스트로 초기화
         }
-        // 모델에 장바구니 추가
+
+        double totalPrice = cartService.totalPrice(cart);
         model.addAttribute("cart", cart);
+        model.addAttribute("totalPrice", totalPrice);
         return "cart/cart";
     }
 
@@ -66,10 +68,10 @@ public class CartController {
 
     // 장바구니 상품 수량 변경
     @PostMapping("/cart/update")
-    public String updateCart(@RequestParam String productId, @RequestParam int quantity) {
+    public String updateCart(@RequestParam String productId,int quantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        String Username = authentication.getName();
+        User user = userRepository.findByUsername(Username).orElse(null);
         if (user == null) {
             return  "redirect:/login";
         }
@@ -81,8 +83,8 @@ public class CartController {
     @PostMapping("/cart/delete")
     public String deleteCart(@RequestParam String productId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        String Username = authentication.getName();
+        User user = userRepository.findByUsername(Username).orElse(null);
         if (user == null) {
             return "redirect:/login";
         }

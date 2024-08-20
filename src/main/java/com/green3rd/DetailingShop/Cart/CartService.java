@@ -41,36 +41,48 @@ public class CartService {
         if (!cart.getProducts().contains(product)) {
             cart.getProducts().add(product);
         }
-        // List<Product> products = cart.getProducts();  // 이 부분 불필요
-        // products.add(product);  // 이 부분 제거
         cartRepository.save(cart);
     }
 
     // 장바구니 상품 수량 변경
-    public void updateCart(SiteUser user, String productId , int quantity) {
+    public void updateCart(User user, String productId, int quantity) {
         Integer intProductId = Integer.parseInt(productId);
         Cart cart = cartRepository.findByUser(user).orElse(null);
 
-        if(cart != null && quantity > 0) {
-            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
-            for (int i = 0 ; i < quantity; i++) {
-                Product product = productRepository.findById(intProductId).orElseThrow(()->
-                        new IllegalArgumentException("상품을 찾을 수 없습니다."));
-                    cart.getProducts().add(product);
+        if (cart != null) {
+            Product product = productRepository.findById(intProductId)
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+
+            // 현재 장바구니에서 해당 상품 제거
+            cart.getProducts().removeIf(product1 -> product1.getIndexId() == (intProductId));
+
+            // 수량만큼 상품을 다시 추가
+            for (int i = 0; i < quantity; i++) {
+                cart.getProducts().add(product);
             }
             cartRepository.save(cart);
         }
     }
 
     // 장바구니 상품 삭제
-    public void deleteCart(SiteUser user, String productId) {
+    public void deleteCart(User user, String productId) {
         Integer intProductId = Integer.parseInt(productId);
         Cart cart = cartRepository.findByUser(user).orElse(null);
 
-        if(cart != null) {
-            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
+        if (cart != null) {
+            // 해당 상품을 장바구니에서 모두 제거
+            cart.getProducts().removeIf(product -> product.getIndexId() == (intProductId));
             cartRepository.save(cart);
         }
+     }
 
+    // 장바구니 가격 계산
+    public double totalPrice(Cart cart) {
+        double totalPrice = 0;
+        for(Product product : cart.getProducts()) {
+            totalPrice += product.getProductPrice(); // 상품 가격을 총 가격에 추가
+        }
+        return totalPrice;
     }
 }
+
