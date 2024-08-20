@@ -61,7 +61,7 @@ public class CartService {
     }
 
     // 장바구니 상품 삭제
-    public void deleteCart(SiteUser user, String productId) {
+    public void deleteCart(User user, String productId) {
         Integer intProductId = Integer.parseInt(productId);
         Cart cart = cartRepository.findByUser(user).orElse(null);
 

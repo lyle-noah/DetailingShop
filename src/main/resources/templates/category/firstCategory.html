@@ -33,6 +33,7 @@
 				</a>
 				<div class="overlay">
 					<form th:action="@{/product/like/{indexId}(indexId=${infor.indexId})}" method="post">
+						<input type="hidden" name="redirectUrl" th:value="${currentUri}" />
 						<button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
 					</form>
 					<form th:action="@{/cart/add}" method="post">
