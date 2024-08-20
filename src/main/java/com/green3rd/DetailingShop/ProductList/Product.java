@@ -32,4 +32,7 @@ public class Product {
     private String formattedPrice; // 추가된 필드
 
     private boolean likeState = false;
+
+    //  수량 필드
+    private int quantity;
 }
