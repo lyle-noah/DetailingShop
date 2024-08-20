@@ -3,6 +3,8 @@ package com.green3rd.DetailingShop.ProductList;
 import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserRepository;
 import com.green3rd.DetailingShop.User.UserService;
+import com.green3rd.DetailingShop.UserLike.UserLikes;
+import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -26,8 +28,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final RequestCache requestCache = new HttpSessionRequestCache();
     private final UserService userService;
+    private final UserLikesRepository userLikesRepository;
 
     @GetMapping("/products")
     public String getProductByCategory(
@@ -37,7 +39,9 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String thirdCategory, // 세 번째 카테고리 필터
             @RequestParam(defaultValue = "0") int page,  // 페이지 번호 (기본값: 0)
             @RequestParam(defaultValue = "10") int size, // 페이지 크기 (기본값: 10)
-            Model model) { // 위 내용들을 뷰에 전달할 데이터 모델
+            Model model,
+            Principal principal,
+            HttpServletRequest request) { // 위 내용들을 뷰에 전달할 데이터 모델
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
         // DB에서 가격정보 포멧은 int형으로 단순 10000 이런식으로 표기되어있기에 원화표시의 포멧을 넣기위한 설정임.
@@ -63,6 +67,25 @@ public class ProductController {
         // 상품 수량 정보
         int totalProducts = (int) productsPage.getTotalElements();
 
+        // 로그인한 사용자의 likeState를 설정
+        if (principal != null) {
+            User user = userService.findByUsername(principal.getName());
+            for (Product product : products) {
+                UserLikes userLikes = userLikesRepository.findByUserAndProduct(user, product).orElse(null);
+                if (userLikes != null) {
+                    product.setLikeState(userLikes.isLikeState());
+                }
+                product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+            }
+        } else {
+            for (Product product : products) {
+                product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+            }
+        }
+
+        // 현재 URL 요청을 저장
+        String currentUri = request.getRequestURI();
+
         // 제품의 데이터를 모델에 전달
         model.addAttribute("productsInfor", products);
         model.addAttribute("firstCategoryName", firstCategory);
@@ -78,6 +101,10 @@ public class ProductController {
 
         // 제품의 수량 데이터를 모델에 전달
         model.addAttribute("totalProducts", totalProducts);
+
+        // 현재 요청 URI를 모델에 전달
+        model.addAttribute("currentUri", currentUri);
+
 
         if (!thirdCategory.isEmpty()) {
             return "category/thirdCategory";
@@ -116,15 +143,17 @@ public class ProductController {
 
         // 세션에 업데이트된 리스트 저장
         session.setAttribute("recentProducts", recentProducts);
-
         return "main/detail";
     }
 
     // 좋아요 버튼 기능
-    @PostMapping("/product/{id}/like")
-    public String likeProduct(@PathVariable("id") int indexId, Principal principal) {
+    @PostMapping("/product/like/{indexId}")
+    public String likeProduct(@PathVariable("indexId") int indexId,
+                              @RequestHeader(value = "Referer", required = false) String referer,
+                              Principal principal,
+                              Model model) {
         if (principal == null) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -134,6 +163,6 @@ public class ProductController {
             productService.toggleLike(user, product);
         }
 
-        return "redirect:/product/" + indexId;
+        return "redirect:" + (referer != null ? referer : "/products");
     }
 }

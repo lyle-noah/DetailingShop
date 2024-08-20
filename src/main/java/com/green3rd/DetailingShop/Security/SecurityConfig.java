@@ -32,8 +32,7 @@ public class SecurityConfig {
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
 
                 .formLogin((formLogin) -> formLogin.loginPage("/user/login")
-/*                        .defaultSuccessUrl("/user/mypage", true))*/
-                        .successHandler(new CustomAuthenticationSuccessHandler()))
+                        .successHandler(new CustomAuthenticationSuccessHandler())) // Custom 성공 처리 핸들러 설정
 
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))

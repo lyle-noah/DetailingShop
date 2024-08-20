@@ -2,6 +2,7 @@ package com.green3rd.DetailingShop.ProductList;
 
 import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserRepository;
+import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UserLikesRepository userLikesRepository;
+    private final UserService userService;
 
     public Page<Product> getProductsByCategory(String firstCategory, String secondCategory, String thirdCategory, int page, int size) {
         Pageable pageable = PageRequest.of(page, size); // 페이지네이션을 위한 Pageable 객체 생성
@@ -65,5 +69,18 @@ public class ProductService {
             newUserLike.setLikeState(true);
             userLikesRepository.save(newUserLike);
         }
+    }
+
+    public List<Product> getProductsWithLikeState(List<Product> products, Principal principal) {
+        if (principal != null) {
+            User user = userService.findByUsername(principal.getName());
+            for (Product product : products) {
+                UserLikes userLikes = userLikesRepository.findByUserAndProduct(user, product).orElse(null);
+                if (userLikes != null) {
+                    product.setLikeState(userLikes.isLikeState());
+                }
+            }
+        }
+        return products;
     }
 }

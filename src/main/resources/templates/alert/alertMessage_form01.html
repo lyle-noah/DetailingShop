@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>알림</title>
     <script type="text/javascript">
-        // 페이지가 로드되면 알림 메시지를 띄우고 지정된 URL로 이동합니다.
         window.onload = function() {
-            alert("[[${message}]]");
-            window.location = "[[${url}]]";
+            var userConfirmed = confirm("[[${message}]]");
+            if (userConfirmed) {
+                window.location.href = "[[${urlYes}]]";  // 로그인 페이지로 이동
+            } else {
+                window.location.href = "[[${urlNo}]]";   // 이전 페이지로 돌아감
+            }
         }
     </script>
 </head>
