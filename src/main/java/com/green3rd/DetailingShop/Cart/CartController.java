@@ -68,12 +68,16 @@ public class CartController {
 
     // 장바구니 상품 수량 변경
     @PostMapping("/cart/update")
-    public String updateCart(@RequestParam String productId,int quantity) {
+    public String updateCart(@RequestParam String productId, @RequestParam int quantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String Username = authentication.getName();
         User user = userRepository.findByUsername(Username).orElse(null);
         if (user == null) {
             return  "redirect:/login";
+        }
+        if (quantity <= 0) {
+            // 유효하지 않은 수량 처리
+            return "redirect:/cart?error=invalid_quantity";
         }
         cartService.updateCart(user, productId, quantity);
         return "redirect:/cart";
@@ -88,7 +92,7 @@ public class CartController {
         if (user == null) {
             return "redirect:/login";
         }
-        cartService.deleteCart(user,productId);
+        cartService.deleteCart(user, productId);
         return "redirect:/cart";
     }
 }

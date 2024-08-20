@@ -50,11 +50,12 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user).orElse(null);
 
         if(cart != null && quantity > 0) {
-            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
+            cart.getProducts().removeIf(product -> product.getProductId().equals(intProductId));
             for (int i = 0 ; i < quantity; i++) {
-                Product product = productRepository.findById(intProductId).orElseThrow(()->
-                        new IllegalArgumentException("상품을 찾을 수 없습니다."));
-                    cart.getProducts().add(product);
+                Product product = productRepository.findById(intProductId)
+                        .orElseThrow(()->
+                                new IllegalArgumentException("상품을 찾을 수 없습니다."));
+                cart.getProducts().add(product);
             }
             cartRepository.save(cart);
         }
@@ -66,18 +67,17 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user).orElse(null);
 
         if(cart != null) {
-            cart.getProducts().removeIf(product -> product.getProductName().equals(intProductId));
+            cart.getProducts().removeIf(product -> product.getIndexId() == (intProductId));
             cartRepository.save(cart);
         }
-     }
+    }
 
     // 장바구니 가격 계산
     public double totalPrice(Cart cart) {
         double totalPrice = 0;
-        for(Product product : cart.getProducts()) {
+        for (Product product : cart.getProducts()) {
             totalPrice += product.getProductPrice(); // 상품 가격을 총 가격에 추가
         }
         return totalPrice;
     }
 }
-
