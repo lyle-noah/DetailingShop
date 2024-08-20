@@ -1,5 +1,8 @@
 package com.green3rd.DetailingShop.ProductList;
 
+import com.green3rd.DetailingShop.User.User;
+import com.green3rd.DetailingShop.User.UserRepository;
+import com.green3rd.DetailingShop.User.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.LinkedList; // 추가된 import
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final RequestCache requestCache = new HttpSessionRequestCache();
+    private final UserService userService;
 
     @GetMapping("/products")
     public String getProductByCategory(
@@ -116,23 +121,19 @@ public class ProductController {
     }
 
     // 좋아요 버튼 기능
-    @PostMapping("/product/like/{indexId}")
-    public String toggleLike(@PathVariable int indexId,
-                             @RequestHeader("Referer") String referer,
-                             HttpServletRequest request, HttpServletResponse response,
-                             Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth == null || auth.getName().equals("anonymousUser")) {
-            // 사용자가 로그인하지 않은 경우, 요청 URL을 세션에 저장
-            requestCache.saveRequest(request, response);
-            model.addAttribute("message", "로그인 후 관심상품에 등록해주세요");
-            model.addAttribute("url", "/user/login");
-            return "alert/alertMessage_form01";
+    @PostMapping("/product/{id}/like")
+    public String likeProduct(@PathVariable("id") int indexId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
         }
 
-        // 사용자가 로그인된 상태일 경우 좋아요 상태를 토글
-        productService.toggleLikeState(indexId);
-        return "redirect:" + referer;
+        User user = userService.findByUsername(principal.getName());
+        Product product = productService.findByIndexId(indexId);
+
+        if (user != null && product != null) {
+            productService.toggleLike(user, product);
+        }
+
+        return "redirect:/product/" + indexId;
     }
 }

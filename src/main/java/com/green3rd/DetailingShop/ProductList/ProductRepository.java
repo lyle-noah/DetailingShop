@@ -6,6 +6,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.Optional;
+
 
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 
@@ -21,4 +23,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
 
     // 검색페이지 페이지네이션 적용
     Page<Product> findAll(Specification<Product> spec, Pageable pageable);
+
+    Optional<Product> findByIndexId(int indexId);
 }
