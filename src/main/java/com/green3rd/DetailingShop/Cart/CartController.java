@@ -69,7 +69,7 @@ public class CartController {
     public String updateCart(@RequestParam String productId, @RequestParam int quantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
             return  "redirect:/login";
         }
@@ -82,7 +82,7 @@ public class CartController {
     public String deleteCart(@RequestParam String productId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String siteUsername = authentication.getName();
-        SiteUser user = userRepository.findByUsername(siteUsername).orElse(null);
+        User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
             return "redirect:/login";
         }

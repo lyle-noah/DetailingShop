@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 
 	@Column(length = 200)
 	private String subject;
