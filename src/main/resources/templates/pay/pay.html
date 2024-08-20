@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <!-- 기존 스타일시트들 -->
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/category_form01.css">
+    <link rel="stylesheet" href="/css/pagination_form01.css">
+    <link rel="stylesheet" href="/css/itemCount_form01.css">
+    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kNV+cu5Fq4+6X2Zw1Qj3gI6F1F1+6g5dQ0Xl+S0GqT1xX9f7sB7v6R1V5xgVjQjXjC6V7PZ6nY6w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-100">
+
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- Header -->
+<div th:replace="~{header/header.html :: header}"></div>
+
+<!-- 결제 화면 -->
+<main class="py-12">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-lg">
+        <div class="md:flex">
+            <div class="w-full p-4 px-5 py-5">
+                <div class="mb-4">
+                    <h1 class="text-2xl font-bold text-gray-800">결제 정보</h1>
+                    <p class="text-sm text-gray-500">안전하고 빠른 결제를 위해 정보를 입력해주세요.</p>
+                </div>
+                <form th:action="@{/checkout/process}" method="post">
+                    <div class="grid grid-cols-6 gap-4">
+                        <div class="col-span-6">
+                            <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">카드 번호</label>
+                            <div class="relative">
+                                <input type="text" id="cardNumber" name="cardNumber" placeholder="**** **** **** ****" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
+                                <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <label for="cardExpiry" class="block text-sm font-medium text-gray-700 mb-1">만료일</label>
+                            <div class="relative">
+                                <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
+                                <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <label for="cardCVC" class="block text-sm font-medium text-gray-700 mb-1">CVC 코드</label>
+                            <div class="relative">
+                                <input type="text" id="cardCVC" name="cardCVC" placeholder="***" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
+                                <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-6 mt-4">
+                            <button type="submit" class="w-full py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition duration-300">
+                                💳 결제하기
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{footer/footer.html :: footer}"></div>
+
+<!-- 스크립트 파일들 -->
+<script src="/js/header.js"></script>
+<script src="/js/dropDown_form01.js"></script>
+<script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
+</body>
+</html>
