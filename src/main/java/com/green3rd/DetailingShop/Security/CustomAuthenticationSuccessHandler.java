@@ -11,6 +11,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -31,6 +32,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String redirectUrl = request.getParameter("redirectUrl");
         String targetUrl = request.getParameter("targetUrl");
         SavedRequest savedRequest = requestCache.getRequest(request, response);
+
+        // 로그로 redirectUrl 출력하여 확인
+        System.out.println("Redirecting to redirectUrl: " + redirectUrl);
 
         if (redirectUrl != null && !redirectUrl.isEmpty()) {
             // redirectUrl이 존재하면 우선적으로 처리
@@ -55,7 +59,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     private String encodeRedirectUrl(String url) throws UnsupportedEncodingException {
         String baseUrl = url.split("\\?")[0];  // /products 부분
-        String query = url.split("\\?").length > 1 ? url.split("\\?")[1] : "";  // firstCategory=외부관리 부분
+        String query = url.split("\\?").length > 1 ? url.split("\\?")[1] : "";  // 쿼리 파라미터 부분
 
         if (!query.isEmpty()) {
             String[] params = query.split("&");
@@ -64,7 +68,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             for (String param : params) {
                 String[] keyValue = param.split("=");
                 String key = keyValue[0];
-                String value = URLEncoder.encode(keyValue[1], StandardCharsets.UTF_8.toString());
+                String value = keyValue[1];
+
+                // value가 이미 인코딩된 경우 이를 다시 디코딩하여 중복 인코딩 방지
+                value = URLDecoder.decode(value, StandardCharsets.UTF_8.toString());
+
+                // 다시 인코딩
+                value = URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+
                 encodedParams.append(key).append("=").append(value).append("&");
             }
 
@@ -74,7 +85,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
             return baseUrl + "?" + encodedParams.toString();
         }
-
         return baseUrl;
     }
 }
