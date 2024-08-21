@@ -10,6 +10,10 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,33 +27,54 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // 로그인 페이지에서 전달된 targetUrl 파라미터를 가져옵니다.
+        // redirectUrl, targetUrl, SavedRequest를 처리
+        String redirectUrl = request.getParameter("redirectUrl");
         String targetUrl = request.getParameter("targetUrl");
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-        if (targetUrl == null) {
-            logger.warn("targetUrl is null");
-        } else {
-            logger.info("Received targetUrl: " + targetUrl);
-        }
-
-        // targetUrl이 존재하고, 값이 비어 있지 않으면 해당 URL로 리다이렉트합니다.
-        if (targetUrl != null && !targetUrl.isEmpty()) {
+        if (redirectUrl != null && !redirectUrl.isEmpty()) {
+            // redirectUrl이 존재하면 우선적으로 처리
+            String encodedRedirectUrl = encodeRedirectUrl(redirectUrl);
+            logger.info("Redirecting to encoded redirectUrl: " + encodedRedirectUrl);
+            response.sendRedirect(encodedRedirectUrl);
+        } else if (savedRequest != null) {
+            // SavedRequest가 존재하면 해당 URL로 리다이렉트
+            String savedRequestUrl = savedRequest.getRedirectUrl();
+            logger.info("Redirecting to SavedRequest URL: " + savedRequestUrl);
+            response.sendRedirect(savedRequestUrl);
+        } else if (targetUrl != null && !targetUrl.isEmpty()) {
+            // targetUrl이 존재하면 해당 URL로 리다이렉트
             logger.info("Redirecting to targetUrl: " + targetUrl);
             response.sendRedirect(targetUrl);
-            return;
+        } else {
+            // 아무런 URL도 없으면 기본 URL로 리다이렉트
+            logger.info("Redirecting to default URL: /");
+            response.sendRedirect("/");
+        }
+    }
+
+    private String encodeRedirectUrl(String url) throws UnsupportedEncodingException {
+        String baseUrl = url.split("\\?")[0];  // /products 부분
+        String query = url.split("\\?").length > 1 ? url.split("\\?")[1] : "";  // firstCategory=외부관리 부분
+
+        if (!query.isEmpty()) {
+            String[] params = query.split("&");
+            StringBuilder encodedParams = new StringBuilder();
+
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = URLEncoder.encode(keyValue[1], StandardCharsets.UTF_8.toString());
+                encodedParams.append(key).append("=").append(value).append("&");
+            }
+
+            if (encodedParams.length() > 0) {
+                encodedParams.deleteCharAt(encodedParams.length() - 1);  // 마지막 & 제거
+            }
+
+            return baseUrl + "?" + encodedParams.toString();
         }
 
-        // targetUrl이 없으면, SavedRequest에서 리다이렉트할 URL을 가져옵니다.
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        if (savedRequest != null) {
-            targetUrl = savedRequest.getRedirectUrl();
-            logger.info("Redirecting to SavedRequest URL: " + targetUrl);
-            response.sendRedirect(targetUrl);
-            return;
-        }
-
-        // SavedRequest도 없으면, 기본 URL인 "/"로 리다이렉트합니다.
-        logger.info("Redirecting to default URL: /");
-        response.sendRedirect("/");
+        return baseUrl;
     }
 }

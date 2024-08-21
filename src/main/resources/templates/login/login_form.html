@@ -109,8 +109,9 @@
 <div class="login-container">
   <h2>로그인</h2>
   <form th:action="@{/user/login}" method="post">
-    <!-- targetUrl을 숨겨진 필드로 추가 -->
+    <!-- targetUrl과 redirectUrl을 숨겨진 필드로 추가 -->
     <input type="hidden" name="targetUrl" th:value="${param.targetUrl}">
+    <input type="hidden" name="redirectUrl" th:value="${param.redirectUrl}">
 
     <div th:if="${param.error}">
       <div class="alert" role="alert">
