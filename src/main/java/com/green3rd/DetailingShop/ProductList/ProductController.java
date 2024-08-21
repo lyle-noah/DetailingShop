@@ -83,8 +83,8 @@ public class ProductController {
             }
         }
 
-        // 현재 URL 요청을 저장
-        String currentUri = request.getRequestURI();
+        // 현재 URL 요청을 저장, 쿼리 파라미터까지 포함하여 전체 URL을 저장
+        String currentUri = request.getRequestURI() + "?" + request.getQueryString();
 
         // 제품의 데이터를 모델에 전달
         model.addAttribute("productsInfor", products);
@@ -105,7 +105,7 @@ public class ProductController {
         // 현재 요청 URI를 모델에 전달
         model.addAttribute("currentUri", currentUri);
 
-
+        // View 선택
         if (!thirdCategory.isEmpty()) {
             return "category/thirdCategory";
         } else if (!secondCategory.isEmpty()) {
@@ -148,14 +148,21 @@ public class ProductController {
 
     // 좋아요 버튼 기능
     @PostMapping("/product/like/{indexId}")
-    public String likeProduct(@PathVariable("indexId") int indexId,
-                              @RequestHeader(value = "Referer", required = false) String referer,
+    public String likeProduct(@PathVariable int indexId,
+                              @RequestParam("redirectUrl") String redirectUrl,
                               Principal principal,
                               Model model) {
         if (principal == null) {
-            return "redirect:/user/login";
+            // 로그인하지 않은 경우
+            model.addAttribute("message", "로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");
+            model.addAttribute("urlYes", "/user/login?redirectUrl=" + redirectUrl);
+            model.addAttribute("urlNo", redirectUrl); // 취소시 원래 페이지로 돌아가기
+
+            // 알림 팝업 페이지로 이동
+            return "alert/alertMessage_form01";
         }
 
+        // 로그인한 경우 좋아요 처리 로직
         User user = userService.findByUsername(principal.getName());
         Product product = productService.findByIndexId(indexId);
 
@@ -163,6 +170,7 @@ public class ProductController {
             productService.toggleLike(user, product);
         }
 
-        return "redirect:" + (referer != null ? referer : "/products");
+        // 좋아요 버튼을 눌렀던 페이지로 리다이렉트
+        return "redirect:" + redirectUrl;
     }
 }
