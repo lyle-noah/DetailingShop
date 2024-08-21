@@ -1,7 +1,6 @@
 package com.green3rd.DetailingShop.ProductList;
 
 import com.green3rd.DetailingShop.User.User;
-import com.green3rd.DetailingShop.User.UserRepository;
 import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
@@ -11,9 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -55,6 +52,7 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product Index Id:" + indexId));
     }
 
+    // 좋아요 버튼의 동작을 수집하고 DB에 저장.
     public void toggleLike(User user, Product product) {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndProduct(user, product);
 
@@ -71,16 +69,8 @@ public class ProductService {
         }
     }
 
-    public List<Product> getProductsWithLikeState(List<Product> products, Principal principal) {
-        if (principal != null) {
-            User user = userService.findByUsername(principal.getName());
-            for (Product product : products) {
-                UserLikes userLikes = userLikesRepository.findByUserAndProduct(user, product).orElse(null);
-                if (userLikes != null) {
-                    product.setLikeState(userLikes.isLikeState());
-                }
-            }
-        }
-        return products;
+    // 사용자들이 누른 좋아요 수 세기.
+    public int getLikesCountForProduct(int productIndexId) {
+        return userLikesRepository.countByProductIndexIdAndLikeState(productIndexId, true);
     }
 }

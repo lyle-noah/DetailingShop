@@ -111,6 +111,17 @@ h1 {
     color: black;
 }
 
+/* 좋아요 숫자 */
+.likes-count {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
 /* 제품 정보 */
 .product-info {
     padding: 16px;

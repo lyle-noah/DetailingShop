@@ -1,26 +1,22 @@
 package com.green3rd.DetailingShop.ProductList;
 
 import com.green3rd.DetailingShop.User.User;
-import com.green3rd.DetailingShop.User.UserRepository;
 import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import jakarta.servlet.http.HttpSession; // 추가된 import
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.LinkedList; // 추가된 import
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -44,6 +40,7 @@ public class ProductController {
             HttpServletRequest request) { // 위 내용들을 뷰에 전달할 데이터 모델
 
         Page<Product> productsPage = productService.getProductsByCategory(firstCategory, secondCategory, thirdCategory, page, size);
+
         // DB에서 가격정보 포멧은 int형으로 단순 10000 이런식으로 표기되어있기에 원화표시의 포멧을 넣기위한 설정임.
         productsPage.forEach(product -> product.setFormattedPrice(productService.formatPrice(product.getProductPrice())));
 
@@ -84,7 +81,24 @@ public class ProductController {
         }
 
         // 현재 URL 요청을 저장, 쿼리 파라미터까지 포함하여 전체 URL을 저장
-        String currentUri = request.getRequestURI() + "?" + request.getQueryString();
+        StringBuilder currentUriBuilder = new StringBuilder(request.getRequestURL().toString());
+
+        if (request.getQueryString() != null) {
+            currentUriBuilder.append("?").append(request.getQueryString());
+        }
+
+        String currentUri = currentUriBuilder.toString();
+
+        // 로그로 확인
+        System.out.println("Current URI: " + currentUri);
+
+        // 각 상품의 좋아요 수를 계산하여 모델에 추가
+        Map<Integer, Integer> likesCountMap = new HashMap<>();
+        for (Product product : products) {
+            int indexId = product.getIndexId(); // 적절한 메서드로 변경
+            int likesCount = productService.getLikesCountForProduct(indexId);
+            likesCountMap.put(indexId, likesCount);
+        }
 
         // 제품의 데이터를 모델에 전달
         model.addAttribute("productsInfor", products);
@@ -104,6 +118,9 @@ public class ProductController {
 
         // 현재 요청 URI를 모델에 전달
         model.addAttribute("currentUri", currentUri);
+
+        // 좋아요 카운트 수를 모델에 전달
+        model.addAttribute("likesCountMap", likesCountMap);
 
         // View 선택
         if (!thirdCategory.isEmpty()) {

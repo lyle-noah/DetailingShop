@@ -33,7 +33,10 @@
 					<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
 				</a>
 				<div class="overlay">
-					<button class="btn">WISH</button>
+                    <form th:action="@{/product/like/{indexId}(indexId=${infor.indexId})}" method="post">
+                        <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
+                        <button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
+                    </form>
 <!--                    <form th:action="@{/cart/add}" method="post">-->
 <!--                        <input type="hidden" name="productId" th:value="${infor.indexId}" />-->
 <!--                        <input type="hidden" name="userId" th:value="${userId}" />-->

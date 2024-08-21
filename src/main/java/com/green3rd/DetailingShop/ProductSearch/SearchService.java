@@ -19,10 +19,4 @@ public class SearchService {
     public Page<Product> searchProducts(String query, Pageable pageable) {
         return productRepository.findAll(ProductSpecification.containsTextInProductFields(query), pageable);
     }
-
-    /* 제품 가격타입(ex.2000) -> (ex.2,000원) 변경 변수*/
-    public String formatPrice(int price) {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
-        return currencyFormat.format(price);
-    }
 }
