@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -28,4 +27,8 @@ public class User {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<UserLikes> likes;
+
+	// 새로운 필드 추가
+	private String securityQuestion;
+	private String securityAnswer;
 }

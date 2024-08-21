@@ -22,4 +22,11 @@ public class UserCreateForm {
     @NotEmpty(message = "이메일은 필수 항목입니다.")
     @Email
     private String email;
+
+    // 새로운 필드 추가
+    @NotEmpty(message = "보안 질문은 필수 항목입니다.")
+    private String securityQuestion;
+
+    @NotEmpty(message = "보안 질문의 답은 필수 항목입니다.")
+    private String securityAnswer;
 }

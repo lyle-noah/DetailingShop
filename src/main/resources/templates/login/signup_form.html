@@ -115,6 +115,14 @@
             <input type="email" th:field="*{email}" placeholder="이메일을 입력하세요">
         </div>
         <div>
+            <label for="securityQuestion">보안 질문</label>
+            <input type="text" th:field="*{securityQuestion}" placeholder="보안 질문을 입력하세요">
+        </div>
+        <div>
+            <label for="securityAnswer">보안 질문 답변</label>
+            <input type="text" th:field="*{securityAnswer}" placeholder="보안 질문의 답을 입력하세요">
+        </div>
+        <div>
             <button type="submit">회원가입</button>
         </div>
     </form>

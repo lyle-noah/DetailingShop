@@ -20,18 +20,25 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() // 전체페이지 접근 허용
+        http
+                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                        .requestMatchers(new AntPathRequestMatcher("/user/forgot-password")).permitAll() // 비밀번호 재설정 경로 접근 허용
+                        .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // H2 콘솔 접근 허용
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() // 전체 페이지 접근 허용
                         .anyRequest().authenticated()) // 그 외의 경로는 인증 필요
 
-                .csrf((csrf) -> csrf.ignoringRequestMatchers(
-                        new AntPathRequestMatcher("/h2-console/**"),
-                        new AntPathRequestMatcher("/user/logout")))
+                .csrf((csrf) -> csrf
+                        .ignoringRequestMatchers(
+                                new AntPathRequestMatcher("/h2-console/**"),
+                                new AntPathRequestMatcher("/user/logout"),
+                                new AntPathRequestMatcher("/user/forgot-password") // 비밀번호 재설정 경로에 대해 CSRF 비활성화
+                        ))
 
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
 
-                .formLogin((formLogin) -> formLogin.loginPage("/user/login")
+                .formLogin((formLogin) -> formLogin
+                        .loginPage("/user/login")
                         .successHandler(new CustomAuthenticationSuccessHandler())) // Custom 성공 처리 핸들러 설정
 
                 .logout((logout) -> logout

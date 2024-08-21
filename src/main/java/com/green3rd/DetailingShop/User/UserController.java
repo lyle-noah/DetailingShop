@@ -14,10 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -49,7 +46,13 @@ public class UserController {
         }
 
         try {
-            userService.create(userCreateForm.getUsername());
+            userService.create(
+                    userCreateForm.getUsername(),
+                    userCreateForm.getPassword1(),
+                    userCreateForm.getEmail(),
+                    userCreateForm.getSecurityQuestion(),
+                    userCreateForm.getSecurityAnswer()
+            );
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
@@ -61,6 +64,7 @@ public class UserController {
         }
         return "redirect:/user/mypage";
     }
+
 
     @GetMapping("/login")
     public String login() {
@@ -109,6 +113,37 @@ public class UserController {
         return "mypage/mypage";
     }
 
+    @GetMapping("/forgot-password")
+    public String forgotPasswordForm(@RequestParam(required = false) String username, Model model) {
+        if (username != null) {
+            try {
+                User user = userService.getUser(username);
+                model.addAttribute("securityQuestion", user.getSecurityQuestion());
+                model.addAttribute("username", username);
+            } catch (UserNotFoundException e) {
+                // 여기에서 에러 메시지를 모델에 추가
+                model.addAttribute("error", "등록되어 있지 않은 아이디입니다.");
+            }
+        }
+        return "login/forgot_password_form";
+    }
+
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam String username,
+                                 @RequestParam String securityAnswer,
+                                 @RequestParam String newPassword,
+                                 Model model) {
+        if (userService.checkSecurityAnswer(username, securityAnswer)) {
+            userService.resetPassword(username, newPassword);
+            return "redirect:/user/login";
+        } else {
+            model.addAttribute("error", "올바르지 않은 답입니다.");
+            model.addAttribute("securityQuestion", userService.getUser(username).getSecurityQuestion());
+            model.addAttribute("username", username);
+            return "login/forgot_password_form";
+        }
+    }
+
     @GetMapping("/testpage")
     public String siteuser(Model model) {
         List<User> siteusersInfo = userRepository.findAll();
@@ -121,14 +156,6 @@ public class UserController {
         }
         return "header/testpage";
     }
-
-    /*
-     * @GetMapping("/logout") public String logout(HttpServletRequest request,
-     * HttpServletResponse response) { Authentication authentication =
-     * SecurityContextHolder.getContext().getAuthentication(); if (authentication !=
-     * null) { new SecurityContextLogoutHandler().logout(request, response,
-     * authentication); } return "redirect:/user/login"; }
-     */
 
     @Autowired
     private HttpServletRequest request;
