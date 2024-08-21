@@ -31,13 +31,13 @@ public class CartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 인증되지 않았거나 로그인된 사용자가 없는 경우
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
         // 로그인된 사용자의 이름 가져오기
         String siteUsername = authentication.getName();
         User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
         // 유저의 장바구니 가져오기
         Cart cart = cartService.getUser(user);
@@ -60,7 +60,7 @@ public class CartController {
         String siteUsername = authentication.getName();
         User user = userRepository.findByUsername(siteUsername).orElse(null);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
         // 장바구니에 상품 추가
         cartService.addCart(user,productId);
@@ -74,7 +74,7 @@ public class CartController {
         String Username = authentication.getName();
         User user = userRepository.findByUsername(Username).orElse(null);
         if (user == null) {
-            return  "redirect:/login";
+            return  "redirect:/user/login";
         }
         if (quantity <= 0) {
             // 유효하지 않은 수량 처리
@@ -91,7 +91,7 @@ public class CartController {
         String Username = authentication.getName();
         User user = userRepository.findByUsername(Username).orElse(null);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
         cartService.deleteCart(user, productId);
         return "redirect:/cart";
