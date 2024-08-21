@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="/css/itemCount_form01.css">
 	<link rel="stylesheet" href="/css/mobileMenu_form01.css">
 	<link rel="stylesheet" href="/css/search_form01.css">
+	<link rel="stylesheet" href="/css/modal.css">
 </head>
 <body class="bg-gray-100">
 <!-- 검색 모달 -->
@@ -35,7 +36,11 @@
                     <form th:action="@{/product/like/{indexId}(indexId=@{${infor.indexId}})}" method="post">
                         <button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
                     </form>
-					<form th:action="@{/cart/add}" method="post">
+<!--					<form th:action="@{/cart/add}" method="post">-->
+<!--						<input type="hidden" name="productId" th:value="${infor.indexId}" />-->
+<!--						<input type="hidden" name="userId" th:value="${userId}" />-->
+<!--						<button type="submit" class="btn">ADD</button>-->
+					<form th:action="@{/cart/add}" method="post" class="add-to-cart-form">
 						<input type="hidden" name="productId" th:value="${infor.indexId}" />
 						<input type="hidden" name="userId" th:value="${userId}" />
 						<button type="submit" class="btn">ADD</button>
@@ -54,9 +59,21 @@
 
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
+
+<!-- Modal -->
+<div id="cart-modal" class="modal hidden">
+	<div class="modal-content">
+		<span class="close-button">&times;</span>
+		<p>상품이 장바구니에 추가되었습니다.</p>
+		<button class="btn" id="go-to-cart">장바구니로 이동</button>
+		<button class="btn continue-shopping-button">쇼핑 계속하기</button>
+	</div>
+</div>
+
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
+<script src="/js/modal.js"></script>
 </body>
 </html>
