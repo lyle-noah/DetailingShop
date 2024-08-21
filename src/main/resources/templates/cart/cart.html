@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/itemCount_form01.css">
     <link rel="stylesheet" href="/css/mobileMenu_form01.css">
     <link rel="stylesheet" href="/css/search_form01.css">
+    <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body class="bg-gray-100">
 
@@ -38,21 +39,28 @@
                 <th class="p-4 text-left">상품명</th>
                 <th class="p-4 text-right">가격 (KRW)</th>
                 <th class="p-4 text-center">수량</th>
-                <th class="p-4 text-center">액션</th>
+                <th class="p-4 text-center">삭제</th>
             </tr>
             </thead>
             <tbody>
+            <!-- 전체 선택 체크박스 -->
+            <tr>
+                <td colspan="5" class="p-4 text-left">
+                    <input type="checkbox" id="select-all" class="mr-2"> 전체 선택
+                </td>
+            </tr>
             <tr th:each="product : ${cart.products}" class="border-b border-gray-200 hover:bg-gray-100">
                 <td class="p-4">
+                    <!-- 각 상품별 체크박스 -->
+                    <input type="checkbox" name="productCheckbox" class="mr-2">
                     <img th:src="@{${product.imgurl}}" alt="Product Image" class="w-20 h-auto rounded"/>
                 </td>
                 <td class="p-4" th:text="${product.productName}">Product Name</td>
                 <td class="p-4 text-right text-blue-600 font-bold" th:text="'₩' + ${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')}">Price</td>
                 <td class="p-4 text-center">
-                    <!-- 상품 수량 변경 폼 -->
                     <form th:action="@{/cart/update}" method="post">
                         <input type="hidden" name="productId" th:value="${product.indexId}" />
-                        <input type="number" name="quantity" th:value="${product.quantity}" min="1" class="w-16 p-2 border rounded text-center"/> <!-- 수량 변경 창 크기 조절 -->
+                        <input type="number" name="quantity" th:value="${product.quantity}" min="1" class="w-16 p-2 border rounded text-center"/>
                     </form>
                 </td>
                 <td class="p-4 text-center">
@@ -96,5 +104,17 @@
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
+
+<!-- 전체 선택 기능 스크립트 -->
+<script>
+    // 전체 선택 기능
+    document.getElementById('select-all').addEventListener('change', function(e) {
+        const checkboxes = document.querySelectorAll('input[name="productCheckbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = e.target.checked;
+        });
+    });
+</script>
+
 </body>
 </html>
