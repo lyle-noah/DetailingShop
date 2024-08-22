@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-    @Controller
-    public class CartController {
+@Controller
+public class CartController {
     private final UserRepository userRepository;
     private final CartService cartService;
 
@@ -74,24 +74,24 @@ import java.util.Map;
     @PostMapping("/cart/update")
     @ResponseBody
     public Map<String, Object> updateCart(@RequestParam String productId, @RequestParam int quantity) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String username = authentication.getName();
-    User user = userRepository.findByUsername(username).orElse(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username).orElse(null);
 
-    if (user == null) {
-        throw new RuntimeException("사용자를 찾을 수 없습니다.");
-    }
-    if (quantity <= 0) {
-        return Map.of("error", "Invalid quantity");
-    }
-    cartService.updateCart(user, productId, quantity);
-    Cart cart = cartService.getUser(user);
-    double totalPrice = cartService.totalPrice(cart);
+        if (user == null) {
+            throw new RuntimeException("사용자를 찾을 수 없습니다.");
+        }
+        if (quantity <= 0) {
+            return Map.of("error", "Invalid quantity");
+        }
+        cartService.updateCart(user, productId, quantity);
+        Cart cart = cartService.getUser(user);
+        double totalPrice = cartService.totalPrice(cart);
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("totalPrice", totalPrice);
-    return response;
-}
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalPrice", totalPrice);
+        return response;
+    }
 
     // 장바구니 상품 삭제
     @PostMapping("/cart/delete")
