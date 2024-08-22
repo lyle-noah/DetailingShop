@@ -29,9 +29,17 @@
     <!-- Product Details Section -->
     <div class="flex flex-col lg:flex-row items-start lg:items-start space-y-8 lg:space-y-0 lg:space-x-16">
         <!-- Product Image -->
-        <div class="w-full lg:w-1/2">
-            <img th:src="@{${product.imgurl}}" alt="Product Image" class="rounded-lg shadow-lg w-full">
+        <div class="w-full lg:w-1/2 relative">
+            <img id="mainImage" th:src="@{${product.imgurl}}" alt="Product Image" class="rounded-lg shadow-lg w-full">
             <p class="mt-2 text-center text-sm text-gray-500">🔍 마우스를 올려보세요.</p>
+
+            <!-- 줌 렌즈 -->
+            <div id="zoomLens"></div>
+
+            <!-- 확대된 이미지 컨테이너 -->
+            <div id="zoomedImageContainer">
+                <img id="zoomedImage" src="" alt="Zoomed Image">
+            </div>
         </div>
 
         <!-- Product Info -->
@@ -84,58 +92,14 @@
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
-<script>
-    // 요소 선택
-    const quantityInput = document.getElementById('quantity');
-    const minusButton = quantityInput.previousElementSibling;
-    const plusButton = quantityInput.nextElementSibling;
-    const totalPriceElement = document.querySelector('.text-2xl.font-bold.text-gray-900 span');
-    const unitPrice = parseFloat(document.querySelector('.text-3xl.font-bold.text-gray-900').textContent.replace(/[^0-9.-]+/g,""));
-
-    // 수량 변경 시 총 가격 업데이트 함수
-    function updateTotalPrice() {
-        const quantity = parseInt(quantityInput.value);
-        const totalPrice = (unitPrice * quantity).toLocaleString();  // 총 가격 계산 및 포맷팅
-        totalPriceElement.textContent = `₩${totalPrice}`;
-    }
-
-    // 마이너스 버튼 클릭 이벤트
-    minusButton.addEventListener('click', () => {
-        let quantity = parseInt(quantityInput.value);
-        if (quantity > 1) {
-            quantityInput.value = quantity - 1;
-            updateTotalPrice();
-        }
-    });
-
-    // 플러스 버튼 클릭 이벤트
-    plusButton.addEventListener('click', () => {
-        let quantity = parseInt(quantityInput.value);
-        quantityInput.value = quantity + 1;
-        updateTotalPrice();
-    });
-
-    // 수량 입력 필드 직접 수정 시 이벤트
-    quantityInput.addEventListener('input', () => {
-        let quantity = parseInt(quantityInput.value);
-        if (isNaN(quantity) || quantity < 1) {
-            quantityInput.value = 1;
-        }
-        updateTotalPrice();
-    });
-
-    // 초기 총 가격 설정
-    updateTotalPrice();
-
-</script>
-
+<!-- 사진 확대 기능 -->
+<script src="/js/Magnifier.js"></script>
 
 <!-- Footer -->
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
-
 
 </body>
 </html>
