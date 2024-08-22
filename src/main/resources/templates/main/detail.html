@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/mobileMenu_form01.css">
     <link rel="stylesheet" href="/css/search_form01.css">
     <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/likeButton_form01.css">
 </head>
 <body class="bg-gray-100">
 <!-- 검색 모달 -->
@@ -29,9 +30,12 @@
     <!-- Product Details Section -->
     <div class="flex flex-col lg:flex-row items-start lg:items-start space-y-8 lg:space-y-0 lg:space-x-16">
         <!-- Product Image -->
-        <div class="w-full lg:w-1/2">
+        <div class="w-full lg:w-1/2 product-image-container">
             <img th:src="@{${product.imgurl}}" alt="Product Image" class="rounded-lg shadow-lg w-full">
-            <p class="mt-2 text-center text-sm text-gray-500">🔍 마우스를 올려보세요.</p>
+            <!-- 좋아요 버튼 모듈화된 프래그먼트 삽입 -->
+            <div th:replace="~{forms/likeButton_form01.html :: likeButton}">
+                <input type="hidden" name="redirectUrl" th:value="@{'/detail/' + ${product.indexId}}" />
+            </div>
         </div>
 
         <!-- Product Info -->
