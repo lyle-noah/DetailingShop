@@ -1,0 +1,185 @@
+h1 {
+    color: #007acc;
+    font-weight: 700;
+    font-size: 2.3rem !important;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 장바구니 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+thead {
+    background-color: #007acc !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f7f7f7;
+}
+
+/* 상품 이미지 스타일 */
+td img {
+    border-radius: 8px;
+    width: 80px;
+    height: auto;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+/* 체크박스 스타일 */
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007acc;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #007acc;
+    border-color: #007acc;
+}
+
+input[type="checkbox"]:checked::before {
+    content: '✔';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: white;
+    font-size: 14px;
+}
+
+/* 가격 텍스트 스타일 */
+.text-blue-600 {
+    color: #007acc;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+}
+
+/* 수량 입력 스타일 */
+input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* 삭제 버튼 스타일 */
+button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #c0392b;
+}
+
+/* 전체 선택 체크박스 스타일 */
+#select-all {
+    margin-right: 10px;
+}
+
+/* 장바구니 요약 스타일 */
+.text-right .text-xl {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.text-right a {
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.text-right a.bg-blue-600 {
+    background-color: #007acc;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.text-right a.bg-blue-600:hover {
+    background-color: #005f99;
+}
+
+.text-right a.bg-green-600 {
+    background-color: #27ae60;
+    color: white;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.text-right a.bg-green-600:hover {
+    background-color: #1e8449;
+}
+
+/* 총 금액 옆의 금액 텍스트 스타일 */
+#total-price {
+    color: #007acc;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* 빈 장바구니 메시지 스타일 */
+.text-center h2 {
+    color: #333333;
+}
+
+.text-center p {
+    color: #777777;
+}
+
+.text-center a {
+    background-color: #007acc;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.text-center a:hover {
+    background-color: #005f99;
+}
+
