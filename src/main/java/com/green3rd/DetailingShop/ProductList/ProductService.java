@@ -20,7 +20,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UserLikesRepository userLikesRepository;
-    private final UserService userService;
 
     public Page<Product> getProductsByCategory(String firstCategory, String secondCategory, String thirdCategory, int page, int size) {
         Pageable pageable = PageRequest.of(page, size); // 페이지네이션을 위한 Pageable 객체 생성

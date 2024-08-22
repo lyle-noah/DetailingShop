@@ -159,6 +159,7 @@ nav.mb-4.text-sm.text-gray-500 a:hover {
     height: 400px; /* 메인 이미지 높이 */
 }
 
+/* 돋보기 디자인 추가 */
 #mainImage {
     width: 100%;
     height: 100%;
@@ -166,39 +167,50 @@ nav.mb-4.text-sm.text-gray-500 a:hover {
 }
 
 /* 확대된 이미지 컨테이너 스타일 */
-        #zoomedImageContainer {
-            position: absolute;
-            top: 0;
-            left: 100%; /* 오른쪽으로 배치 */
-            margin-left: 20px; /* 원래 이미지와의 간격 */
-            width: 400px; /* 확대된 이미지의 너비 */
-            height: 400px; /* 확대된 이미지의 높이 */
-            overflow: hidden;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            display: none; /* 기본적으로 숨김 */
-        }
+#zoomedImageContainer {
+    position: absolute;
+    top: 0;
+    left: 100%; /* 오른쪽으로 배치 */
+    margin-left: 20px; /* 원래 이미지와의 간격 */
+    width: 400px; /* 확대된 이미지의 너비 */
+    height: 400px; /* 확대된 이미지의 높이 */
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none; /* 기본적으로 숨김 */
+}
 
-        #zoomedImage {
-            width: 200%; /* 확대율 */
-            height: 200%; /* 확대율 */
-            transition: transform 0.1s ease-in-out;
-            object-fit: cover; /* 이미지가 자르지 않고 완전히 보이도록 설정 */
-        }
+#zoomedImage {
+    width: 200%; /* 확대율 */
+    height: 200%; /* 확대율 */
+    transition: transform 0.1s ease-in-out;
+    object-fit: cover; /* 이미지가 자르지 않고 완전히 보이도록 설정 */
+}
 
-        /* 줌 렌즈 스타일 */
-        #zoomLens {
-            position: absolute;
-            border: 2px solid #000;
-            width: 100px; /* 렌즈의 크기 */
-            height: 100px;
-            opacity: 0.5;
-            background-color: rgba(255, 255, 255, 0.4);
-            display: none; /* 기본적으로 숨김 */
-            z-index: 1000; /* 앞에 표시되도록 설정 */
-            pointer-events: none; /* 마우스 이벤트를 렌즈에서 무시 */
-        }
+/* 줌 렌즈 스타일 */
+#zoomLens {
+    position: absolute;
+    border: 2px solid #000;
+    width: 100px; /* 렌즈의 크기 */
+    height: 100px;
+    opacity: 0.5;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: none; /* 기본적으로 숨김 */
+    z-index: 1000; /* 앞에 표시되도록 설정 */
+    pointer-events: none; /* 마우스 이벤트를 렌즈에서 무시 */
+}
 
+
+/* 상품이미지의 좋아요 버튼 디자인 설정 */
+.product-image-container {
+    position: relative; /* 아이콘을 이미지 위에 배치하기 위해 상대 위치 지정 */
+}
+
+.product-image-container img {
+    width: 100%;
+    height: auto;
+    display: block; /* 이미지를 블록 레벨 요소로 설정하여 올바르게 표시 */
+}

@@ -1,0 +1,12 @@
+<!-- likeButton_form01.html -->
+<div th:fragment="likeButton" class="like-icon">
+    <form th:action="@{/product/like/{indexId}(indexId=${product.indexId})}" method="post">
+        <!-- 현재 페이지의 URL을 가져와서 redirectUrl로 사용 -->
+        <input type="hidden" name="redirectUrl" th:value="@{'/detail/' + ${product.indexId}}" />
+        <button type="submit" class="like-button" style="border: none; background: none; padding: 0;">
+            <img th:src="@{${product.likeState ? '/img/icon/icon_LikeButton1.png' : '/img/icon/icon_LikeButton2.png'}}"
+                 alt="Like Button"
+                 class="like-button-img">
+        </button>
+    </form>
+</div>

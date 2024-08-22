@@ -29,14 +29,14 @@
 	<div class="product-grid">
 		<div th:each="infor : ${productsInfor}" class="product-card">
 			<div class="product-image-container">
-				<a th:href="@{/product/{indexId}(indexId=${infor.indexId})}">
+				<a th:href="@{/detail/{indexId}(indexId=${infor.indexId})}">
 					<img th:src="@{${infor.imgurl}}" alt="사진이 없습니다.">
 				</a>
 				<div class="overlay">
-                    <form th:action="@{/product/like/{indexId}(indexId=${infor.indexId})}" method="post">
-                        <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
-                        <button type="submit" class="btn" th:text="${infor.likeState ? '♥ WISH' : '♡ WISH'}"></button>
-                    </form>
+					<form th:action="@{/product/like/{indexId}(indexId=${infor.indexId})}" method="post">
+						<input type="hidden" name="redirectUrl" th:value="${currentUri}" />
+						<button type="submit" class="btn" th:classappend="${infor.likeState ? 'WISHED' : ''}" th:text="${infor.likeState ? 'WISHED' : 'WISH'}"></button>
+					</form>
 <!--					<form th:action="@{/cart/add}" method="post">-->
 <!--						<input type="hidden" name="productId" th:value="${infor.indexId}" />-->
 <!--						<input type="hidden" name="userId" th:value="${userId}" />-->

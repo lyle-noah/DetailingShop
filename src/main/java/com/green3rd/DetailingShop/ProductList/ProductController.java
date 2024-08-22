@@ -3,20 +3,19 @@ package com.green3rd.DetailingShop.ProductList;
 import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
-import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
+import com.green3rd.DetailingShop.UserLike.UserLikesService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession; // 추가된 import
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.LinkedList; // 추가된 import
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -25,7 +24,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final UserService userService;
-    private final UserLikesRepository userLikesRepository;
+    private final UserLikesService userLikesService;
 
     @GetMapping("/products")
     public String getProductByCategory(
@@ -68,7 +67,7 @@ public class ProductController {
         if (principal != null) {
             User user = userService.findByUsername(principal.getName());
             for (Product product : products) {
-                UserLikes userLikes = userLikesRepository.findByUserAndProduct(user, product).orElse(null);
+                UserLikes userLikes = userLikesService.findByUserAndProduct(user, product).orElse(null);
                 if (userLikes != null) {
                     product.setLikeState(userLikes.isLikeState());
                 }
@@ -133,13 +132,36 @@ public class ProductController {
     }
 
     // 상세 페이지 조회
-    @GetMapping("/product/{indexId}")
-    public String getProductDetail(@PathVariable int indexId, Model model, HttpSession session) {
-        Product product = productService.getProductByID(indexId);
+    @GetMapping("/detail/{indexId}")
+    public String getProductDetail(@PathVariable int indexId,
+                                   Principal principal,
+                                   Model model,
+                                   HttpSession session) {
+        // 상품을 indexId로 조회
+        Product product = productService.findByIndexId(indexId);
+
+        // 상품이 존재하지 않는 경우 404 페이지로 리다이렉트
         if (product == null) {
             return "error/404";
         }
+
+        // 상품의 가격을 포맷팅하여 설정
         product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+
+        // 로그인한 사용자의 likeState를 설정
+        if (principal != null) {
+            // 현재 로그인한 사용자 조회
+            User user = userService.findByUsername(principal.getName());
+
+            // 사용자가 해당 상품을 좋아요했는지 조회
+            UserLikes userLikes = userLikesService.findByUserAndProduct(user, product).orElse(null);
+
+            if (userLikes != null) {
+                product.setLikeState(userLikes.isLikeState());
+            }
+        }
+
+        // 상품 정보를 모델에 추가
         model.addAttribute("product", product);
 
         // 최근 본 상품 리스트를 세션에서 가져옴
@@ -169,6 +191,10 @@ public class ProductController {
                               @RequestParam("redirectUrl") String redirectUrl,
                               Principal principal,
                               Model model) {
+
+        System.out.println("indexId: " + indexId);
+        System.out.println("redirectUrl: " + redirectUrl);
+
         if (principal == null) {
             // 로그인하지 않은 경우
             model.addAttribute("message", "로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");

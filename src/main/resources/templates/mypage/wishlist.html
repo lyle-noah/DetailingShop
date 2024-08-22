@@ -38,11 +38,11 @@
                     <div th:each="product : ${productsInfor}" class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
                             <!-- 상품 이미지를 클릭하면 상세 페이지로 이동 -->
-                            <a th:href="@{/product/{indexId}(indexId=${product.indexId})}">
+                            <a th:href="@{/detail/{indexId}(indexId=${product.indexId})}">
                                 <img th:src="@{${product.imgurl}}" alt="Product Image" class="w-20 h-20 rounded">
                             </a>
                             <div>
-                                <a th:href="@{/product/{indexId}(indexId=${product.indexId})}" class="text-lg font-semibold" th:text="${product.productName}">상품 이름</a>
+                                <a th:href="@{/detail/{indexId}(indexId=${product.indexId})}" class="text-lg font-semibold" th:text="${product.productName}">상품 이름</a>
                                 <p class="text-gray-500 line-through" th:text="${product.formattedPrice}">정가</p>
                                 <p class="text-gray-900 font-bold" th:text="${product.formattedPrice}">판매가</p>
                             </div>
