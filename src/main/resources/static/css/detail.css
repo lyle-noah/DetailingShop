@@ -26,9 +26,56 @@
     }
 
     /* Product Image 스타일 */
-    .product-image {
-        flex: 1 1 50%;
-        max-width: 400px; /* 이미지의 최대 너비 */
+    .product-image-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        overflow: visible; /* 'hidden' 대신 'visible'로 변경하여 자식 요소가 표시되도록 함 */
+    }
+
+    /* 메인 이미지 스타일 */
+    .product-image-container img#mainImage {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        display: block;
+    }
+
+    /* 확대된 이미지 컨테이너 스타일 */
+    .zoomed-image-container {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 20px);
+        width: 400px;
+        height: 400px;
+        overflow: hidden; /* 확대된 이미지가 컨테이너 밖으로 나가지 않도록 설정 */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+       /* display: none;*/
+    }
+
+    #zoomed-image {
+        width: 300%; /* 확대 비율에 맞게 설정, 300% 확대 */
+        height: 300%;
+        object-fit: cover;
+        transform-origin: top left;
+        transition: transform 0.1s ease-in-out;
+    }
+
+    /* 줌 렌즈 스타일 */
+    .zoom-lens {
+        position: absolute;
+        border: 2px solid #000;
+        width: 200px; /* 렌즈 크기 */
+        height: 200px;
+        opacity: 0.5;
+        background-color: rgba(255, 255, 255, 0.4);
+        display: none; /* 기본적으로 숨김 */
+        z-index: 1000; /* 렌즈가 이미지 위에 표시되도록 설정 */
+        pointer-events: none; /* 마우스 이벤트를 렌즈에서 무시 */
     }
 
     /* Product Details 스타일 */
@@ -101,11 +148,14 @@
     .action-buttons {
         display: flex;
         gap: 16px;
-        align-items: stretch; /* 버튼들이 동일한 높이를 가지도록 수정 */
+        align-items: stretch;
+        justify-content: space-between; /* 버튼들 사이의 균형을 맞추기 위해 수정 */
     }
 
-    .action-buttons .buy-now {
-        flex: 1;
+    .action-buttons .buy-now,
+    .action-buttons .cart,
+    .action-buttons .wishlist {
+        flex: 1; /* 버튼들이 동일한 크기를 가지도록 설정 */
         padding: 12px 16px;
         font-size: 1rem;
         font-weight: 600;
@@ -113,6 +163,10 @@
         border: none;
         border-radius: 8px;
         transition: background-color 0.3s ease;
+        text-align: center; /* 텍스트 중앙 정렬 */
+    }
+
+    .action-buttons .buy-now {
         background-color: #3b82f6;
         color: white;
     }
@@ -121,101 +175,47 @@
         background-color: #2563eb;
     }
 
-    .action-buttons .cart, .action-buttons .wishlist {
-        flex: 1 !important;
-        padding: 12px 16px !important;
-        font-size: 1rem !important;
-        font-weight: 600 !important;
-        cursor: pointer !important;
-        border: none !important;
-        border-radius: 8px !important;
-        transition: background-color 0.3s ease !important;
-        background-color: #e5e7eb !important; /* 기본 배경색 */
-        color: #1f2937 !important; /* 글자색 */
+    .action-buttons .cart {
+        background-color: #e5e7eb;
+        color: #1f2937;
     }
 
-    .action-buttons .cart:hover, .action-buttons .wishlist:hover {
-        background-color: #d1d5db !important; /* 호버 시 배경색 */
+    .action-buttons .cart:hover {
+        background-color: #d1d5db;
+    }
+
+    .action-buttons .wishlist {
+        background-color: #e5e7eb;
+        color: #1f2937;
+    }
+
+    .action-buttons .wishlist:hover {
+        background-color: #d1d5db;
     }
 
     /* 모달 창 스타일 */
-.modal {
-    display: none; /* 처음에는 보이지 않도록 설정 */
-    position: fixed;
-    inset: 0;
-    background-color: rgba(75, 85, 99, 0.5); /* Gray-600 with 50% opacity */
-    justify-content: center;
-    align-items: center;
-}
+    .modal {
+        display: none; /* 처음에는 보이지 않도록 설정 */
+        position: fixed;
+        inset: 0;
+        background-color: rgba(75, 85, 99, 0.5); /* Gray-600 with 50% opacity */
+        justify-content: center;
+        align-items: center;
+    }
 
-.modal .modal-content {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
-}
+    .modal .modal-content {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+    }
 
-/* 기본 이미지 컨테이너 스타일 */
-.product-image-container {
-    position: relative;
-    width: 400px;  /* 메인 이미지 너비 */
-    height: 400px; /* 메인 이미지 높이 */
-}
-
-/* 돋보기 디자인 추가 */
-#mainImage {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-}
-
-/* 확대된 이미지 컨테이너 스타일 */
-#zoomedImageContainer {
-    position: absolute;
-    top: 0;
-    left: 100%; /* 오른쪽으로 배치 */
-    margin-left: 20px; /* 원래 이미지와의 간격 */
-    width: 400px; /* 확대된 이미지의 너비 */
-    height: 400px; /* 확대된 이미지의 높이 */
-    overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    display: none; /* 기본적으로 숨김 */
-}
-
-#zoomedImage {
-    width: 200%; /* 확대율 */
-    height: 200%; /* 확대율 */
-    transition: transform 0.1s ease-in-out;
-    object-fit: cover; /* 이미지가 자르지 않고 완전히 보이도록 설정 */
-}
-
-/* 줌 렌즈 스타일 */
-#zoomLens {
-    position: absolute;
-    border: 2px solid #000;
-    width: 100px; /* 렌즈의 크기 */
-    height: 100px;
-    opacity: 0.5;
-    background-color: rgba(255, 255, 255, 0.4);
-    display: none; /* 기본적으로 숨김 */
-    z-index: 1000; /* 앞에 표시되도록 설정 */
-    pointer-events: none; /* 마우스 이벤트를 렌즈에서 무시 */
-}
-
-
-/* 상품이미지의 좋아요 버튼 디자인 설정 */
-.product-image-container {
-    position: relative; /* 아이콘을 이미지 위에 배치하기 위해 상대 위치 지정 */
-}
-
-.product-image-container img {
-    width: 100%;
-    height: auto;
-    display: block; /* 이미지를 블록 레벨 요소로 설정하여 올바르게 표시 */
+    /* 기본 이미지 컨테이너 스타일 */
+    .product-image-container {
+        position: relative;
+        width: 400px;  /* 메인 이미지 너비 */
+        height: 400px; /* 메인 이미지 높이 */
+    }
 }

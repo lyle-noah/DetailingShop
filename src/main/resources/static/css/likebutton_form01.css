@@ -5,7 +5,7 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
-    z-index: 10; /* 이미지보다 위에 아이콘을 표시 */
+    z-index: 1100; /* 이미지보다 위에 아이콘을 표시 */
 }
 
 .like-button-img {

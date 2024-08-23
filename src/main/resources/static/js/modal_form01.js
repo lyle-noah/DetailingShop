@@ -1,5 +1,3 @@
-// modal.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('cart-modal');
     const closeButton = modal.querySelector('.close-button');
@@ -7,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addToCartForms.forEach(form => {
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); // 기본 폼 제출 동작 방지
 
             const formData = new FormData(this);
 
@@ -17,10 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (response.ok) {
-                    // Show the modal if the request was successful
                     modal.classList.remove('hidden');
                 } else {
-                    // Handle error
                     console.error('Error adding item to cart');
                 }
             })
@@ -28,15 +24,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    closeButton.addEventListener('click', function() {
-        modal.classList.add('hidden');
-    });
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+    }
 
-    document.querySelector('#cart-modal .btn').addEventListener('click', function() {
-        window.location.href = '/cart'; // Redirect to cart page
-    });
+    const goToCartButton = document.querySelector('#go-to-cart');
+    if (goToCartButton) {
+        goToCartButton.addEventListener('click', function() {
+            window.location.href = '/cart'; // 장바구니 페이지로 리다이렉트
+        });
+    }
 
-    document.querySelector('#cart-modal .continue-shopping-button').addEventListener('click', function() {
-        modal.classList.add('hidden');
-    });
+    const continueShoppingButton = document.querySelector('#continue-shopping');
+    if (continueShoppingButton) {
+        continueShoppingButton.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+    }
 });
