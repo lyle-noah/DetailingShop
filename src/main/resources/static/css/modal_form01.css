@@ -6,6 +6,7 @@
     background-color: rgba(75, 85, 99, 0.5); /* Gray-600 with 50% opacity */
     justify-content: center;
     align-items: center;
+    z-index: 5; /* 모달이 가장앞에있도록 설정 */
 }
 
 .modal .modal-content {
