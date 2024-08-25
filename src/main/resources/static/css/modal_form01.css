@@ -1,74 +1,18 @@
-/* 모달 기본 스타일 */
+/* 모달 창 스타일 */
 .modal {
+    display: none; /* 처음에는 보이지 않도록 설정 */
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    display: flex;
-    align-items: center;
+    inset: 0;
+    background-color: rgba(75, 85, 99, 0.5); /* Gray-600 with 50% opacity */
     justify-content: center;
-    z-index: 1000; /* 모달이 다른 요소 위에 보이도록 */
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    align-items: center;
 }
 
-/* 모달 내용 */
-.modal-content {
-    background: white;
-    padding: 20px;
+.modal .modal-content {
+    background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
+    padding: 20px;
+    text-align: center;
     max-width: 500px;
     width: 100%;
-    text-align: center;
-}
-
-/* 모달 숨기기 */
-.modal.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* 모달 보이기 */
-.modal:not(.hidden) {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* 모달 닫기 버튼 스타일 */
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px;
-    color: #333;
-}
-
-/* 모달 버튼 스타일 */
-.modal-content .btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.modal-content .btn:hover {
-    background-color: #0056b3;
-}
-
-/* 쇼핑 계속하기 버튼 스타일 */
-.continue-shopping-button {
-    background-color: #6c757d;
-}
-
-.continue-shopping-button:hover {
-    background-color: #5a6268;
 }

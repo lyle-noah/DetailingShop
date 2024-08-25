@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/css/detail.css">
     <link rel="stylesheet" href="/css/likebutton_form01.css">
     <link rel="stylesheet" href="/css/modal_form01.css">
+    <link rel="stylesheet" href="/css/magnifier_form01.css">
+
 </head>
 <body class="bg-gray-100">
 <!-- 검색 모달 -->
@@ -38,7 +40,9 @@
             <div th:replace="~{forms/likeButton_form01.html :: likeButton}">
                 <input type="hidden" name="redirectUrl" th:value="@{'/detail/' + ${product.indexId}}" />
             </div>
-            <p class="mt-2 text-center text-sm text-gray-500">🔍 마우스를 올려보세요.</p>
+
+            <!-- 안내 문구 -->
+            <p id="hoverText" class="hover-text">🔍 마우스를 올려보세요.</p>
 
             <!-- 줌 렌즈 및 확대된 이미지 컨테이너 -->
             <div th:replace="~{forms/magnifier_form01.html :: magnifier}"></div>

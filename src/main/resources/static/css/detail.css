@@ -31,51 +31,40 @@
         width: 400px;
         height: 400px;
         overflow: visible; /* 'hidden' 대신 'visible'로 변경하여 자식 요소가 표시되도록 함 */
+        border: 1px solid #ddd;
+        border-radius: 8px;
     }
 
     /* 메인 이미지 스타일 */
     .product-image-container img#mainImage {
+        position: relative; /* 레이어 순서를 위해 추가 */
+        z-index: 2; /* 렌즈가 이 위에 뜨도록 설정 */
         width: 100%;
         height: 100%;
-        border-radius: 8px;
-        display: block;
-    }
-
-    /* 확대된 이미지 컨테이너 스타일 */
-    .zoomed-image-container {
-        position: absolute;
-        top: 0;
-        left: calc(100% + 20px);
-        width: 400px;
-        height: 400px;
-        overflow: hidden; /* 확대된 이미지가 컨테이너 밖으로 나가지 않도록 설정 */
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-       /* display: none;*/
-    }
-
-    #zoomed-image {
-        width: 300%; /* 확대 비율에 맞게 설정, 300% 확대 */
-        height: 300%;
         object-fit: cover;
-        transform-origin: top left;
-        transition: transform 0.1s ease-in-out;
+        display: block;
+        transition: none !important; /* 모든 호버 관련 애니메이션 제거 */
+        filter: none !important; /* 필터 효과 제거 */
     }
 
-    /* 줌 렌즈 스타일 */
-    .zoom-lens {
+    /* 안내 문구 스타일 */
+    .hover-text {
         position: absolute;
-        border: 2px solid #000;
-        width: 200px; /* 렌즈 크기 */
-        height: 200px;
-        opacity: 0.5;
-        background-color: rgba(255, 255, 255, 0.4);
-        display: none; /* 기본적으로 숨김 */
-        z-index: 1000; /* 렌즈가 이미지 위에 표시되도록 설정 */
-        pointer-events: none; /* 마우스 이벤트를 렌즈에서 무시 */
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.7); /* 검정 배경색 */
+        color: #fff; /* 흰색 텍스트 */
+        padding: 10px 0;
+        font-size: 14px;
+        transition: opacity 0.3s ease;
+        opacity: 1; /* 기본적으로 보임 */
+        z-index: 3; /* 이미지보다 앞에 있도록 설정 */
+    }
+
+    .product-image-container:hover .hover-text {
+        opacity: 0; /* 호버 시 문구 숨김 */
+        z-index: 0; /* 이미지보다 뒤에 있도록 설정 */
     }
 
     /* Product Details 스타일 */
@@ -191,31 +180,5 @@
 
     .action-buttons .wishlist:hover {
         background-color: #d1d5db;
-    }
-
-    /* 모달 창 스타일 */
-    .modal {
-        display: none; /* 처음에는 보이지 않도록 설정 */
-        position: fixed;
-        inset: 0;
-        background-color: rgba(75, 85, 99, 0.5); /* Gray-600 with 50% opacity */
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal .modal-content {
-        background-color: white;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        max-width: 500px;
-        width: 100%;
-    }
-
-    /* 기본 이미지 컨테이너 스타일 */
-    .product-image-container {
-        position: relative;
-        width: 400px;  /* 메인 이미지 너비 */
-        height: 400px; /* 메인 이미지 높이 */
     }
 }
