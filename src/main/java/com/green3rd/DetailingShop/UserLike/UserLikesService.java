@@ -18,8 +18,8 @@ public class UserLikesService {
         return userLikesRepository.findByUserAndProduct(user, product);
     }
 
-    // 사용자가 좋아요한 상품 리스트를 반환하는 메소드
-    public List<Product> getLikedProductsByUserId(Long userId) {
-        return userLikesRepository.findLikedProductsByUserId(userId);
-    }
+//    // 사용자가 좋아요한 상품 리스트를 반환하는 메소드
+//    public List<Product> getLikedProductsByUserId(Long userId) {
+//        return userLikesRepository.findLikedProductsByUserId(userId);
+//    }
 }

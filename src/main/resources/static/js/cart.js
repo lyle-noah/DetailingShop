@@ -29,3 +29,31 @@ function updateTotalPrice(input) {
     })
     .catch(error => console.error('Error updating total price:', error));
 }
+
+// 아임포트 결제 요청 처리
+function requestPay() {
+    const IMP = window.IMP; // 생략 가능
+    IMP.init('imp02854257'); // 아임포트 식별코드
+
+    // 결제 정보 설정
+    IMP.request_pay({
+        pg: 'kakao', // 결제 방식 (카카오페이)
+        pay_method: 'card', // 결제 수단
+        merchant_uid: 'order_' + new Date().getTime(), // 주문번호
+        name: '주문명: 결제 테스트',
+        amount: parseFloat(document.getElementById('total-price').innerText.replace(/[^0-9.-]+/g,"")), // 결제 금액
+        buyer_email: 'buyer@example.com',
+        buyer_name: '구매자 이름',
+        buyer_tel: '010-1234-5678',
+        buyer_addr: '서울특별시 강남구 삼성동',
+        buyer_postcode: '123-456'
+    }, function (rsp) {
+        if (rsp.success) {
+            // 결제 성공 시 처리 로직
+            window.location.href = '/pay/success?imp_uid=' + rsp.imp_uid + '&merchant_uid=' + rsp.merchant_uid;
+        } else {
+            // 결제 실패 시 처리 로직
+            alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
+        }
+    });
+}
