@@ -12,10 +12,65 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #f5f5f5; /* 배경을 단색으로 변경 */
+            background-color: #f5f5f5;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+        }
+
+        /* 페이드 인 애니메이션 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 호버 줌 및 섀도우 효과 */
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .hover-shadow {
+            transition: box-shadow 0.3s ease;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 고급스러운 느낌을 위한 미묘한 테두리 및 그림자 */
+        .rounded-lg {
+            border-radius: 12px;
+        }
+
+        .shadow-md {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-lg {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        /* 부드러운 컬러 전환 */
+        .bg-white {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+        .bg-white:hover {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
@@ -25,20 +80,21 @@
 
 <!-- Header -->
 <div th:replace="~{header/header.html :: header}"></div>
+
 <main class="container mx-auto px-4 py-8 lg:py-16">
-    <div class="text-center mb-8">
+    <div class="text-center mb-8 fade-in">
         <h1 class="text-4xl font-bold">마이 쇼핑</h1>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 fade-in">
         <!-- 왼쪽 사이드바 -->
         <div class="lg:col-span-1 space-y-12">
-            <div th:replace="~{mypage/sidebar.html :: sidebar}"></div>
+            <div th:replace="~{mypage/sidebar.html :: sidebar}" class="hover-shadow rounded-lg bg-white p-6"></div>
         </div>
 
         <!-- 메인 컨텐츠 -->
         <div class="lg:col-span-3 space-y-12">
             <!-- Profile Section -->
-            <div class="bg-white p-8 rounded-lg shadow-md flex items-center space-x-6">
+            <div class="bg-white p-8 rounded-lg shadow-md flex items-center space-x-6 hover-shadow hover-zoom">
                 <img class="w-24 h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
                 <div>
                     <h2 class="text-3xl font-semibold">
@@ -50,22 +106,22 @@
 
             <!-- Info Section -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-                <div class="bg-white p-8 rounded-lg shadow-md">
+                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
                     <div class="text-2xl font-bold">5,000원</div>
                     <div class="text-gray-500 mt-2">총상품구매 적립금</div>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-md">
+                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
                     <div class="text-2xl font-bold">0개</div>
                     <div class="text-gray-500 mt-2">쿠폰</div>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-md">
+                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
                     <div class="text-2xl font-bold">0원(0회)</div>
                     <div class="text-gray-500 mt-2">총주문</div>
                 </div>
             </div>
 
             <!-- Order Status Section -->
-            <div class="bg-white p-8 rounded-lg shadow-md">
+            <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
                 <h3 class="text-2xl font-bold mb-6">나의 주문처리 현황 (최근 3개월 기준)</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
                     <div>
@@ -89,6 +145,7 @@
         </div>
     </div>
 </main>
+
 <div th:replace="~{footer/footer :: footer}"></div>
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>

@@ -18,6 +18,6 @@ public interface UserLikesRepository extends JpaRepository<UserLikes, Long> {
     int countByProductIndexIdAndLikeState(int productIndexId, boolean likeState);
 
     // 사용자가 좋아요한 상품 목록을 가져오는 메소드
-    @Query("SELECT p FROM Product p WHERE p.id IN (SELECT ul.productId FROM UserLikes ul WHERE ul.userId = :userId AND ul.likeState = 1)")
-    List<Product> findLikedProductsByUserId(@Param("userId") Long userId);
+    /*@Query("SELECT p FROM Product p WHERE p.id IN (SELECT ul.productId FROM UserLikes ul WHERE ul.userId = :userId AND ul.likeState = 1)")
+    List<Product> findLikedProductsByUserId(@Param("userId") Long userId);*/
 }
