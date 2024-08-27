@@ -68,15 +68,20 @@
             <div class="cartCount-selector">
                 <label for="quantityInput" class="block text-sm font-medium text-gray-700">수량:</label>
                 <div class="flex items-center mt-1">
-                    <button type="button" class="px-3 py-1" onclick="decreaseCartCount()">-</button>
+                    <button type="button" class="px-3 py-1">-</button>
                     <input id="quantityInput" name="cartCount" type="text" value="1" class="text-center w-12 border border-gray-300 py-1">
-                    <button type="button" class="px-3 py-1" onclick="increaseCartCount()">+</button>
+                    <button type="button" class="px-3 py-1">+</button>
                 </div>
             </div>
             
             <!-- 총 가격 -->
             <div class="total-price">
-                총 금액 : <span id="totalPrice" data-unit-price="${product.price}" th:text="${product.formattedPrice}"></span>
+                <!-- data-unit-price 속성에 값 설정 -->
+                총 금액 :
+                <span id="totalPrice"
+                      th:attr="data-unit-price=${product.productPrice}"
+                      th:text="'Price: ' +${product.formattedPrice}">
+                </span>
             </div>
 
             <!-- 액션 버튼들 -->
@@ -109,5 +114,6 @@
 <script src="/js/magnifier_form01.js"></script>
 <script src="/js/modal_form01.js"></script>
 <script src="/js/modal_form02.js"></script>
+<script src="/js/likeButton_form01.js"></script>
 </body>
 </html>

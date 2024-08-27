@@ -4,39 +4,65 @@ document.addEventListener("DOMContentLoaded", function() {
     const decreaseButton = document.querySelector('.cartCount-selector button:first-child');
     const increaseButton = document.querySelector('.cartCount-selector button:last-child');
     const totalPriceElement = document.getElementById('totalPrice');
-    const unitPrice = parseInt(totalPriceElement.dataset.unitPrice);
+
+    // unitPrice 값을 소수로 변환
+    const unitPrice = parseFloat(totalPriceElement.dataset.unitPrice);
+
+    // unitPrice 값 확인
+    console.log("Unit Price:", unitPrice);
+
+    function updateTotalPrice() {
+        let quantity = parseInt(quantityInput.value);
+
+        // 수량이 비어있거나 NaN이면 0으로 설정
+        if (isNaN(quantity) || quantity < 1) {
+            quantity = 0;
+            quantityInput.value = quantity;
+        }
+
+        // 최대 수량 제한
+        if (quantity > 100) {
+            quantity = 100;
+            quantityInput.value = quantity;
+        }
+
+        // 총 금액 계산
+        if (!isNaN(quantity) && !isNaN(unitPrice)) {
+            const totalPrice = unitPrice * quantity;
+            totalPriceElement.textContent = totalPrice.toLocaleString() + '원';
+        } else {
+            totalPriceElement.textContent = '0원'; // 기본값으로 0원 설정
+        }
+    }
 
     function updateCartCount() {
         finalCartCountInput.value = quantityInput.value;
         updateTotalPrice();
     }
 
-    function updateTotalPrice() {
-        const currentCartCount = parseInt(quantityInput.value);
-        const totalPrice = currentCartCount * unitPrice;
-        totalPriceElement.textContent = totalPrice.toLocaleString() + "원";
-    }
-
     function increaseCartCount() {
-        var input = document.getElementById("quantityInput");
-        input.value = parseInt(input.value) + 1;
-        updateFinalCartCount(input.value);
-    }
+        let quantity = parseInt(quantityInput.value);
+        quantity = isNaN(quantity) ? 0 : quantity;
 
-    function decreaseCartCount() {
-        var input = document.getElementById("quantityInput");
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-            updateFinalCartCount(input.value);
+        if (quantity < 100) { // 최대 수량 제한
+            quantityInput.value = quantity + 1;
+            updateCartCount();
         }
     }
 
-    function updateFinalCartCount(value) {
-        document.getElementById("finalCartCount").value = value;
+    function decreaseCartCount() {
+        let quantity = parseInt(quantityInput.value);
+
+        if (isNaN(quantity) || quantity <= 1) {
+            quantity = 0;
+        } else {
+            quantity = quantity - 1;
+        }
+        quantityInput.value = quantity;
+        updateCartCount();
     }
 
-    quantityInput.addEventListener('input', updateCartCount);
-
+    // 이벤트 리스너 추가
     decreaseButton.addEventListener('click', function(event) {
         event.preventDefault();
         decreaseCartCount();
@@ -47,10 +73,15 @@ document.addEventListener("DOMContentLoaded", function() {
         increaseCartCount();
     });
 
-    // CART 버튼을 누를 때 수량 업데이트 및 비동기 요청
-    document.querySelector('.cart-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // 페이지 리로드 방지
+    quantityInput.addEventListener('input', updateTotalPrice);
 
+    // 초기 총 금액 설정
+    updateTotalPrice();
+
+
+    // 모달창 설정 기본 설정
+    document.querySelector('.cart-form').addEventListener('submit', function(event) {
+        event.preventDefault();
         finalCartCountInput.value = quantityInput.value;
 
         const formData = new FormData(this);
@@ -71,10 +102,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error('Error:', error));
     });
 
-    // 초기 총 가격 설정
-    updateTotalPrice();
-
-    // 모달 창 닫기 로직 추가
     document.querySelectorAll('.close-button').forEach(button => {
         button.addEventListener('click', function() {
             document.getElementById('cart-modal').style.display = 'none';

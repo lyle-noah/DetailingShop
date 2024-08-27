@@ -53,20 +53,26 @@ public class ProductService {
 
     // 좋아요 버튼의 동작을 수집하고 DB에 저장.
     public boolean toggleLike(User user, Product product) {
-        Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndProduct(user, product);
+        // 현재 사용자와 상품의 좋아요 상태를 검색
+        UserLikes userLike = userLikesRepository.findByUserIdAndProductIndexId(user.getId(), product.getIndexId());
 
-        if (userLikesOptional.isPresent()) {
-            UserLikes userLikes = userLikesOptional.get();
-            userLikes.setLikeState(!userLikes.isLikeState());
-            userLikesRepository.save(userLikes);
+        if (userLike != null) {
+            // 현재 상태를 반전시킴
+            boolean newLikeState = !userLike.isLikeState();
+//            System.out.println("Current like state: " + userLike.isLikeState()); // 현재 상태 로그 출력
+//            System.out.println("New like state will be: " + newLikeState); // 반전된 상태 로그 출력
+            userLike.setLikeState(newLikeState);
+            userLikesRepository.save(userLike);  // 변경된 상태를 저장
+            return newLikeState;
         } else {
+            // 만약 사용자가 해당 상품에 대해 좋아요를 누른 적이 없다면 새로 생성
             UserLikes newUserLike = new UserLikes();
             newUserLike.setUser(user);
             newUserLike.setProduct(product);
-            newUserLike.setLikeState(true);
-            userLikesRepository.save(newUserLike);
+            newUserLike.setLikeState(true);  // 기본적으로 좋아요로 설정
+            userLikesRepository.save(newUserLike);  // 새 항목을 저장
+            return true;
         }
-        return false;
     }
 
     // 사용자들이 누른 좋아요 수 세기.

@@ -194,19 +194,24 @@ public class ProductController {
         Map<String, Object> response = new HashMap<>();
 
         if (principal == null) {
-            // 로그인하지 않은 경우
+            // 비로그인 상태: 리다이렉트 URL과 메시지를 반환
             response.put("redirect", "/user/login?redirectUrl=" + redirectUrl);
             response.put("message", "로그인이 필요합니다.");
             return response;
         }
 
-        // 로그인한 경우 좋아요 처리 로직
+        // 로그인된 상태에서 좋아요 처리 로직
         User user = userService.findByUsername(principal.getName());
         Product product = productService.findByIndexId(indexId);
 
         if (user != null && product != null) {
             boolean likeState = productService.toggleLike(user, product);
             response.put("likeState", likeState);
+
+            // 디버그 로그 추가
+//            System.out.println("User: " + user.getUsername());
+//            System.out.println("Product: " + product.getProductName());
+//            System.out.println("Like State: " + likeState);
         }
 
         return response;

@@ -28,12 +28,21 @@ public class CartController {
     @GetMapping("/cart")
     public String getCartPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 비로그인 상태 처리
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/user/login";  // 로그인되지 않은 사용자는 로그인 페이지로 리다이렉트
+            return "redirect:/user/login";
         }
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByUsername(userDetails.getUsername());
+        // 로그인된 사용자 정보 가져오기
+        Object principal = authentication.getPrincipal();
+        User user;
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            user = userService.findByUsername(username);
+        } else {
+            return "redirect:/user/login";
+        }
 
         // 장바구니와 총 금액을 모델에 추가
         model.addAttribute("cartItems", cartService.getCartByUser(user));

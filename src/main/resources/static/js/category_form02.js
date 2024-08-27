@@ -11,15 +11,19 @@ document.querySelectorAll('.overlay form').forEach(form => {
             method: 'POST',
             body: formData,
         })
-        .then(response => response.json()) // 서버가 JSON 형식으로 응답
+        .then(response => response.json())
         .then(data => {
+
+//            console.log('Server response:', data); // 서버 응답 확인
+
             if (data.redirect) {
+                // 비로그인 상태: 로그인 페이지로 리다이렉트
                 if (data.message) {
-                    alert(data.message);  // alertMessage_form01의 기능을 비동기 처리로 대체
+                    alert(data.message); // 로그인 필요 알림
                 }
                 window.location.href = data.redirect;
             } else if (data.likeState !== undefined) {
-                // 좋아요 상태 변경
+                // 서버의 응답에 따라 버튼 상태 변경
                 if (data.likeState) {
                     button.classList.add('WISHED');
                     button.textContent = 'WISHED';

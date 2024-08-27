@@ -8,6 +8,7 @@ import com.green3rd.DetailingShop.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,6 @@ public class CartService {
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-
-
 
     // 특정 사용자의 장바구니 아이템 가져오기
     public List<Cart> getCartByUser(User user) {
@@ -77,11 +76,16 @@ public class CartService {
     }
 
     // 장바구니 총 금액 계산
-    public int calculateTotalPrice(User user) {
+    public BigDecimal calculateTotalPrice(User user) {
         List<Cart> cartItems = cartRepository.findByUserAndCartStateTrue(user);
-        return cartItems.stream().mapToInt(cart -> cart.getProduct().getProductPrice() * cart.getCartCount()).sum();
+        return cartItems.stream()
+                .map(item -> {
+                    BigDecimal productPrice = BigDecimal.valueOf(item.getProduct().getProductPrice()); // 상품 가격이 BigDecimal 타입인지 확인
+                    BigDecimal cartCount = BigDecimal.valueOf(item.getCartCount()); // 수량을 BigDecimal로 변환
+                    return productPrice.multiply(cartCount); // 가격 * 수량
+                })
+                .reduce(BigDecimal.ZERO, BigDecimal::add); // 모든 항목의 가격을 합산
     }
-
 
     public boolean addProductToCart(int indexId, int cartCount, String username) {
         // User와 Product 엔티티를 각각 조회합니다.
