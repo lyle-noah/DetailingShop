@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/detail.css">
     <link rel="stylesheet" href="/css/likebutton_form01.css">
     <link rel="stylesheet" href="/css/modal_form01.css">
+    <link rel="stylesheet" href="/css/modal_form02.css">
     <link rel="stylesheet" href="/css/magnifier_form01.css">
 
 </head>
@@ -65,26 +66,27 @@
             </div>
 
             <!-- 수량 선택기 -->
-            <div class="quantity-selector">
-                <label for="quantity" class="block text-sm font-medium text-gray-700">수량:</label>
+            <div class="cartCount-selector">
+                <label for="quantityInput" class="block text-sm font-medium text-gray-700">수량:</label>
                 <div class="flex items-center mt-1">
-                    <button class="px-3 py-1">-</button>
-                    <input id="quantity" type="text" value="1" class="text-center w-12 border border-gray-300 py-1">
-                    <button class="px-3 py-1">+</button>
+                    <button type="button" class="px-3 py-1" onclick="decreaseCartCount()">-</button>
+                    <input id="quantityInput" name="cartCount" type="text" value="1" class="text-center w-12 border border-gray-300 py-1">
+                    <button type="button" class="px-3 py-1" onclick="increaseCartCount()">+</button>
                 </div>
             </div>
-
+            
             <!-- 총 가격 -->
             <div class="total-price">
-                총 금액 : <span th:text="${product.formattedPrice}"></span>
+                총 금액 : <span id="totalPrice" data-unit-price="${product.price}" th:text="${product.formattedPrice}"></span>
             </div>
 
             <!-- 액션 버튼들 -->
             <div class="action-buttons">
                 <button class="buy-now">BUY IT NOW</button>
-                <form action="/cart/add" method="post" class="cart-form">
+                <form th:action="@{/cart/add/{indexId}(indexId=${product.indexId})}" method="post" class="cart-form add-to-cart-form">
                     <input type="hidden" name="productId" th:value="${product.indexId}"/>
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> <!-- CSRF 토큰 추가 -->
+                    <input type="hidden" id="finalCartCount" name="cartCount" value="1"/> <!-- 최종 수량 설정 -->
+                    <input type="hidden" name="redirectUrl" th:value="@{'/detail/' + ${product.indexId}}"/> <!-- 추가된 redirectUrl -->
                     <button type="submit" class="cart">CART</button>
                 </form>
                 <button class="wishlist">WISH LIST</button>
@@ -95,17 +97,18 @@
 
 <!-- 장바구니 모달 hidden 처리되어있음. -->
 <div th:replace="~{forms/modal_form01.html :: cartModal}"></div>
+<div th:replace="~{forms/modal_form02.html :: cartModalExist}"></div>
 
 <!-- 푸터 -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
 <script src="/js/header.js"></script>
+<script src="/js/detail.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
-<script src="/js/detail.js"></script>
 <script src="/js/modal_form01.js"></script>
+<script src="/js/modal_form02.js"></script>
 <script src="/js/magnifier_form01.js"></script>
-
 </body>
 </html>

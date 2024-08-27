@@ -7,9 +7,6 @@ import lombok.ToString;
 import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.User.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "cart")
 @Getter
@@ -19,15 +16,28 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    // 유저와 카트 1:1
-    @OneToOne
-    @JoinColumn(name = "username", referencedColumnName = "username")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // 카트와 상품 1:N
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
-    private List<Product> products = new ArrayList<>(); // products 리스트 초기화
+    @ManyToOne
+    @JoinColumn(name = "product_indexId", nullable = false)
+    private Product product;
+
+    private boolean cartState;  // 장바구니 상태를 나타내는 boolean 필드
+    private int cartCount;      // 장바구니 수량을 나타내는 int 필드
+
+    // 기본 생성자
+    public Cart() {
+    }
+
+    // User와 Product를 매개변수로 받는 생성자
+    public Cart(User user, Product product) {
+        this.user = user;
+        this.product = product;
+        this.cartCount = 0; // 기본값 설정
+        this.cartState = false; // 기본값 설정
+    }
 }

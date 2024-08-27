@@ -43,15 +43,8 @@
             </tr>
             </thead>
             <tbody>
-            <!-- 전체 선택 체크박스 -->
-            <tr>
-                <td colspan="5" class="p-4 text-left">
-                    <input type="checkbox" id="select-all" class="mr-2"> 전체 선택
-                </td>
-            </tr>
             <tr th:each="product : ${cart.products}" class="border-b border-gray-200 hover:bg-gray-100">
                 <td class="p-4">
-                    <!-- 각 상품별 체크박스 -->
                     <input type="checkbox" name="productCheckbox" class="mr-2">
                     <img th:src="@{${product.imgurl}}" alt="Product Image" class="w-20 h-auto rounded"/>
                 </td>
@@ -60,11 +53,10 @@
                 <td class="p-4 text-center">
                     <form class="update-form" th:action="@{/cart/update}" method="post">
                         <input type="hidden" name="productId" th:value="${product.indexId}" />
-                        <input type="number" name="quantity" th:value="${product.quantity}" min="1" class="w-16 p-2 border rounded text-center" oninput="updateTotalPrice(this)" />
+                        <input type="number" name="cartCount" th:value="${product.cartCount}" min="1" class="w-16 p-2 border rounded text-center" oninput="updateTotalPrice(this)" />
                     </form>
                 </td>
                 <td class="p-4 text-center">
-                    <!-- 상품 삭제 폼 -->
                     <form th:action="@{/cart/delete}" method="post">
                         <input type="hidden" name="productId" th:value="${product.indexId}" />
                         <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">삭제</button>
