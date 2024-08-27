@@ -21,6 +21,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	// JitPack repository 추가
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -48,6 +50,8 @@ dependencies {
     implementation 'org.commonmark:commonmark:0.21.0'
     /* ↓↓ Mail 설치 ↓↓ */                   
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+	/* ↓↓ 아임포트(결제) 설치 ↓↓ */
+	implementation 'com.github.Iamport:iamport-rest-client-java:0.2.5'
 }
 
 tasks.named('test') {

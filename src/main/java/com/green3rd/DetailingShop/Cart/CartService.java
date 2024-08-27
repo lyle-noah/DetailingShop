@@ -54,22 +54,6 @@ public class CartService {
     }
 
     // 장바구니 상품 수량 변경
-//    public void updateCart(User user, String productId, int quantity) {
-//        Integer intProductId = Integer.parseInt(productId);
-//        Cart cart = cartRepository.findByUser(user).orElse(null);
-//
-//        if(cart != null && quantity > 0) {
-//            cart.getProducts().removeIf(product -> product.getProductId().equals(intProductId));
-//            for (int i = 0 ; i < quantity; i++) {
-//                Product product = productRepository.findById(intProductId)
-//                        .orElseThrow(()->
-//                                new IllegalArgumentException("상품을 찾을 수 없습니다."));
-//                cart.getProducts().add(product);
-//            }
-//            cartRepository.save(cart);
-//        }
-//    }
-    // 장바구니 상품 수량 변경
     public void updateCart(User user, String productId, int quantity) {
         Integer intProductId = Integer.parseInt(productId);
         Product product = productRepository.findById(intProductId)
@@ -123,5 +107,14 @@ public class CartService {
             }
         }
         return totalPrice;
+    }
+
+    // 결제 후 장바구니 비우기
+    public void clearCart(User user) {
+        Cart cart = cartRepository.findByUser(user).orElse(null);
+        if (cart != null) {
+            cart.getProducts().clear();
+            cartRepository.save(cart);
+        }
     }
 }

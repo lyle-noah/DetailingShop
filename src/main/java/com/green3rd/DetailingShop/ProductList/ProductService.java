@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -71,5 +72,20 @@ public class ProductService {
     // 사용자들이 누른 좋아요 수 세기.
     public int getLikesCountForProduct(int productIndexId) {
         return userLikesRepository.countByProductIndexIdAndLikeState(productIndexId, true);
+    }
+
+    // 관리자 페이지 상품 목록
+    public List<Product> findAllProducts() {
+        return productRepository.findAll();
+    }
+
+    // 관리자 페이지 상품 저장
+    public void save(Product product) {
+        productRepository.save(product);
+    }
+
+    // 관리자 페이지 상품 삭제
+    public void deleteProductById(Integer id) {
+        productRepository.deleteById(id);
     }
 }

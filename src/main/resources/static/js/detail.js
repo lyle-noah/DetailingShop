@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const continueShoppingBtn = document.getElementById('continue-shopping');
     const goToCartBtn = document.getElementById('go-to-cart');
 
+
     // 폼 제출 이벤트 막기
     cartForm.addEventListener('submit', function(event) {
         event.preventDefault(); // 폼 기본 제출 동작 막기
