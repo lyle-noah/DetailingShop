@@ -1,108 +1,107 @@
 package com.green3rd.DetailingShop.Cart;
 
+import com.green3rd.DetailingShop.ProductList.Product;
+import com.green3rd.DetailingShop.ProductList.ProductService;
 import com.green3rd.DetailingShop.User.User;
-import com.green3rd.DetailingShop.User.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.green3rd.DetailingShop.User.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.security.Principal;
+import java.util.Optional;
+
 
 @Controller
+@RequiredArgsConstructor
 public class CartController {
-    private final UserRepository userRepository;
+
     private final CartService cartService;
+    private final UserService userService;
+    private final ProductService productService;
 
-    @Autowired
-    public CartController(UserRepository userRepository, CartService cartService) {
-        this.userRepository = userRepository;
-        this.cartService = cartService;
-    }
-
-    // 장바구니 페이지
+    // 장바구니 페이지 접근
     @GetMapping("/cart")
-    public String CartPage(Model model) {
-        // 현재 인증된 사용자 정보 가져오기
+    public String getCartPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // 인증되지 않았거나 로그인된 사용자가 없는 경우
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/user/login";
-        }
-        // 로그인된 사용자의 이름 가져오기
-        String siteUsername = authentication.getName();
-        User user = userRepository.findByUsername(siteUsername).orElse(null);
-        if (user == null) {
-            return "redirect:/user/login";
-        }
-        // 유저의 장바구니 가져오기
-        Cart cart = cartService.getUser(user);
-        if (cart == null) {
-            cart = new Cart();
-            cart.setProducts(new ArrayList<>());  // 빈 리스트로 초기화
+            return "redirect:/user/login";  // 로그인되지 않은 사용자는 로그인 페이지로 리다이렉트
         }
 
-        double totalPrice = cartService.totalPrice(cart);
-        model.addAttribute("cart", cart);
-        model.addAttribute("totalPrice", totalPrice);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        // 장바구니와 총 금액을 모델에 추가
+        model.addAttribute("cartItems", cartService.getCartByUser(user));
+        model.addAttribute("totalPrice", cartService.calculateTotalPrice(user));
+
         return "cart/cart";
     }
 
-    //  장바구니 추가
-    @PostMapping("/cart/add")
-    public String addCart(@RequestParam String productId) {
-        // 인증된 사용자 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String siteUsername = authentication.getName();
-        User user = userRepository.findByUsername(siteUsername).orElse(null);
-        if (user == null) {
-            return "redirect:/user/login";
+    // 장바구니에 상품 추가 기능
+    @PostMapping("/cart/add/{indexId}")
+    public String addToCart(@PathVariable int indexId,
+                            @RequestParam("cartCount") int cartCount,
+                            @RequestParam("redirectUrl") String redirectUrl,
+                            Principal principal,
+                            Model model) {
+
+        if (principal == null) {
+            // 비로그인 상태일 경우 로그인 페이지로 리다이렉트
+            model.addAttribute("message", "로그인이 필요합니다.");
+            model.addAttribute("urlYes", "/user/login?redirectUrl=" + redirectUrl);
+            model.addAttribute("urlNo", redirectUrl);
+            return "alert/alertMessage_form01";
         }
-        // 장바구니에 상품 추가
-        cartService.addCart(user,productId);
-        return "redirect:/cart";
+
+        // 로그인한 경우 장바구니에 추가 처리 로직
+        User user = userService.findByUsername(principal.getName());
+        Product product = productService.findByIndexId(indexId);
+
+        if (user != null && product != null) {
+            Cart cart = cartService.getOrCreateCart(user, product);
+
+            // 장바구니에 상품이 이미 있는지 확인
+            if (cart.isCartState()) { // 기존의 getCartState 메서드 대신 cart.getCartState() 사용
+                // 상품이 이미 장바구니에 존재할 때 모달창 보여줌
+                return "forms/modal_form02";
+            }
+
+            // 새로운 상품 장바구니 추가 로직
+            cart.setCartState(true);
+            cart.setCartCount(cartCount);
+            cartService.saveCart(cart);
+        }
+
+        // 장바구니에 추가되면 모달창 띄우기
+        return "forms/modal_form01";
     }
 
-    //  장바구니 추가
+    // 장바구니에서 상품 수량 변경
     @PostMapping("/cart/update")
-    @ResponseBody
-    public Map<String, Object> updateCart(@RequestParam String productId, @RequestParam int quantity) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElse(null);
+    public String updateCart(@RequestParam("productId") Integer indexId,
+                             @RequestParam("cartCount") int carCount,
+                             Principal principal,
+                             Model model) {
 
-        if (user == null) {
-            throw new RuntimeException("사용자를 찾을 수 없습니다.");
-        }
-        if (quantity <= 0) {
-            return Map.of("error", "Invalid quantity");
-        }
-        cartService.updateCart(user, productId, quantity);
-        Cart cart = cartService.getUser(user);
-        double totalPrice = cartService.totalPrice(cart);
+        User user = userService.findByUsername(principal.getName());
+        cartService.updateCartCount(user, indexId, carCount);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("totalPrice", totalPrice);
-        return response;
+        return "redirect:/cart";  // 장바구니 페이지로 리다이렉트
     }
 
-    // 장바구니 상품 삭제
+    // 장바구니에서 상품 제거
     @PostMapping("/cart/delete")
-    public String deleteCart(@RequestParam String productId) {
+    public String removeFromCart(@RequestParam("productId") Integer indexId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String Username = authentication.getName();
-        User user = userRepository.findByUsername(Username).orElse(null);
-        if (user == null) {
-            return "redirect:/user/login";
-        }
-        cartService.deleteCart(user, productId);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        cartService.removeFromCart(user, indexId);
         return "redirect:/cart";
     }
 }

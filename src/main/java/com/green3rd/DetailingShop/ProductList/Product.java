@@ -1,13 +1,16 @@
 package com.green3rd.DetailingShop.ProductList;
 
+import com.green3rd.DetailingShop.Cart.Cart;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +22,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int indexId;  // 이 컬럼이 all_product 테이블의 index_id와 매핑됩니다
+    private Integer indexId;  // 이 컬럼이 all_product 테이블의 index_id와 매핑됩니다
 
     @Column(nullable = false)
     private String productId;
@@ -35,10 +38,14 @@ public class Product {
     @Transient
     private String formattedPrice; // 추가된 필드
 
+    // 좋아요 상태 엔티티 연결
     private boolean likeState = false;
 
-    //  수량 필드
-    private int quantity;
+    // 장바구니 상태 엔티티 연결
+    private boolean cartState = false;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<Cart> carts = new HashSet<>();
 
     // 좋아요버튼
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

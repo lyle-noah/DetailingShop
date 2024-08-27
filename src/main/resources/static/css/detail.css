@@ -94,14 +94,14 @@
         line-height: 1.6;
     }
 
-    /* Quantity Selector 스타일 */
-    .quantity-selector {
+    /* cartCount Selector 스타일 */
+    .cartCount-selector {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
     }
 
-    .quantity-selector button {
+    .cartCount-selector button {
         background-color: #e5e7eb;
         border: none;
         padding: 8px 12px;
@@ -111,11 +111,11 @@
         transition: background-color 0.3s ease;
     }
 
-    .quantity-selector button:hover {
+    .cartCount-selector button:hover {
         background-color: #d1d5db;
     }
 
-    .quantity-selector input {
+    .cartCount-selector input {
         text-align: center;
         width: 60px;
         border: 1px solid #d1d5db;
