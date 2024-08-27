@@ -1,31 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Admin - Users</title>
-</head>
-<body>
-<h1>유저 목록</h1>
-<table>
-    <thead>
-    <tr>
-        <th>아이디</th>
-        <th>유저명</th>
-        <th>이메일</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.username}">Username</td>
-        <td th:text="${user.email}">user@example.com</td>
-        <td>
-            <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Admin - Users</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>유저 목록</h1>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>아이디</th>-->
+<!--        <th>유저명</th>-->
+<!--        <th>이메일</th>-->
+<!--        <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="user : ${users}">-->
+<!--        <td th:text="${user.id}">1</td>-->
+<!--        <td th:text="${user.username}">Username</td>-->
+<!--        <td th:text="${user.email}">user@example.com</td>-->
+<!--        <td>-->
+<!--            <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">-->
+<!--                <button type="submit">Delete</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+<div th:fragment="content">
+    <h1>유저 목록</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>아이디</th>
+            <th>유저명</th>
+            <th>이메일</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">Username</td>
+            <td th:text="${user.email}">user@example.com</td>
+            <td>
+                <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

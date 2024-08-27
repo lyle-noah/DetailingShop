@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <a href="javascript:void(0)" onclick="showContent('userManagement')">유저 관리</a>
+    <a href="javascript:void(0)" onclick="showContent('productManagement')">상품 관리</a>
+</div>
+
+<div class="main-content">
+    <div id="userManagement" class="content active">
+        <h2>유저 관리</h2>
+        <!-- users.html 템플릿 내용 -->
+        <div th:replace="~{admin/users.html :: content}"></div>
+    </div>
+
+    <div id="productManagement" class="content">
+        <h2>상품 관리</h2>
+        <div th:replace="~{admin/products.html :: content}"></div>
+        <div th:replace="~{admin/addProductForm.html :: content}"></div>
+        <div th:replace="~{admin/editProduct.html :: content}"></div>
+    </div>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

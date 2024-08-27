@@ -20,33 +20,55 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public String Home() {
+        return "admin/admin";
+    }
+
     // 상품 목록 조회
     @GetMapping("/products")
     public String getProducts(Model model) {
         List<Product> products = productService.findAllProducts();
         model.addAttribute("products" , products);
-        return "admin/products";
+        model.addAttribute("view" , "products");
+        return "admin/admin";
     }
 
     // 유저 목록 조회
     @GetMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute("users" , userService.findAllUsers());
-        return "admin/users";
+        model.addAttribute("view" , "users");
+        return "admin/admin";
     }
 
-    // 상품 추가 페이지
+//    // 상품 추가 페이지
+//    @GetMapping("/products/add")
+//    public String addProductForm(Model model) {
+//        model.addAttribute("product" , new Product());
+//        model.addAttribute("view" , "addProductForm");
+//        return "admin/admin";
+//    }
+
+    // 상품 추가 폼을 보여주는 메서드
     @GetMapping("/products/add")
     public String addProductForm(Model model) {
-        model.addAttribute("product" , new Product());
-        return "admin/addProductForm";
+    model.addAttribute("product", new Product()); // 빈 Product 객체를 모델에 추가
+    return "admin/addProductForm"; // addProductForm.html 템플릿 반환
     }
 
-    // 상품 추가 처리
+//    // 상품 추가 처리
+//    @PostMapping("/products/add")
+//    public String addProduct(@ModelAttribute Product product) {
+//        productService.save(product);
+//        return "redirect:/admin/products";
+//    }
+
+    // 상품 추가를 처리하는 메서드
     @PostMapping("/products/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productService.save(product);
-        return "redirect:/admin/products";
+    public String addProduct(@ModelAttribute("product") Product product) {
+        // 제품 저장 로직 (예: productService.save(product))
+        return "redirect:/admin/products"; // 저장 후 제품 목록 페이지로 리다이렉트
     }
 
     // 상품 삭제 처리
@@ -62,5 +84,4 @@ public class AdminController {
         userService.deleteByUserId(id);
         return "redirect:/admin/users";
     }
-
 }

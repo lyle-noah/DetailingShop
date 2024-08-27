@@ -1,37 +1,69 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Admin - Products</title>
-</head>
-<body>
-<h1>Product List</h1>
-<a th:href="@{/admin/products/add}">Add New Product</a>
-<table>
-    <thead>
-    <tr>
-        <th>상품 이미지</th>
-        <th>제품 번호</th>
-        <th>제품명</th>
-        <th>가격</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td>
-            <img th:src="${product.imgurl}" alt="Product Image" style="width: 100px; height: auto;">
-        </td>
-        <td th:text="${product.indexId}">1</td>
-        <td th:text="${product.productName}">Product Name</td>
-        <td th:text="${product.productPrice}">100</td>
-        <td>
-            <a th:href="@{/admin/products/edit/{id}(id=${product.indexId})}">Edit</a>
-            <form th:action="@{/admin/products/delete/{id}(id=${product.indexId})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Admin - Products</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Product List</h1>-->
+<!--<a th:href="@{/admin/products/add}">Add New Product</a>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>상품 이미지</th>-->
+<!--        <th>제품 번호</th>-->
+<!--        <th>제품명</th>-->
+<!--        <th>가격</th>-->
+<!--        <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="product : ${products}">-->
+<!--        <td>-->
+<!--            <img th:src="${product.imgurl}" alt="Product Image" style="width: 100px; height: auto;">-->
+<!--        </td>-->
+<!--        <td th:text="${product.indexId}">1</td>-->
+<!--        <td th:text="${product.productName}">Product Name</td>-->
+<!--        <td th:text="${product.productPrice}">100</td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/admin/products/edit/{id}(id=${product.indexId})}">Edit</a>-->
+<!--            <form th:action="@{/admin/products/delete/{id}(id=${product.indexId})}" method="post">-->
+<!--                <button type="submit">Delete</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+<div th:fragment="content">
+    <h1>Product List</h1>
+    <a th:href="@{/admin/products/add}">Add New Product</a>
+    <table>
+        <thead>
+        <tr>
+            <th>상품 이미지</th>
+            <th>제품 번호</th>
+            <th>제품명</th>
+            <th>가격</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td>
+                <img th:src="${product.imgurl}" alt="Product Image" style="width: 100px; height: auto;">
+            </td>
+            <td th:text="${product.indexId}">1</td>
+            <td th:text="${product.productName}">Product Name</td>
+            <td th:text="${product.productPrice}">100</td>
+            <td>
+                <a th:href="@{/admin/products/edit/{id}(id=${product.indexId})}">Edit</a>
+                <form th:action="@{/admin/products/delete/{id}(id=${product.indexId})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

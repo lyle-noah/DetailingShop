@@ -1,30 +1,85 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Add New Product</title>
-</head>
-<body>
-<h1>Add New Product</h1>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Add New Product</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>상품 추가</h1>-->
 
-<form th:action="@{/admin/products/add}" th:object="${product}" method="post">
-    <div>
-        <label for="name">Product Name:</label>
-        <input type="text" id="name" th:field="*{productName}" placeholder="Enter product name" required>
-    </div>
-    <div>
-        <label for="price">Price:</label>
-        <input type="number" id="price" th:field="*{productPrice}" placeholder="Enter product price" step="0.01" required>
-    </div>
-    <div>
-        <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}" placeholder="Enter product description"></textarea>
-    </div>
-    <div>
-        <button type="submit">Add Product</button>
-    </div>
-</form>
+<!--<form th:action="@{/admin/products/add}" th:object="${product}" method="post">-->
+<!--    <div>-->
+<!--        <label for="productId">Product ID:</label>-->
+<!--        <input type="text" id="productId" th:field="*{productId}" placeholder="Enter product ID" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="name">Product Name:</label>-->
+<!--        <input type="text" id="name" th:field="*{productName}" placeholder="Enter product name" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="price">Price:</label>-->
+<!--        <input type="number" id="price" th:field="*{productPrice}" placeholder="Enter product price" step="10000" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="firstCategory">First Category:</label>-->
+<!--        <input type="text" id="firstCategory" th:field="*{firstCategory}" placeholder="Enter first category">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="secondCategory">Second Category:</label>-->
+<!--        <input type="text" id="secondCategory" th:field="*{secondCategory}" placeholder="Enter second category">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="thirdCategory">Third Category:</label>-->
+<!--        <input type="text" id="thirdCategory" th:field="*{thirdCategory}" placeholder="Enter third category">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="imgurl">Image URL:</label>-->
+<!--        <input type="text" id="imgurl" th:field="*{imgurl}" placeholder="Enter image URL">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <button type="submit">상품 추가하기</button>-->
+<!--    </div>-->
+<!--</form>-->
 
-<a th:href="@{/admin/products}">Back to Product List</a>
+<!--<a th:href="@{/admin/products}">상품 목록으로 돌아가기</a>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
+<div th:fragment="content">
+    <h1>상품 추가</h1>
+
+    <form th:action="@{/admin/products/add}" th:object="${product}" method="post">
+        <div>
+            <label for="productId">Product ID:</label>
+            <input type="text" id="productId" th:field="*{productId}" placeholder="Enter product ID" required>
+        </div>
+        <div>
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" th:field="*{productName}" placeholder="Enter product name" required>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" th:field="*{productPrice}" placeholder="Enter product price" step="10000" required>
+        </div>
+        <div>
+            <label for="firstCategory">First Category:</label>
+            <input type="text" id="firstCategory" th:field="*{firstCategory}" placeholder="Enter first category">
+        </div>
+        <div>
+            <label for="secondCategory">Second Category:</label>
+            <input type="text" id="secondCategory" th:field="*{secondCategory}" placeholder="Enter second category">
+        </div>
+        <div>
+            <label for="thirdCategory">Third Category:</label>
+            <input type="text" id="thirdCategory" th:field="*{thirdCategory}" placeholder="Enter third category">
+        </div>
+        <div>
+            <label for="imgurl">Image URL:</label>
+            <input type="text" id="imgurl" th:field="*{imgurl}" placeholder="Enter image URL">
+        </div>
+        <div>
+            <button type="submit">상품 추가하기</button>
+        </div>
+    </form>
+
+    <a th:href="@{/admin/products}">상품 목록으로 돌아가기</a>
+</div>
