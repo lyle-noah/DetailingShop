@@ -34,12 +34,22 @@
         <section class="lg:col-span-3 space-y-12">
             <!-- Profile Section -->
             <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md flex items-center space-x-4 lg:space-x-6 hover-shadow hover-zoom mb-8">
-                <img class="w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
+                <img id="profile-img" class="w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-lg object-cover"
+                     th:src="${user.profileImagePath != null ? user.profileImagePath : '/img/icon/icon_Profile.png'}"
+                     alt="Profile picture">
                 <div>
                     <h2 class="text-2xl lg:text-3xl font-semibold">
                         안녕하세요. <span th:text="${user.username}">사용자</span> 님!
                     </h2>
                     <p class="text-gray-500 mt-2">고객님의 회원등급은 일반회원 입니다.</p>
+                    <!-- 프로필 사진 변경 버튼 -->
+                    <button id="change-profile-btn" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                        프로필 사진 변경
+                    </button>
+                    <!-- 숨겨진 파일 입력 -->
+                    <form id="profile-form" action="/user/profile/uploadImage" method="POST" enctype="multipart/form-data">
+                        <input id="profile-file" type="file" name="profileImage" accept="image/*" class="hidden" />
+                    </form>
                 </div>
             </div>
 
@@ -90,5 +100,23 @@
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const changeProfileBtn = document.getElementById('change-profile-btn');
+    const profileFileInput = document.getElementById('profile-file');
+    const profileForm = document.getElementById('profile-form');
+
+    changeProfileBtn.addEventListener('click', function() {
+        profileFileInput.click();
+    });
+
+    profileFileInput.addEventListener('change', function() {
+        if (profileFileInput.files.length > 0) {
+            profileForm.submit();
+        }
+    });
+});
+
+</script>
 </body>
 </html>

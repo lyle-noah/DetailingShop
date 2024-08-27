@@ -42,4 +42,15 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
     }
+
+    public void updateProfileImage(String username, String imagePath) {
+        User user = getUser(username);
+        user.setProfileImagePath(imagePath);
+
+        // 디버깅 출력
+        System.out.println("Image path set for user: " + username + ", path: " + imagePath);
+
+        userRepository.save(user);
+    }
+
 }

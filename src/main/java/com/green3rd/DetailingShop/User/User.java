@@ -31,4 +31,8 @@ public class User {
 	// 새로운 필드 추가
 	private String securityQuestion;
 	private String securityAnswer;
+
+	// 프로필 이미지 경로 필드 추가
+	private String profileImagePath;
 }
+

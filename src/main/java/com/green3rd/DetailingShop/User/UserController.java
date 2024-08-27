@@ -1,6 +1,11 @@
 package com.green3rd.DetailingShop.User;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import com.green3rd.DetailingShop.Security.UserNotFoundException;
 import com.green3rd.DetailingShop.UserCreate.UserCreateForm;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -87,7 +94,7 @@ public class UserController {
         }
         model.addAttribute("user", user);
         model.addAttribute("username", user.getUsername());
-        return "profile";
+        return "mypage/mypage"; // "profile" 대신 "mypage/mypage"로 변경
     }
 
     @GetMapping("/mypage")
@@ -163,5 +170,47 @@ public class UserController {
     @ModelAttribute
     public void addAttributes(Model model) {
         model.addAttribute("requestURI", request.getRequestURI());
+    }
+
+    @PostMapping("/profile/uploadImage")
+    public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file,
+                                     RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/user/login";
+        }
+
+        String username = authentication.getName();
+        User user;
+        try {
+            user = userService.getUser(username);
+        } catch (UserNotFoundException e) {
+            return "redirect:/user/login";
+        }
+
+        if (!file.isEmpty()) {
+            try {
+                // 파일 저장 로직
+                String imagePath = saveFile(file);
+                userService.updateProfileImage(username, imagePath);
+                redirectAttributes.addFlashAttribute("message", "프로필 사진이 성공적으로 업로드되었습니다.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                redirectAttributes.addFlashAttribute("message", "프로필 사진 업로드 중 오류가 발생했습니다.");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("message", "빈 파일을 업로드할 수 없습니다.");
+        }
+
+        return "redirect:/user/mypage"; // "redirect:/user/profile" 대신 "redirect:/user/mypage"로 변경
+    }
+
+    private String saveFile(MultipartFile file) throws IOException {
+        String uploadDirectory = "uploads/profileImages/";
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        Path path = Paths.get(uploadDirectory + fileName);
+        Files.createDirectories(path.getParent());
+        Files.write(path, file.getBytes());
+        return "/uploads/profileImages/" + fileName; // Web에서 접근 가능한 경로
     }
 }
