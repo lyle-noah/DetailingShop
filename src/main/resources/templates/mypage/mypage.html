@@ -21,10 +21,10 @@
 <div th:replace="~{header/header.html :: header}"></div>
 
 <main class="container mx-auto px-4 py-8 lg:py-16">
-    <div class="text-center mb-8 fade-in">
+    <div class="text-center mb-12 fade-in">
         <h1 class="text-4xl font-bold">마이 쇼핑</h1>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 fade-in">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 fade-in">
         <!-- 왼쪽 사이드바 -->
         <aside class="lg:col-span-1">
             <div th:replace="~{mypage/sidebar.html :: sidebar}" class="hover-shadow rounded-lg bg-white p-6"></div>
@@ -33,10 +33,10 @@
         <!-- 메인 컨텐츠 -->
         <section class="lg:col-span-3 space-y-12">
             <!-- Profile Section -->
-            <div class="bg-white p-8 rounded-lg shadow-md flex items-center space-x-6 hover-shadow hover-zoom">
-                <img class="w-24 h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
+            <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md flex items-center space-x-4 lg:space-x-6 hover-shadow hover-zoom mb-8">
+                <img class="w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
                 <div>
-                    <h2 class="text-3xl font-semibold">
+                    <h2 class="text-2xl lg:text-3xl font-semibold">
                         안녕하세요. <span th:text="${user.username}">사용자</span> 님!
                     </h2>
                     <p class="text-gray-500 mt-2">고객님의 회원등급은 일반회원 입니다.</p>
@@ -44,39 +44,39 @@
             </div>
 
             <!-- Info Section -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
-                    <div class="text-2xl font-bold">5,000원</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+                <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md hover-shadow hover-zoom">
+                    <div class="text-2xl lg:text-3xl font-bold">5,000원</div>
                     <div class="text-gray-500 mt-2">총상품구매 적립금</div>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
-                    <div class="text-2xl font-bold">0개</div>
+                <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md hover-shadow hover-zoom">
+                    <div class="text-2xl lg:text-3xl font-bold">0개</div>
                     <div class="text-gray-500 mt-2">쿠폰</div>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
-                    <div class="text-2xl font-bold">0원(0회)</div>
+                <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md hover-shadow hover-zoom">
+                    <div class="text-2xl lg:text-3xl font-bold">0원(0회)</div>
                     <div class="text-gray-500 mt-2">총주문</div>
                 </div>
             </div>
 
             <!-- Order Status Section -->
-            <div class="bg-white p-8 rounded-lg shadow-md hover-shadow hover-zoom">
-                <h3 class="text-2xl font-bold mb-6">나의 주문처리 현황 (최근 3개월 기준)</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+            <div class="bg-white p-6 lg:p-8 rounded-lg shadow-md hover-shadow hover-zoom">
+                <h3 class="text-xl lg:text-2xl font-bold mb-4 lg:mb-6">나의 주문처리 현황 (최근 3개월 기준)</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
                     <div>
-                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-2xl lg:text-3xl font-bold">0</div>
                         <div class="text-gray-500 mt-2">입금전</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-2xl lg:text-3xl font-bold">0</div>
                         <div class="text-gray-500 mt-2">배송준비중</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-2xl lg:text-3xl font-bold">0</div>
                         <div class="text-gray-500 mt-2">배송중</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold">0</div>
+                        <div class="text-2xl lg:text-3xl font-bold">0</div>
                         <div class="text-gray-500 mt-2">배송완료</div>
                     </div>
                 </div>
