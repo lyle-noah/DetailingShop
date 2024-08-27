@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const decreaseButton = document.querySelector('.cartCount-selector button:first-child');
     const increaseButton = document.querySelector('.cartCount-selector button:last-child');
     const totalPriceElement = document.getElementById('totalPrice');
-    const unitPrice = parseInt(totalPriceElement.dataset.unitPrice); // 개별 상품 가격
+    const unitPrice = parseInt(totalPriceElement.dataset.unitPrice);
 
     function updateCartCount() {
         finalCartCountInput.value = quantityInput.value;
@@ -47,37 +47,46 @@ document.addEventListener("DOMContentLoaded", function() {
         increaseCartCount();
     });
 
-    // CART 버튼을 누를 때 수량 업데이트
+    // CART 버튼을 누를 때 수량 업데이트 및 비동기 요청
     document.querySelector('.cart-form').addEventListener('submit', function(event) {
-        finalCartCountInput.value = quantityInput.value; // 최종 수량을 서버로 전송
+        event.preventDefault(); // 페이지 리로드 방지
+
+        finalCartCountInput.value = quantityInput.value;
+
+        const formData = new FormData(this);
+        const actionUrl = this.getAttribute('action');
+
+        fetch(actionUrl, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(html => {
+            if (html.includes('modal_form01')) {
+                document.getElementById('cart-modal').style.display = 'flex';
+            } else if (html.includes('modal_form02')) {
+                document.getElementById('cart-modal-exist').style.display = 'flex';
+            }
+        })
+        .catch(error => console.error('Error:', error));
     });
 
     // 초기 총 가격 설정
     updateTotalPrice();
 
-    // 장바구니 추가 및 모달 관련 요소 선택
-    const cartForm = document.querySelector('form.cart-form');
-    const modal = document.getElementById('cart-modal');
-    const continueShoppingBtn = document.getElementById('continue-shopping');
-    const goToCartBtn = document.getElementById('go-to-cart');
-
-
-    // 폼 제출 이벤트 막기
-    cartForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // 폼 기본 제출 동작 막기
-
-        // 모달 창 보이기
-        modal.style.display = 'flex';
+    // 모달 창 닫기 로직 추가
+    document.querySelectorAll('.close-button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('cart-modal').style.display = 'none';
+            document.getElementById('cart-modal-exist').style.display = 'none';
+        });
     });
 
-    // 쇼핑 계속하기 버튼 클릭 시
-    continueShoppingBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
+    document.getElementById('continue-shopping-exist').addEventListener('click', function() {
+        document.getElementById('cart-modal-exist').style.display = 'none';
     });
 
-    // 장바구니로 이동 버튼 클릭 시
-    goToCartBtn.addEventListener('click', function() {
-        // 실제 장바구니로 이동
-        cartForm.submit();
+    document.getElementById('continue-shopping').addEventListener('click', function() {
+        document.getElementById('cart-modal').style.display = 'none';
     });
-})
+});
