@@ -26,12 +26,12 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 fade-in">
         <!-- 왼쪽 사이드바 -->
-        <div class="lg:col-span-1 space-y-12">
+        <aside class="lg:col-span-1">
             <div th:replace="~{mypage/sidebar.html :: sidebar}" class="hover-shadow rounded-lg bg-white p-6"></div>
-        </div>
+        </aside>
 
         <!-- 메인 컨텐츠 -->
-        <div class="lg:col-span-3 space-y-12">
+        <section class="lg:col-span-3 space-y-12">
             <!-- Profile Section -->
             <div class="bg-white p-8 rounded-lg shadow-md flex items-center space-x-6 hover-shadow hover-zoom">
                 <img class="w-24 h-24 rounded-full shadow-lg" src="/img/icon/icon_Profile.png" alt="Profile picture">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </main>
 
