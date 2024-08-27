@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>알림</title>
+    <link rel="stylesheet" href="/css/alert.css">
+</head>
+<body>
+<div class="alert">
+    <h1>알림</h1>
+    <p th:text="${message}"></p>
+    <div class="alert-buttons">
+        <a th:href="${urlYes}" class="btn">돌아가기</a>
+        <a th:href="${urlNo}" class="btn">장바구니로 이동</a>
+    </div>
+</div>
+</body>
+</html>

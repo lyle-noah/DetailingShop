@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/itemCount_form01.css">
     <link rel="stylesheet" href="/css/mobileMenu_form01.css">
     <link rel="stylesheet" href="/css/search_form02.css">
+    <link rel="stylesheet" href="/css/modal_form01.css">
+    <link rel="stylesheet" href="/css/modal_form02.css">
 </head>
 <body class="bg-gray-100">
 
@@ -36,9 +38,9 @@
                         <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
                         <button type="submit" class="btn" th:classappend="${infor.likeState ? 'WISHED' : ''}" th:text="'WISH'"></button>
                     </form>
-                    <form th:action="@{/cart/add}" method="post">
-                        <input type="hidden" name="productId" th:value="${infor.indexId}" />
-                        <input type="hidden" name="userId" th:value="${userId}" />
+                    <form th:action="@{/cart/add/{indexId}(indexId=${infor.indexId})}" method="post" class="add-to-cart-form">
+                        <input type="hidden" name="cartCount" value="1"/>
+                        <input type="hidden" name="redirectUrl" th:value="${currentUri}"/>
                         <button type="submit" class="btn">ADD</button>
                     </form>
                 </div>
@@ -56,8 +58,16 @@
 <!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
+<!-- 장바구니 모달 hidden 처리되어있음. -->
+<div th:replace="~{forms/modal_form01.html :: cartModal}"></div>
+<div th:replace="~{forms/modal_form02.html :: cartModalExist}"></div>
+
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/mobileMenu_form01.js"></script>
+<script src="/js/search_form01.js"></script>
+<script src="/js/modal_form01.js"></script>
+<script src="/js/modal_form02.js"></script>
+<script src="/js/category_form01.js"></script>
 </body>
 </html>

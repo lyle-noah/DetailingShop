@@ -1,4 +1,4 @@
-/* 모달 창 스타일 */
+/* modal_form01.css */
 .modal {
     display: none; /* 처음에는 보이지 않도록 설정 */
     position: fixed;
@@ -19,9 +19,14 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.modal .modal-content h2 {
+    font-size: 15px; /* 메인 메시지 크기 조정 */
+}
+
 .modal .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* 버튼들이 가운데로 정렬되도록 */
+    gap: 30px; /* 버튼 간 간격을 30px로 설정 */
     margin-top: 20px;
 }
 

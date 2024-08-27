@@ -23,7 +23,7 @@ public class Cart {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "product_indexId", nullable = false)
+    @JoinColumn(name = "product_index_id", nullable = false)
     private Product product;
 
     private boolean cartState;  // 장바구니 상태를 나타내는 boolean 필드

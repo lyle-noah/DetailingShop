@@ -1,7 +1,6 @@
 package com.green3rd.DetailingShop.ProductList;
 
 import com.green3rd.DetailingShop.User.User;
-import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +52,7 @@ public class ProductService {
     }
 
     // 좋아요 버튼의 동작을 수집하고 DB에 저장.
-    public void toggleLike(User user, Product product) {
+    public boolean toggleLike(User user, Product product) {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndProduct(user, product);
 
         if (userLikesOptional.isPresent()) {
@@ -67,6 +66,7 @@ public class ProductService {
             newUserLike.setLikeState(true);
             userLikesRepository.save(newUserLike);
         }
+        return false;
     }
 
     // 사용자들이 누른 좋아요 수 세기.

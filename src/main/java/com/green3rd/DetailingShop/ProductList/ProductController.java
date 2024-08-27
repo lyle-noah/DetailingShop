@@ -185,22 +185,19 @@ public class ProductController {
 
     // 좋아요 버튼 기능
     @PostMapping("/product/like/{indexId}")
-    public String likeProduct(@PathVariable int indexId,
-                              @RequestParam("redirectUrl") String redirectUrl,
-                              Principal principal,
-                              Model model) {
+    @ResponseBody
+    public Map<String, Object> likeProduct(@PathVariable int indexId,
+                                           @RequestParam("redirectUrl") String redirectUrl,
+                                           Principal principal,
+                                           Model model) {
 
-        System.out.println("indexId: " + indexId);
-        System.out.println("redirectUrl: " + redirectUrl);
+        Map<String, Object> response = new HashMap<>();
 
         if (principal == null) {
             // 로그인하지 않은 경우
-            model.addAttribute("message", "로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");
-            model.addAttribute("urlYes", "/user/login?redirectUrl=" + redirectUrl);
-            model.addAttribute("urlNo", redirectUrl); // 취소시 원래 페이지로 돌아가기
-
-            // 알림 팝업 페이지로 이동
-            return "alert/alertMessage_form01";
+            response.put("redirect", "/user/login?redirectUrl=" + redirectUrl);
+            response.put("message", "로그인이 필요합니다.");
+            return response;
         }
 
         // 로그인한 경우 좋아요 처리 로직
@@ -208,10 +205,10 @@ public class ProductController {
         Product product = productService.findByIndexId(indexId);
 
         if (user != null && product != null) {
-            productService.toggleLike(user, product);
+            boolean likeState = productService.toggleLike(user, product);
+            response.put("likeState", likeState);
         }
 
-        // 좋아요 버튼을 눌렀던 페이지로 리다이렉트
-        return "redirect:" + redirectUrl;
+        return response;
     }
 }

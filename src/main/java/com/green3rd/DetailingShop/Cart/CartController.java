@@ -44,6 +44,7 @@ public class CartController {
 
     // 장바구니에 상품 추가 기능
     @PostMapping("/cart/add/{indexId}")
+    @ResponseBody
     public String addToCart(@PathVariable int indexId,
                             @RequestParam("cartCount") int cartCount,
                             @RequestParam("redirectUrl") String redirectUrl,
@@ -51,10 +52,6 @@ public class CartController {
                             Model model) {
 
         if (principal == null) {
-            // 비로그인 상태일 경우 로그인 페이지로 리다이렉트
-            model.addAttribute("message", "로그인이 필요합니다.");
-            model.addAttribute("urlYes", "/user/login?redirectUrl=" + redirectUrl);
-            model.addAttribute("urlNo", redirectUrl);
             return "alert/alertMessage_form01";
         }
 
@@ -65,19 +62,15 @@ public class CartController {
         if (user != null && product != null) {
             Cart cart = cartService.getOrCreateCart(user, product);
 
-            // 장바구니에 상품이 이미 있는지 확인
-            if (cart.isCartState()) { // 기존의 getCartState 메서드 대신 cart.getCartState() 사용
-                // 상품이 이미 장바구니에 존재할 때 모달창 보여줌
+            if (cart.isCartState()) {
                 return "forms/modal_form02";
             }
 
-            // 새로운 상품 장바구니 추가 로직
             cart.setCartState(true);
             cart.setCartCount(cartCount);
             cartService.saveCart(cart);
         }
 
-        // 장바구니에 추가되면 모달창 띄우기
         return "forms/modal_form01";
     }
 

@@ -50,8 +50,8 @@ public class PayController {
                     String username = authentication.getName();
                     User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
 
-                    // 결제 후 장바구니 비우기
-                    /*cartService.clearCart(user);*/
+                    /*// 결제 후 장바구니 비우기
+                    cartService.clearCart(user);*/
 
                     model.addAttribute("message", "결제가 완료되었습니다.");
                     model.addAttribute("payment", payment);
