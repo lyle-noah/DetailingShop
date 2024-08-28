@@ -8,7 +8,12 @@ import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.User.User;
 
 @Entity
-@Table(name = "cart")
+@Table(
+        name = "cart",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "product_index_id"})
+        }
+)
 @Getter
 @Setter
 @ToString

@@ -10,5 +10,8 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Integer>{
 
     Optional<Cart> findByUserAndProduct(User user, Product product);
+
+
+
     List<Cart> findByUserAndCartStateTrue(User user); // cartState가 true인 항목만 가져옴
 }
