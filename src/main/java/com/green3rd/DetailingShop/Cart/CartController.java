@@ -5,6 +5,8 @@ import com.green3rd.DetailingShop.ProductList.ProductService;
 import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.security.Principal;
-import java.util.Optional;
+import java.util.List;
 
 
 @Controller
@@ -30,8 +32,9 @@ public class CartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // 비로그인 상태 처리
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/user/login";
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
+            String redirectUrl = "/cart";
+            return "redirect:/user/login?redirectUrl=" + redirectUrl;
         }
 
         // 로그인된 사용자 정보 가져오기
@@ -44,9 +47,16 @@ public class CartController {
             return "redirect:/user/login";
         }
 
+        // 장바구니 목록 가져오기
+        List<Cart> cartItems = cartService.getCartByUser(user);
+
+        // 장바구니가 비어있는지 확인
+        boolean isCartEmpty = cartItems.isEmpty();
+
         // 장바구니와 총 금액을 모델에 추가
-        model.addAttribute("cartItems", cartService.getCartByUser(user));
+        model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", cartService.calculateTotalPrice(user));
+        model.addAttribute("isCartEmpty", isCartEmpty);
 
         return "cart/cart";
     }
@@ -83,27 +93,45 @@ public class CartController {
         return "forms/modal_form01";
     }
 
-    // 장바구니에서 상품 수량 변경
-    @PostMapping("/cart/update")
-    public String updateCart(@RequestParam("productId") Integer indexId,
-                             @RequestParam("cartCount") int carCount,
-                             Principal principal,
-                             Model model) {
-
-        User user = userService.findByUsername(principal.getName());
-        cartService.updateCartCount(user, indexId, carCount);
-
-        return "redirect:/cart";  // 장바구니 페이지로 리다이렉트
-    }
-
-    // 장바구니에서 상품 제거
+    // 장바구니 품목 삭제 (비동기 처리)
     @PostMapping("/cart/delete")
-    public String removeFromCart(@RequestParam("productId") Integer indexId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByUsername(userDetails.getUsername());
+    public String deleteCartItem(@RequestParam("indexId") Integer indexId, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Product product = productService.findByIndexId(indexId);
 
-        cartService.removeFromCart(user, indexId);
+        if (user != null && product != null) {
+            cartService.deleteCartItem(user, product);
+        }
+
         return "redirect:/cart";
     }
+
+    // 장바구니 수량 업데이트 (비동기 처리)
+    @PostMapping("/cart/update")
+    public ResponseEntity<Void> updateCartItem(@RequestParam("indexId") Integer indexId, @RequestParam("cartCount") int cartCount, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Product product = productService.findByIndexId(indexId);
+
+        if (user != null && product != null) {
+            cartService.updateCartItem(user, product, cartCount);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    // 장바구니 수량 변경 기능
+    @PostMapping("/cart/update-quantity")
+    public String updateCartQuantity(@RequestParam("indexId") Integer indexId, @RequestParam("cartCount") int cartCount, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Product product = productService.findByIndexId(indexId);
+
+        if (user != null && product != null) {
+            cartService.updateCartItem(user, product, cartCount);
+        }
+
+        return "redirect:/cart";
+    }
+
+
 }

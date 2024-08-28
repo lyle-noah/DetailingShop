@@ -63,18 +63,6 @@ public class CartService {
         }
     }
 
-    // 장바구니에서 상품 제거
-    public void removeFromCart(User user, Integer indexId) {
-        Product product = productService.findByIndexId(indexId);
-        Optional<Cart> optionalCart = cartRepository.findByUserAndProduct(user, product);
-
-        if (optionalCart.isPresent()) {
-            Cart cart = optionalCart.get();
-            cart.setCartState(false);  // cartState를 false로 설정 (장바구니에서 제거)
-            cartRepository.save(cart);
-        }
-    }
-
     // 장바구니 총 금액 계산
     public BigDecimal calculateTotalPrice(User user) {
         List<Cart> cartItems = cartRepository.findByUserAndCartStateTrue(user);
@@ -86,6 +74,32 @@ public class CartService {
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add); // 모든 항목의 가격을 합산
     }
+
+    // 장바구니 품목 삭제
+    public void deleteCartItem(User user, Product product) {
+        Optional<Cart> cartItemOpt = cartRepository.findByUserAndProduct(user, product);
+        if (cartItemOpt.isPresent()) {
+            Cart cartItem = cartItemOpt.get();
+            cartItem.setCartCount(0);
+            cartItem.setCartState(false);
+            cartRepository.save(cartItem);  // 저장을 통해 삭제 상태로 만듦
+        } else {
+            throw new RuntimeException("Cart item not found for deletion");
+        }
+    }
+
+    // 장바구니 수량 업데이트
+    public void updateCartItem(User user, Product product, int cartCount) {
+        Optional<Cart> cartItemOpt = cartRepository.findByUserAndProduct(user, product);
+        if (cartItemOpt.isPresent()) {
+            Cart cartItem = cartItemOpt.get();
+            cartItem.setCartCount(cartCount);
+            cartRepository.save(cartItem);  // 수량 업데이트 후 저장
+        } else {
+            throw new RuntimeException("Cart item not found for update");
+        }
+    }
+
 
     public boolean addProductToCart(int indexId, int cartCount, String username) {
         // User와 Product 엔티티를 각각 조회합니다.
