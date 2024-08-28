@@ -25,4 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
     Page<Product> findAll(Specification<Product> spec, Pageable pageable);
 
     Optional<Product> findByIndexId(int indexId);
+
+    // 관리자 페이지 상품아이디 문자열로 검색
+    Optional<Product> findByProductId(String productId);
 }
