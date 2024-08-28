@@ -94,4 +94,16 @@ public class ProductService {
     public void deleteProductById(Integer id) {
         productRepository.deleteById(id);
     }
+
+
+
+    // 관리자 페이지 indexId로 검색 (기본 키를 이용한 검색)
+    public Product findProductByIndexId(Integer indexId) {
+        return productRepository.findById(indexId).orElse(null);
+    }
+
+    // 관리자 페이지 productId로 검색 (문자열 ID를 이용한 검색)
+    public Product findProductById(String productId) {
+        return productRepository.findByProductId(productId).orElse(null);
+    }
 }

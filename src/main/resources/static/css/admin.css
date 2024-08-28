@@ -1,28 +1,80 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
 .sidebar {
     height: 100%;
-    width: 200px;
+    width: 250px;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #2c3e50;
     padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease; /* 사이드바 확장/축소 애니메이션 */
 }
 
-.sidebar a {
-    padding: 10px 15px;
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-bottom: 1px solid #34495e;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.sidebar .nav-item {
+    padding: 15px 20px;
     text-decoration: none;
     font-size: 18px;
     color: white;
     display: block;
+    transition: background-color 0.3s;
 }
 
-.sidebar a:hover {
-    background-color: #575757;
+.sidebar .nav-item:hover {
+    background-color: #34495e;
+}
+
+.sidebar .nav-item i {
+    margin-right: 10px;
+    font-size: 20px;
 }
 
 .main-content {
-    margin-left: 210px;
+    margin-left: 270px;
     padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-height: 100vh; /* 화면 전체를 채우기 위해 높이 설정 */
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #2980b9;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #3498db;
 }
 
 .content {
@@ -31,4 +83,23 @@
 
 .active {
     display: block;
+}
+
+/* 추가된 애니메이션과 반응형 디자인 */
+.sidebar:hover {
+    width: 280px; /* 사이드바 확장 */
+}
+
+.sidebar-header {
+    font-size: 24px; /* 헤더 폰트 크기 확대 */
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* 작은 화면에서 사이드바 축소 */
+    }
+
+    .main-content {
+        margin-left: 220px;
+    }
 }

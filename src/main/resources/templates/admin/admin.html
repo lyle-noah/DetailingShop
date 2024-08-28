@@ -1,31 +1,32 @@
+<!--메인 관리자 페이지-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin Dashboard</title>
     <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 <div class="sidebar">
-    <a href="javascript:void(0)" onclick="showContent('userManagement')">유저 관리</a>
-    <a href="javascript:void(0)" onclick="showContent('productManagement')">상품 관리</a>
+    <div class="sidebar-header">
+        <h2>Admin Panel</h2>
+    </div>
+    <a th:href="@{/admin/users}" class="nav-item"><i class="fas fa-users"></i> 유저 관리</a>
+    <a th:href="@{/admin/products}" class="nav-item"><i class="fas fa-box-open"></i> 상품 관리</a>
 </div>
 
 <div class="main-content">
-    <div id="userManagement" class="content active">
+    <div th:if="${view == 'users'}">
         <h2>유저 관리</h2>
-        <!-- users.html 템플릿 내용 -->
-        <div th:replace="~{admin/users.html :: content}"></div>
+        <div th:replace="admin/users :: content"></div>
     </div>
 
-    <div id="productManagement" class="content">
+    <div th:if="${view == 'products'}">
         <h2>상품 관리</h2>
-        <div th:replace="~{admin/products.html :: content}"></div>
-        <div th:replace="~{admin/addProductForm.html :: content}"></div>
-        <div th:replace="~{admin/editProduct.html :: content}"></div>
+        <div th:replace="admin/products :: content"></div>
     </div>
 </div>
 
-<script src="/js/admin.js"></script>
 </body>
 </html>
