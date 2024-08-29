@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,4 +29,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
 
     // 관리자 페이지 상품아이디 문자열로 검색
     Optional<Product> findByProductId(String productId);
+
+    // 관리자 페이지 상품 검색
+    List<Product> findByProductNameContainingOrFirstCategoryContainingOrSecondCategoryContainingOrThirdCategoryContaining
+    (String productName, String firstCategory, String secondCategory, String thirdCategory);
 }

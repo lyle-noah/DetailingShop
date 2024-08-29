@@ -13,6 +13,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -95,8 +96,6 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-
-
     // 관리자 페이지 indexId로 검색 (기본 키를 이용한 검색)
     public Product findProductByIndexId(Integer indexId) {
         return productRepository.findById(indexId).orElse(null);
@@ -106,4 +105,11 @@ public class ProductService {
     public Product findProductById(String productId) {
         return productRepository.findByProductId(productId).orElse(null);
     }
+
+    // 관리자 페이지에서 상품 검색
+    public List<Product> searchProductsByKeyword(String keyword) {
+        return productRepository.findByProductNameContainingOrFirstCategoryContainingOrSecondCategoryContainingOrThirdCategoryContaining
+                (keyword, keyword, keyword, keyword);
+    }
+
 }
