@@ -3,142 +3,141 @@
     display: flex;
     justify-content: center; /* 가운데 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
-    gap: 4rem; /* space-x-4와 동일한 간격 */
-    background-color: #fff; /* 배경 색상 추가 */
+    gap: 4rem; /* 메뉴 항목 간의 간격 */
+    background-color: #fff; /* 배경 색상 */
 }
 
-/* 링크 스타일 */
-.nav-container a {
+/* 1차 카테고리 스타일 및 하단 선택 애니메이션 */
+.firstmenu-item {
+    position: relative; /* 하단 애니메이션을 위한 설정 */
     text-decoration: none;
-    color: #333;
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 수직 중앙 정렬 */
-    height: 55px; /* 높이 설정 */
-    position: relative; /* For the underline effect */
-    white-space: nowrap; /* Prevent text wrapping */
+    color: #4a4a4a; /* 진한 그레이색상 */
+    font-weight: 700; /* 폰트 굵기를 굵게 설정 */
+    font-size: 40%; /* 폰트 사이즈를 20% 작게 설정 */
+    display: flex;
+    align-items: center;
+    height: 80px; /* 1차 메뉴 높이 설정 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
-/* 링크 호버 및 클릭 스타일 */
-.nav-container a:hover,
-.nav-container a.active {
-    color: #6c757d; /* Gray tone for hover and active state */
+/* 1차 메뉴 호버 시 애니메이션 및 색상 변화 제거 */
+.firstmenu-item:hover {
+    color: #4a4a4a; /* 호버 시에도 동일한 색상을 유지 */
+    font-weight: 700; /* 글씨 굵기 유지 */
 }
 
-/* 드롭다운 스타일 */
+.firstmenu-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #6c757d; /* 애니메이션 색상 */
+    transition: width 0.3s ease-in-out; /* 애니메이션 효과 */
+    z-index: 1;
+}
+
+.firstmenu-item.active::after,
+.firstmenu-item:hover::after {
+    width: 100%; /* 애니메이션이 활성화되면 전체 폭을 덮음 */
+}
+
+/* 2차, 3차 카테고리 스타일: 패딩 적용 및 높이 조정 */
+.secondmenu-item,
+.thirdmenu-item {
+    color: #7a7a7a; /* 기본 그레이 색상 */
+    font-weight: 400; /* 기본 글씨 굵기를 호버 시와 동일하게 설정 */
+    font-size: 40%; /* 1차 메뉴와 동일한 폰트 사이즈 */
+    padding: 10px 20px; /* 패딩을 증가시켜 메뉴 간 거리를 늘림 */
+    display: block;
+    position: relative;
+    transition: none; /* 글씨 굵기 변화 애니메이션 제거 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+/* 서브메뉴 간 간격 조정 */
+.submenu-content {
+    left: 100%; /* 2차 메뉴 바로 옆에 위치 */
+    top: 0;
+    background-color: #f9f9f9;
+}
+
+/* 3차 메뉴가 있는 2차 메뉴에만 화살표 표시 */
+.secondmenu-item.with-submenu::after {
+    content: ' >';
+    font-size: 0.8em;
+    position: absolute;
+    right: 16px;
+    color: #6c757d;
+}
+
+/* 드롭다운 항목 호버 및 활성화 스타일 */
+.firstmenu-item:hover,
+.firstmenu-item.active,
+.secondmenu-item:hover,
+.thirdmenu-item:hover {
+    color: #6c757d; /* 호버 시 회색 톤으로 변경 */
+    font-weight: 700; /* 호버 시 텍스트를 굵게 */
+}
+
+/* 드롭다운 기본 스타일 */
 .dropdown {
     position: relative;
-    display: inline-block; /* Ensure dropdowns are inline */
+    display: inline-block;
 }
 
-/* 드롭다운 내용 스타일 */
-.dropdown-content {
-    display: none;
+.dropdown-content,
+.submenu-content {
+    display: none; /* 기본적으로 드롭다운 메뉴 숨김 */
     position: absolute;
     background-color: #ffffff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     min-width: 200px;
     z-index: 1;
-    top: 100%; /* Adjust to align with the bottom of the dropdown trigger */
+    top: 100%;
     left: 0;
-    padding-top: 10px; /* Add space between items */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add visibility transition */
+    padding: 0; /* 드롭다운 콘텐츠 간의 간격 최소화 */
+    margin: 0;
 }
 
-/* 드롭다운 항목 스타일 */
-.dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    display: block;
-    position: relative;
-    transition: font-weight 0.3s ease; /* Add transition for font-weight */
+/* 2차, 3차 메뉴 호버 스타일 */
+.secondmenu-item:hover,
+.thirdmenu-item:hover {
+    color: #000; /* 호버 시 검정색으로 변경 */
+    font-weight: 700; /* 글씨 굵기 두껍게 */
+    transition: color 0.3s ease; /* 색상 변화 애니메이션만 유지 */
 }
 
-/* 드롭다운 항목 호버 스타일 */
-.dropdown-content a:hover {
-    font-weight: bold; /* Make text bold on hover */
-    color: #6c757d; /* Gray tone for hover */
-}
-
-/* 드롭다운 호버 시 표시 */
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
-
-/* 서브메뉴 스타일 */
-.submenu {
-    position: relative;
-}
-
-/* 서브메뉴 내용 스타일 */
+/* 3차 메뉴 위치 설정 */
 .submenu-content {
-    display: none;
     position: absolute;
-    left: 100%;
-    top: 0;
-    min-width: 200px;
-    background-color: #f9f9f9; /* Slightly different color for differentiation */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
     z-index: 1;
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add visibility transition */
+    left: 100%; /* 기본 위치를 2차 메뉴 옆으로 */
+    top: 0;
+    transform: translateX(0); /* 변환 제거 */
+    min-width: 200px; /* 최소 너비 설정 (기본값보다 더 넓게 설정) */
 }
 
-/* 서브메뉴 항목 스타일 */
-.submenu-content a {
-    color: #333;
-    padding: 12px 16px;
-    display: block;
-    position: relative;
-    transition: font-weight 0.3s ease; /* Add transition for font-weight */
-}
-
-/* 서브메뉴 항목 호버 스타일 */
-.submenu-content a:hover {
-    font-weight: bold; /* Make text bold on hover */
-    color: #6c757d; /* Gray tone for hover */
-}
-
-/* 서브메뉴 호버 시 표시 */
+/* 드롭다운 및 서브메뉴 호버 시 표시 */
+.dropdown:hover .dropdown-content,
 .submenu:hover .submenu-content {
     display: block;
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
-/* 2차 메뉴 옆 화살표 */
-.submenu > a::after {
-    content: ' >'; /* Arrow for 3rd level menu */
-    font-size: 0.8em;
-    position: absolute;
-    right: 16px; /* Adjust this value to move the arrow more to the right */
-    color: #6c757d; /* Gray tone for arrow */
-    transition: opacity 0.3s ease;
+/* 깜빡임 문제 해결을 위한 추가 스타일 */
+.dropdown-content,
+.submenu-content {
+    pointer-events: auto; /* 마우스 이벤트를 안정적으로 유지 */
 }
 
-/* 메뉴 아래 표시바 스타일 */
-.nav-container > a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0; /* Move the underline slightly up */
-    height: 2px;
-    width: 0;
-    background-color: #6c757d; /* Gray tone for the underline */
-    transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 1; /* Ensure the underline appears above other elements */
-}
-
-/* 활성화된 메뉴 표시바 */
-.nav-container > a.active::after,
-.nav-container > .dropdown:hover > a::after {
-    width: 100%;
-    transform: scaleX(1);
-}
-
-/* 호버 시 표시바 애니메이션 */
-.nav-container > a::after {
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: width 0.3s ease, transform 0.3s ease;
+.secondmenu-item:hover + .submenu-content,
+.thirdmenu-item:hover + .submenu-content {
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }

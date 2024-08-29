@@ -1,0 +1,63 @@
+/* LINE Seed Sans - Web (영문 폰트) */
+@font-face {
+    font-family: 'LINE Seed Sans W';
+    src: url('/fonts/LINESeedSans_W_Rg.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed Sans W';
+    src: url('/fonts/LINESeedSans_W_Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed Sans W';
+    src: url('/fonts/LINESeedSans_W_He.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed Sans W';
+    src: url('/fonts/LINESeedSans_W_Th.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed Sans W';
+    src: url('/fonts/LINESeedSans_W_XBd.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* LINE Seed KR (한글 폰트) */
+@font-face {
+    font-family: 'LINE Seed KR';
+    src: url('/fonts/LINESeedKR-Rg.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed KR';
+    src: url('/fonts/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINE Seed KR';
+    src: url('/fonts/LINESeedKR-Th.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+/* 전체 페이지에 폰트 적용 */
+body {
+    font-family: 'LINE Seed Sans W', 'LINE Seed KR', sans-serif;
+}

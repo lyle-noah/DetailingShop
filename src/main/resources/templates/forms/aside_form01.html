@@ -1,0 +1,43 @@
+<aside th:fragment="aside" id="mobile-aside-menu" class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <!-- 헤더 로고 및 닫기 버튼 -->
+    <div class="flex justify-between items-center p-4 border-b border-gray-200">
+        <a href="/">
+            <img src="/img/icon/icon_MainLogo.png" alt="Main Logo" class="h-10">
+        </a>
+        <button id="close-mobile-menu" class="text-gray-700 hover:text-blue-500">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- 사용자 메뉴 -->
+    <div class="p-4 border-b border-gray-200">
+        <a href="/user/signup" class="text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
+        <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
+        <a href="/user/logout" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
+        <a href="/question/list" class="text-gray-700 hover:text-blue-500">게시판</a>
+        <a href="/user/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
+    </div>
+
+    <!-- 상품 카테고리 메뉴 -->
+    <div class="p-4">
+        <div th:replace="~{forms/mobileMenu_form01.html :: mobileMenu}"></div>
+    </div>
+
+    <!-- 고객센터 또는 기타 링크 -->
+    <div class="p-4 border-t border-gray-200">
+        <h2 class="text-gray-700 font-semibold mb-2">고객센터</h2>
+        <div class="flex space-x-4">
+            <a href="#" class="text-gray-700">
+                <img src="/img/icon/kakao.png" alt="Kakao" class="w-6 h-6">
+            </a>
+            <a href="#" class="text-gray-700">
+                <img src="/img/icon/youtube.png" alt="YouTube" class="w-6 h-6">
+            </a>
+            <a href="#" class="text-gray-700">
+                <img src="/img/icon/naver.png" alt="Naver" class="w-6 h-6">
+            </a>
+        </div>
+    </div>
+</aside>

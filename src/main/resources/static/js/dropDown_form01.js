@@ -1,12 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 모든 메뉴 항목을 가져옵니다.
-    const menuItems = document.querySelectorAll('.nav-container a');
+    const secondMenuItems = document.querySelectorAll('.secondmenu-item');
 
-    // 메뉴 항목 클릭 시 활성화 상태 추가
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            menuItems.forEach(i => i.classList.remove('active')); // 기존 활성화 제거
-            this.classList.add('active'); // 클릭한 메뉴에 활성화 추가
+    secondMenuItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const submenu = this.nextElementSibling;
+
+            if (submenu && submenu.classList.contains('submenu-content')) {
+                // 2차 메뉴의 위치를 가져옴
+                const rect = this.getBoundingClientRect();
+
+                // 메뉴 컨테이너의 스크롤과 상관없이 정확한 Y축 위치를 설정
+                submenu.style.top = `${this.offsetTop}px`;
+                submenu.style.left = `${rect.width}px`; // 2차 메뉴의 너비만큼 옆에 3차 메뉴 표시
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const firstMenuItems = document.querySelectorAll('.firstmenu-item');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const firstMenuItem = dropdown.querySelector('.firstmenu-item');
+
+        dropdown.addEventListener('mouseenter', function() {
+            firstMenuItem.classList.add('active');
+        });
+
+        dropdown.addEventListener('mouseleave', function() {
+            firstMenuItem.classList.remove('active');
         });
     });
 });
