@@ -1,39 +1,38 @@
 <header class="header" th:fragment="header">
-    <nav  class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <!-- Logo -->
-                    <div class="flex items-center space-x-0">
-                        <a href="/" class="flex items-center p-0 text-gray-700 hover:text-blue-500">
-                            <img src="/img/icon/icon_MainLogo.png" alt="Profile Picture" style="width: auto; height: 100px; object-fit: contain;">
-                        </a>
-                    </div>
+    <nav class="bg-white">
+        <div class="max-w-7xl mx-auto">
+            <!-- 사용자 메뉴 텍스트 버튼 박스: 상단에 배치 -->
+            <div class="user-menu hidden md:flex justify-end w-full space-x-4 mb-2">
+                <!-- 사용자 메뉴 텍스트 버튼들 -->
+                <a href="/user/signup" class="text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
+                <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
+                <a href="/user/logout" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
+                <a href="/question/list" class="text-gray-700 hover:text-blue-500">게시판</a>
+                <a href="/user/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
+            </div>
+
+            <!-- 로고, 네비게이션 메뉴, 사용자 메뉴 아이콘 박스: 하단에 배치 -->
+            <div class="flex justify-between items-center w-full">
+                <!-- 로고 -->
+                <div class="logo flex items-center">
+                    <a href="/" class="text-gray-700 hover:text-blue-500">
+                        <img src="/img/icon/icon_MainLogo.png" alt="Main Logo" style="height: 80px;">
+                    </a>
                 </div>
 
-                <!-- Primary Navbar items -->
-                <div class="hidden md:flex items-center space-x-1">
+                <!-- 네비게이션 메뉴 -->
+                <div class="nav-menu hidden md:flex items-center space-x-4">
                     <div th:replace="~{forms/dropDown_form01.html :: dropDown}"></div>
                 </div>
 
-                <!-- Secondary Navbar items -->
-                <div class="hidden md:flex items-center space-x-1">
-                    <a href="/user/signup" class="py-5 px-3 text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
-                    <!-- 로그인 버튼 -->
-                    <a th:href="@{/user/login}" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">
-                        로그인
-                    </a>
-                    <a href="/user/logout" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
-                    <!-- 마이페이지 버튼 -->
+                <!-- 아이콘 메뉴: 오른쪽에 배치 -->
+                <div class="icon-menu hidden md:flex items-center space-x-4">
+                    <!-- 마이페이지 -->
                     <a th:href="@{/user/login(targetUrl='/user/mypage')}" class="py-5 px-3 text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">
-                        <img class="h-6 w-6" src="/img/icon/icon_Profile.png" alt="Profile Picture">
+                        <img class="h-6 w-6" src="/img/icon/icon_MyPage.png" alt="Profile Picture">
                     </a>
                     <a th:href="@{/user/mypage}" class="py-5 px-3" th:if="${#authorization.expression('isAuthenticated()')}">
-                        <img class="h-6 w-6" src="/img/icon/icon_Profile.png" alt="Profile Picture">
-                    </a>
-                    <!-- 게시판 아이콘 -->
-                    <a href="/question/list" class="py-5 px-3 text-gray-700 hover:text-blue-500">
-                        <img class="h-6 w-6" src="/img/icon/icon_Board.png" alt="Profile Picture">
+                        <img class="h-6 w-6" src="/img/icon/icon_MyPage.png" alt="Profile Picture">
                     </a>
                     <!-- 검색 아이콘 -->
                     <a href="javascript:void(0);" id="search-icon" class="py-5 px-3 text-gray-700 hover:text-blue-500">
@@ -44,17 +43,18 @@
                         <img src="/img/icon/icon_Cart.png" alt="Cart Icon" class="h-6 w-6" style="background-color: transparent;">
                     </a>
                 </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button class="mobile-menu-button">
+
+                <!-- 모바일 메뉴 아이콘 -->
+                <!--<div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="mobile-menu-button">
                         <svg class="w-6 h-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                </div>
+                </div>-->
             </div>
         </div>
         <!-- Mobile menu -->
-        <div th:replace="~{forms/mobileMenu_form01.html :: mobileMenu}"></div>
+        <!--<div th:replace="~{forms/aside.html :: aside}"></div>-->
     </nav>
 </header>

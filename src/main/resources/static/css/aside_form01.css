@@ -1,0 +1,20 @@
+#mobile-aside-menu {
+    width: 100%;
+    max-width: 300px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+#mobile-aside-menu.transform {
+    transform: translateX(0);
+}
+
+/* 드롭다운 메뉴 스타일 */
+.dropdown-menu {
+    display: none;
+    padding-left: 20px;
+}
+
+.dropdown-menu.open {
+    display: block;
+}
