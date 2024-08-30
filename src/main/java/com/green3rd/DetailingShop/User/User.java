@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -34,5 +35,8 @@ public class User {
 
 	// 프로필 이미지 경로 필드 추가
 	private String profileImagePath;
+
+	//마지막 로그인 날짜 필드 추가
+	private LocalDate lastLoginDate;
 }
 

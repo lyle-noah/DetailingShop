@@ -1,4 +1,4 @@
-<!--유저 목록 조회 및 추가 페이지-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -6,31 +6,16 @@
     <link rel="stylesheet" type="text/css" href="/css/adminusers.css">
 </head>
 <body>
-<div th:fragment="content">
+<div th:fragment="content" class="container">
     <h2>유저 관리</h2>
 
-    <!-- 유저 검색 폼 -->
-    <form th:action="@{/admin/users/search}" method="get">
-        <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-        <button type="submit">검색</button>
-    </form>
-
-    <!-- 유저 추가 폼 -->
-    <h3>새 유저 추가</h3>
-    <form th:action="@{/admin/users/add}" method="post">
-        <input type="text" name="username" placeholder="유저명" required/>
-        <input type="email" name="email" placeholder="이메일" required/>
-        <input type="password" name="password" placeholder="비밀번호" required/>
-        <button type="submit">추가</button>
-    </form>
-
+    <!-- 유저 리스트 테이블 -->
     <table class="user-table">
         <thead>
         <tr>
             <th>유저명</th>
             <th>이메일</th>
-            <th>비밀번호</th>
-            <th>수정</th>
+            <th>변경</th>
             <th>삭제</th>
         </tr>
         </thead>
@@ -38,7 +23,6 @@
         <tr th:each="user : ${users}">
             <td th:text="${user.username}"></td>
             <td th:text="${user.email}"></td>
-            <td th:text="${user.password}"></td>
             <td>
                 <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn-edit">수정</a>
             </td>
@@ -50,6 +34,22 @@
         </tr>
         </tbody>
     </table>
+
+    <!-- 유저 추가 폼 -->
+    <h3>새 유저 추가</h3>
+    <form class="add-user-form" th:action="@{/admin/users/add}" method="post">
+        <input type="text" name="username" placeholder="유저명" required/>
+        <input type="email" name="email" placeholder="이메일" required/>
+        <input type="password" name="password" placeholder="비밀번호" required/>
+        <button type="submit" class="btn-add">추가</button>
+    </form>
+
+    <!-- 유저 검색 폼 -->
+    <h3>유저 검색</h3>
+    <form class="search-form" th:action="@{/admin/users/search}" method="get">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+        <button type="submit" class="btn-search">검색</button>
+    </form>
 </div>
 </body>
 </html>

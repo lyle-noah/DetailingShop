@@ -5,7 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Service
@@ -80,6 +82,24 @@ public class UserService {
             // 키워드가 숫자가 아닌 경우, 부분 일치로 이름 또는 이메일 검색
             return userRepository.findByUsernameContainingOrEmailContaining(keyword, keyword);
         }
+    }
+
+    // 관리자 페이지 유저 일 로그인 수
+    public int getTodayLoginUsers() {
+        LocalDate today = LocalDate.now();
+        return userRepository.countByLastLoginDate(today);
+    }
+
+    // 관리자 페이지 총 유저 수
+    public int getTotalUsers() {
+        return  (int) userRepository.count();
+    }
+
+    // 관리자 페이지 유저 로그인 시 현재 날짜로 업데이트
+    public void updateLastLoginDate(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
+        user.setLastLoginDate(LocalDate.now());
+        userRepository.save(user);
     }
 
     public void updateProfileImage(String username, String imagePath) {

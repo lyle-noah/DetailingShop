@@ -23,6 +23,11 @@ public class AdminController {
 
     @GetMapping
     public String adminHome(Model model) {
+        int dailyLoginUsers = userService.getTodayLoginUsers();
+        int totalUsers = userService.getTotalUsers();
+        model.addAttribute("dailyLoginUsers", dailyLoginUsers);
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("view", "dashboard");
         return "admin/admin";
     }
 
@@ -39,13 +44,13 @@ public class AdminController {
     @GetMapping("/users/add")
     public String addUserForm(Model model) {
         model.addAttribute("user", new User()); // 빈 User 객체를 모델에 추가
-        return "admin/addUserForm"; // addUserForm.html 템플릿 반환
+        return "admin/addUserForm";
     }
 
     // 유저 추가를 처리하는 메서드
     @PostMapping("/users/add")
     public String addUser(@ModelAttribute("user") User user) {
-        userService.save(user); // 유저 저장 로직
+        userService.save(user); // 유저 저장
         return "redirect:/admin/users"; // 저장 후 유저 목록 페이지로 리다이렉트
     }
 
@@ -57,7 +62,7 @@ public class AdminController {
             return "redirect:/admin/users"; // 유저를 찾지 못한 경우 유저 목록 페이지로 리다이렉트
         }
         model.addAttribute("user", user);
-        return "admin/editUserForm"; // editUserForm.html 템플릿 반환
+        return "admin/editUserForm";
     }
 
     // 유저 수정 처리 메서드
@@ -65,7 +70,7 @@ public class AdminController {
     public String editUser(@PathVariable Long id, @ModelAttribute("user") User user) {
         user.setId(id.intValue()); // ID를 설정
         userService.save(user); // 유저 저장 로직
-        return "redirect:/admin/users"; // 저장 후 유저 목록 페이지로 리다이렉트
+        return "redirect:/admin/users";
     }
     // 유저 삭제 처리
     @PostMapping("/users/delete/{id}")
@@ -96,7 +101,7 @@ public class AdminController {
     @GetMapping("/products/add")
     public String addProductForm(Model model) {
         model.addAttribute("product", new Product()); // 빈 Product 객체를 모델에 추가
-        return "admin/addProductForm"; // addProductForm.html 템플릿 반환
+        return "admin/addProductForm";
     }
 
     // 상품 편집 폼을 보여주는 메서드
@@ -105,10 +110,10 @@ public class AdminController {
         Product product = productService.findProductByIndexId(id); // 상품을 ID로 검색
         if (product == null) {
             // 제품을 찾지 못한 경우
-            return "redirect:/admin/products"; // 제품 목록 페이지로 리다이렉트
+            return "redirect:/admin/products";
         }
         model.addAttribute("product", product);
-        return "admin/editProduct"; // editProduct.html 템플릿 반환
+        return "admin/editProduct";
     }
 
     // 상품 편집 처리 메서드
@@ -116,14 +121,14 @@ public class AdminController {
     public String editProduct(@PathVariable Integer id, @ModelAttribute("product") Product product) {
         product.setIndexId(id); // ID를 설정
         productService.save(product); // 제품 저장 로직
-        return "redirect:/admin/products"; // 저장 후 제품 목록 페이지로 리다이렉트
+        return "redirect:/admin/products";
     }
 
     // 상품 추가를 처리하는 메서드
     @PostMapping("/products/add")
     public String addProduct(@ModelAttribute("product") Product product) {
-        productService.save(product); // 제품 저장 로직
-        return "redirect:/admin/products"; // 저장 후 제품 목록 페이지로 리다이렉트
+        productService.save(product); // 제품 저장
+        return "redirect:/admin/products";
     }
 
     // 상품 삭제 처리

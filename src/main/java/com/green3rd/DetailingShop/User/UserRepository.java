@@ -1,5 +1,6 @@
 package com.green3rd.DetailingShop.User;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // username 또는 이메일 중 하나라도 일치하면 결과에 포함
     List<User> findByUsernameContainingOrEmailContaining(String username, String email);
+
+    // 관리자 페이지 유저 로그인 lastLoginDate로 유저 수를 카운트하는 쿼리 메서드
+    int countByLastLoginDate(LocalDate lastLoginDate);
 }
