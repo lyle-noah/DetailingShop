@@ -1,13 +1,11 @@
-/* header.css */
-
 /* 헤더 높이 및 내부 여백 조정 */
 .header {
-    position: fixed; /* 헤더를 화면 상단에 고정 */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 200px; /* 최종 헤더 높이 */
-    z-index: 3; /* 다른 요소보다 위에 위치 */
+    height: 200px;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,42 +15,161 @@
     box-sizing: border-box;
 }
 
-/* 헤더 요소 메뉴들의 전체 설정 */
-.header .max-w-7xl {
-    max-width: 1400px;
+/* 사용자 메뉴 텍스트 박스 설정 */
+.user-menu-text {
     width: 100%;
     display: flex;
-    justify-content: space-between; /* 요소 간의 간격 조정 */
-    flex-direction: column;
-    align-items: center;
+    justify-content: flex-end; /* 사용자 메뉴를 오른쪽 정렬 */
     margin: 0 auto;
 }
 
-/* 로고, 네비게이션 메뉴, 사용자 메뉴 아이콘 박스의 높이 설정 */
-.header .max-w-7xl .flex {
-    height: 120px; /* 높이를 120px로 설정 */
-    align-items: center; /* 수직 중앙 정렬 */
-}
-
-.user-menu {
-    justify-content: flex-end;
-    margin-right: 20px;
-}
-
-.nav-menu {
-    margin-left: 80px; /* 로고와 메뉴 간 간격 */
-}
-
-.nav-menu a {
-    font-size: 18px; /* 폰트 크기 조정 */
-}
-
-.icon-menu a {
-    height: 120px; /* 버튼들의 높이를 박스 크기와 동일하게 설정 */
+/* 로고, 네비게이션 메뉴, 사용자 아이콘 박스 */
+.header-main {
+    width: 100%;
+    max-width: 1300px; /* 최대 너비 제한 */
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center; /* 텍스트와 아이콘을 중앙에 정렬 */
-    margin-left: 80px;
+    margin: 0 auto;
+    box-sizing: border-box; /* 패딩 포함 계산 */
 }
 
+/* 로고 및 아이콘에 고정 크기 설정 */
+.header-logo img,
+.header-icon-menu img,
+.header-mobile-menu-button svg,
+.search-icon-pc img,
+.search-icon-mobile img {
+    height: 100px; /* 고정된 높이 */
+    width: auto; /* 너비 자동 조정 */
+    transition: none; /* 크기 조정 애니메이션 제거 */
+}
 
+/* 화면이 줄어들 때 요소 크기 조정 */
+@media (max-width: 1200px) {
+    .header-logo img,
+    .header-icon-menu img {
+        height: 80px;
+    }
+}
+
+/* 1024px 이하에서 즉시 숨김 처리 */
+@media (max-width: 1024px) {
+    .header {
+        display: flex;
+        justify-content: center; /* 내부 요소를 중앙 정렬 */
+        align-items: center;
+        width: 100%;
+        height: 150px; /* 1024px 이하에서 header 높이 150px로 설정 */
+    }
+
+    .user-menu-text,
+    .header-nav-menu,
+    .icon-menu,
+    .header-logo,
+    .search-icon-pc {
+        display: none !important; /* 강제 숨김 처리 */
+    }
+
+    /* 모바일 메뉴 아이콘 보이기 */
+    .header-mobile-menu-button,
+    .search-icon-mobile {
+        display: flex;
+    }
+
+    .header-mobile-menu-button svg,
+    .search-icon-mobile img {
+        width: 24px !important; /* 모바일에서 아이콘 크기 24px로 설정 */
+        height: 24px !important;
+    }
+
+    /* 모바일 메뉴 및 검색 아이콘 위치 설정 */
+    .header-main {
+        width: 100%;
+        max-width: 1024px; /* 최대 너비 설정 */
+        padding: 0 16px; /* 좌우 여백 추가 */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 모바일 로고에 좌우 마진 추가 */
+    .header-main .logo {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+        margin: 0 330px; /* 로고를 중앙에 배치 */
+        position: relative; /* 포지션을 relative로 설정 */
+        top: 0; /* 필요에 따라 조정 */
+        left: 0; /* 필요에 따라 조정 */
+    }
+
+    .header-mobile-menu-button,
+    .search-icon-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* 1024px 이상에서 모바일 메뉴와 검색 아이콘 숨김 */
+@media (min-width: 1025px) {
+    .header-mobile-menu-button,
+    .search-icon-mobile {
+        display: none;
+    }
+
+    .search-icon-pc {
+        display: flex;
+    }
+}
+
+/* 모바일 버전 추가 (미디어 쿼리 사용) */
+@media screen and (max-width: 768px) {
+    .header {
+        height: 150px; /* 헤더 높이 변경 */
+    }
+
+    /* 헤더 요소들 정렬 (모바일) */
+    .header-main {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 로고, 네비게이션 메뉴, 사용자 메뉴 아이콘 박스의 높이 설정 (모바일) */
+    .header-main .header-flex {
+        height: 200px; /* 헤더 높이 유지 */
+    }
+
+    /* 모바일 메뉴 아이콘과 검색 아이콘 스타일링 (모바일) */
+    .header-mobile-menu-button,
+    .search-icon-mobile {
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 모바일 버전에서 네비게이션 메뉴 숨기기 */
+    .header-nav-menu {
+        display: none;
+    }
+
+    /* 사용자 메뉴 (모바일) */
+    .user-menu-text {
+        display: none;
+    }
+
+    /* 아이콘 메뉴 (모바일) */
+    .header-icon-menu {
+        display: none;
+    }
+}
+
+/* PC 버전에서 aside 뷰 숨기기 */
+@media screen and (min-width: 769px) {
+    #mobile-aside-menu {
+        display: none; /* PC 버전에서는 aside 뷰를 숨김 */
+    }
+}
