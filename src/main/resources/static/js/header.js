@@ -1,21 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('.mobile-menu-button');
-    const closeButton = document.querySelector('#close-mobile-menu');
-    const mobileAsideMenu = document.getElementById('mobile-aside-menu');
+    // 로고와 네비바 마진 계산 기능
     const logo = document.querySelector('.header-main .logo');
     const navContainer = document.querySelector('.nav-container');
     const mobileBreakpoint = 1024;
-
-    // 모바일 메뉴 토글 기능
-    menuButton.addEventListener('click', function() {
-        mobileAsideMenu.classList.toggle('translate-x-0');
-        mobileAsideMenu.classList.toggle('-translate-x-full');
-    });
-
-    closeButton?.addEventListener('click', function() {
-        mobileAsideMenu.classList.add('-translate-x-full');
-        mobileAsideMenu.classList.remove('translate-x-0');
-    });
 
     // 헤더 높이 계산 및 body의 padding-top 설정
     function adjustBodyPadding() {

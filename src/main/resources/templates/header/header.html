@@ -14,9 +14,9 @@
         <div class="header-main flex justify-between items-center mx-auto">
             <!-- 모바일 메뉴 아이콘: 작은 화면에서만 보임 -->
             <div class="header-mobile-menu-button md:hidden flex items-center">
-                <button id="mobile-menu-button" class="mobile-menu-button">
+                <a href="javascript:void(0);" id="mobile-menu-button" class="mobile-menu-button">
                     <img src="/img/icon/icon_MobileMenuButton.png" alt="MobileMenu Icon" class="h-6 w-6" style="background-color: transparent;">
-                </button>
+                </a>
             </div>
 
             <!-- 로고 -->
@@ -54,8 +54,5 @@
                 </a>
             </div>
         </div>
-
-        <!-- Mobile menu -->
-        <div th:replace="~{forms/aside_form01.html :: aside}"></div>
     </nav>
 </header>

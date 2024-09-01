@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <title th:text="'검색결과 - ' + ${query}">Search Results</title>
     <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/font_form01.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/dropDown_form01.css">
+    <link rel="stylesheet" href="/css/aside_form01.css">
+    <link rel="stylesheet" href="/css/dropDownMobile_form01.css">
     <link rel="stylesheet" href="/css/category_form01.css">
     <link rel="stylesheet" href="/css/pagination_form01.css">
     <link rel="stylesheet" href="/css/itemCount_form01.css">
-    <link rel="stylesheet" href="/css/mobileMenu_form01.css">
+    <link rel="stylesheet" href="/css/search_form01.css">
     <link rel="stylesheet" href="/css/search_form02.css">
     <link rel="stylesheet" href="/css/modal_form01.css">
     <link rel="stylesheet" href="/css/modal_form02.css">
 </head>
 <body class="bg-gray-100">
+<!-- 검색 모달 -->
+<div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- 모바일메뉴 모달 -->
+<div th:replace="~{forms/aside_form01.html :: aside}"></div>
 
 <!-- Header -->
 <div th:replace="~{header/header.html :: header}"></div>
@@ -33,10 +41,14 @@
                 <a th:href="@{/searchResult/{indexId}(indexId=${infor.indexId})}">
                     <img th:src="${infor.imgurl}" alt="사진이 없습니다.">
                 </a>
+                <!-- 좋아요 카운트 -->
+                <div class="likes-count">
+                    <span th:text="'♥ ' + ${likesCountMap[infor.indexId]}">♥ 0</span>
+                </div>
                 <div class="overlay">
                     <form th:action="@{/searchResult/like/{indexId}(indexId=${infor.indexId})}" method="post">
                         <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
-                        <button type="submit" class="btn" th:classappend="${infor.likeState ? 'WISHED' : ''}" th:text="'WISH'"></button>
+                        <button type="submit" class="btn" th:classappend="${infor.likeState ? 'WISHED' : ''}" th:text="${infor.likeState ? 'WISHED' : 'WISH'}"></button>
                     </form>
                     <form th:action="@{/cart/add/{indexId}(indexId=${infor.indexId})}" method="post" class="add-to-cart-form">
                         <input type="hidden" name="cartCount" value="1"/>
@@ -69,5 +81,7 @@
 <script src="/js/modal_form01.js"></script>
 <script src="/js/modal_form02.js"></script>
 <script src="/js/category_form01.js"></script>
+<script src="/js/aside_form01.js"></script>
+<script src="/js/dropDownMobile_form01.js"></script>
 </body>
 </html>

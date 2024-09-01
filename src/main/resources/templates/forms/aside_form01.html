@@ -1,43 +1,37 @@
-<aside th:fragment="aside" id="mobile-aside-menu" class="fixed top-0 left-0 w-3/4 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
-    <!-- 헤더 로고 및 닫기 버튼 -->
-    <div class="flex justify-between items-center p-4 border-b border-gray-200">
-        <a href="/">
-            <img src="/img/icon/icon_MainLogo.png" alt="Main Logo" class="h-10">
-        </a>
-        <button id="close-mobile-menu" class="text-gray-700 hover:text-blue-500">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
+<!-- aside_form01.html -->
+<div th:fragment="aside">
+    <div id="aside-overlay" class="fixed inset-0 hidden z-50"></div>
+    <div id="aside-modal" class="fixed top-0 left-0 hidden z-60 shadow-lg overflow-y-auto">
+        <!-- 상단 박스 (로고, 사용자 메뉴, 닫기 버튼) -->
+        <div class="bg-gray-200 w-full">
+            <div class="container mx-auto py-4 relative flex justify-between items-center">
+                <a href="/" class="block mx-auto text-center">
+                    <img src="/img/icon/icon_MainLogo.png" alt="Main Logo" class="mx-auto" style="height: 80px;">
+                </a>
+                <button id="close-aside-button" class="text-gray-700 absolute right-4 top-4 text-4xl">&times;</button>
+            </div>
+            <div class="flex justify-center space-x-4 pb-4">
+                <!-- 사용자 메뉴 텍스트 버튼들 -->
+                <a href="/user/signup" class="text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
+                <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
+                <a href="/user/logout" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
+                <a href="/question/list" class="text-gray-700 hover:text-blue-500">게시판</a>
+                <a href="/user/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
+            </div>
+        </div>
 
-    <!-- 사용자 메뉴 텍스트 -->
-    <div class="p-4 border-b border-gray-200">
-        <a href="/user/signup" class="text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
-        <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
-        <a href="/user/logout" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
-        <a href="/question/list" class="text-gray-700 hover:text-blue-500">게시판</a>
-        <a href="/user/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
-    </div>
+        <!-- 네비게이션 메뉴 -->
+        <div class="px-4 py-8">
+            <div th:replace="~{forms/dropDownMobile_form01.html :: mobileMenu}"></div>
+        </div>
 
-    <!-- 상품 카테고리 메뉴 -->
-    <div class="p-4">
-        <div th:replace="~{forms/dropDownMobile_form01.html :: mobileMenu}"></div>
-    </div>
-
-    <!-- 고객센터 -->
-    <div class="p-4 border-t border-gray-200">
-        <h2 class="text-gray-700 font-semibold mb-2">고객센터</h2>
-        <div class="flex space-x-4">
-            <a href="#" class="text-gray-700">
-                <img src="/img/icon/kakao.png" alt="Kakao" class="w-6 h-6">
-            </a>
-            <a href="#" class="text-gray-700">
-                <img src="/img/icon/youtube.png" alt="YouTube" class="w-6 h-6">
-            </a>
-            <a href="#" class="text-gray-700">
-                <img src="/img/icon/naver.png" alt="Naver" class="w-6 h-6">
-            </a>
+        <!-- 고객센터 -->
+        <div class="px-4 pb-4">
+            <div class="flex space-x-4">
+                <a href="#"><img src="/img/icon/icon_Kakao.jpg" alt="Kakao" class="h-6 w-6"></a>
+                <a href="#"><img src="/img/icon/icon_Youtube.jpg" alt="YouTube" class="h-6 w-6"></a>
+                <a href="#"><img src="/img/icon/icon_Naver.jpg" alt="Naver Cafe" class="h-6 w-6"></a>
+            </div>
         </div>
     </div>
-</aside>
+</div>

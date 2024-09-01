@@ -4,12 +4,14 @@
 	<meta charset="UTF-8">
 	<title th:text="${firstCategoryName} + ' - Car Detailing Shop'">Product Category - Car Detailing Shop</title>
 	<link rel="stylesheet" href="/css/output.css">
+	<link rel="stylesheet" href="/css/font_form01.css">
 	<link rel="stylesheet" href="/css/header.css">
-	<link rel="stylesheet" href="/css/dropDown_form01.css">
 	<link rel="stylesheet" href="/css/category_form01.css">
+	<link rel="stylesheet" href="/css/dropDown_form01.css">
+	<link rel="stylesheet" href="/css/aside_form01.css">
+	<link rel="stylesheet" href="/css/dropDownMobile_form01.css">
 	<link rel="stylesheet" href="/css/pagination_form01.css">
 	<link rel="stylesheet" href="/css/itemCount_form01.css">
-	<link rel="stylesheet" href="/css/mobileMenu_form01.css">
 	<link rel="stylesheet" href="/css/search_form01.css">
 	<link rel="stylesheet" href="/css/modal_form01.css">
 	<link rel="stylesheet" href="/css/modal_form02.css">
@@ -17,6 +19,9 @@
 <body class="bg-gray-100">
 <!-- 검색 모달 -->
 <div th:replace="~{forms/search_form01.html :: searchProduct01}"></div>
+
+<!-- 모바일메뉴 모달 -->
+<div th:replace="~{forms/aside_form01.html :: aside}"></div>
 
 <!-- Header -->
 <div th:replace="~{header/header.html :: header}"></div>
@@ -59,21 +64,21 @@
 	<div th:replace="~{forms/pagination_form01.html :: pagination01}"></div>
 </main>
 
-<!-- Footer -->
+		<!-- Footer -->
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
 <!-- 장바구니 모달 hidden 처리되어있음. -->
 <div th:replace="~{forms/modal_form01.html :: cartModal}"></div>
 <div th:replace="~{forms/modal_form02.html :: cartModalExist}"></div>
 
-<script src="/js/headerDistance.js"></script>
 <script src="/js/header.js"></script>
 <script src="/js/dropDown_form01.js"></script>
-<script src="/js/mobileMenu_form01.js"></script>
 <script src="/js/search_form01.js"></script>
 <script src="/js/modal_form01.js"></script>
 <script src="/js/modal_form02.js"></script>
 <script src="/js/category_form01.js"></script>
 <script src="/js/category_form02.js"></script>
+<script src="/js/aside_form01.js"></script>
+<script src="/js/dropDownMobile_form01.js"></script>
 </body>
 </html>

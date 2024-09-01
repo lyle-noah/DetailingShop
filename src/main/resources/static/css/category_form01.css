@@ -7,14 +7,14 @@ body {
 }
 
 main.container {
-    padding-top: 6rem; /* 위쪽 여백을 6rem으로 설정 */
+    padding-top: 3rem; /* 위쪽 여백을 6rem으로 설정 */
     padding-bottom: 6rem; /* 아래쪽 여백을 6rem으로 설정 */
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 }
 
 .header-content {

@@ -6,6 +6,7 @@ import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserService;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import com.green3rd.DetailingShop.UserLike.UserLikesRepository;
+import com.green3rd.DetailingShop.UserLike.UserLikesService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +15,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class SearchController {
     private final ProductService productService;
     private final SearchService searchService;
     private final UserService userService;
-    private final UserLikesRepository userLikesRepository;
+    private final UserLikesService userLikesService;
 
     @GetMapping("/search")
     public String searchProducts(@RequestParam("productName") String productName,
@@ -64,7 +64,7 @@ public class SearchController {
         if (principal != null) {
             User user = userService.findByUsername(principal.getName());
             for (Product product : products) {
-                UserLikes userLikes = userLikesRepository.findByUserAndProduct(user, product).orElse(null);
+                UserLikes userLikes = userLikesService.findByUserAndProduct(user, product).orElse(null);
                 if (userLikes != null) {
                     product.setLikeState(userLikes.isLikeState());
                 }
@@ -88,9 +88,16 @@ public class SearchController {
         // 로그로 확인
         System.out.println("Current URI: " + currentUri);
 
+        // 각 상품의 좋아요 수를 계산하여 모델에 추가
+        Map<Integer, Integer> likesCountMap = new HashMap<>();
+        for (Product product : products) {
+            int indexId = product.getIndexId(); // 적절한 메서드로 변경
+            int likesCount = productService.getLikesCountForProduct(indexId);
+            likesCountMap.put(indexId, likesCount);
+        }
 
         // 검색제품의 데이터를 모델에 전달
-        model.addAttribute("searchResult", productsPage.getContent());
+        model.addAttribute("searchResult", products);
         model.addAttribute("query", productName);
 
         // 제품 페이지 정보와 연산 정보값을 모델에 전달
@@ -106,17 +113,43 @@ public class SearchController {
         // 현재 요청 URI를 모델에 전달
         model.addAttribute("currentUri", currentUri);
 
+        // 좋아요 카운트 수를 모델에 전달
+        model.addAttribute("likesCountMap", likesCountMap);
+
         return "search/searchResult";
     }
 
     // 상세 페이지 조회
     @GetMapping("/searchResult/{indexId}")
-    public String getProductDetail(@PathVariable int indexId, Model model, HttpSession session) {
-        Product product = productService.getProductByID(indexId);
+    public String getSearchProductDetail(@PathVariable int indexId,
+                                   Principal principal,
+                                   Model model,
+                                   HttpSession session) {
+        // 상품을 indexId로 조회
+        Product product = productService.findByIndexId(indexId);
+
+        // 상품이 존재하지 않는 경우 404 페이지로 리다이렉트
         if (product == null) {
             return "error/404";
         }
+
+        // 상품의 가격을 포맷팅하여 설정
         product.setFormattedPrice(productService.formatPrice(product.getProductPrice()));
+
+        // 로그인한 사용자의 likeState를 설정
+        if (principal != null) {
+            // 현재 로그인한 사용자 조회
+            User user = userService.findByUsername(principal.getName());
+
+            // 사용자가 해당 상품을 좋아요했는지 조회
+            UserLikes userLikes = userLikesService.findByUserAndProduct(user, product).orElse(null);
+
+            if (userLikes != null) {
+                product.setLikeState(userLikes.isLikeState());
+            }
+        }
+
+        // 상품 정보를 모델에 추가
         model.addAttribute("product", product);
 
         // 최근 본 상품 리스트를 세션에서 가져옴
@@ -142,29 +175,35 @@ public class SearchController {
 
     // 좋아요 버튼 기능
     @PostMapping("/searchResult/like/{indexId}")
-    public String likeProduct(@PathVariable int indexId,
-                              @RequestParam("redirectUrl") String redirectUrl,
-                              Principal principal,
-                              Model model) {
-        if (principal == null) {
-            // 로그인하지 않은 경우
-            model.addAttribute("message", "로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");
-            model.addAttribute("urlYes", "/user/login?redirectUrl=" + redirectUrl);
-            model.addAttribute("urlNo", redirectUrl); // 취소시 원래 페이지로 돌아가기
+    @ResponseBody
+    public Map<String, Object> likeSearchProduct(@PathVariable int indexId,
+                                           @RequestParam("redirectUrl") String redirectUrl,
+                                           Principal principal,
+                                           Model model) {
 
-            // 알림 팝업 페이지로 이동
-            return "alert/alertMessage_form01";
+        Map<String, Object> response = new HashMap<>();
+
+        if (principal == null) {
+            // 비로그인 상태: 리다이렉트 URL과 메시지를 반환
+            response.put("redirect", "/user/login?redirectUrl=" + redirectUrl);
+            response.put("message", "로그인이 필요합니다.");
+            return response;
         }
 
-        // 로그인한 경우 좋아요 처리 로직
+        // 로그인된 상태에서 좋아요 처리 로직
         User user = userService.findByUsername(principal.getName());
         Product product = productService.findByIndexId(indexId);
 
         if (user != null && product != null) {
-            productService.toggleLike(user, product);
+            boolean likeState = productService.toggleLike(user, product);
+            response.put("likeState", likeState);
+
+            // 디버그 로그 추가
+            System.out.println("User: " + user.getUsername());
+            System.out.println("Product: " + product.getProductName());
+            System.out.println("Like State: " + likeState);
         }
 
-        // 좋아요 버튼을 눌렀던 페이지로 리다이렉트
-        return "redirect:" + redirectUrl;
+        return response;
     }
 }
