@@ -4,6 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const navContainer = document.querySelector('.nav-container');
     const mobileBreakpoint = 1024;
 
+    // 사용자메뉴(텍스트) 요소 사이 | 막대바 동적 기능 변수
+    const userMenu = document.querySelector('.user-menu-text');
+    const links = userMenu.querySelectorAll('a');
+
+    // 사용자메뉴(텍스트) 요소 사이 | 막대바 동적 기능
+    links.forEach((link, index) => {
+        if (index < links.length - 1 && link.style.display !== 'none') {
+            const separator = document.createElement('span');
+            separator.textContent = '|';
+            separator.style.margin = '0 12px';
+            link.after(separator);
+        }
+    });
+
     // 헤더 높이 계산 및 body의 padding-top 설정
     function adjustBodyPadding() {
         const headerHeight = document.querySelector('.header').offsetHeight;

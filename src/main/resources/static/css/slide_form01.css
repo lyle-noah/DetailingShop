@@ -1,22 +1,13 @@
-/* 기본 스타일 */
-/*body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #f3f3f3;
-}*/
-
+/* 메인베너 슬라이드 디자인 설정 */
 .slider {
     position: relative;
-    width: 100%; /* 기본 너비를 100%로 설정 */
+    width: 100%;
+    max-width: 1230px;
     height: 600px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 40px auto; /* 상단 0, 좌우 자동, 하단 20px */
 }
 
 .slides {
@@ -41,26 +32,30 @@
     display: block;
 }
 
-.navigation {
+/* 슬라이드 전환 버튼 스타일 수정 */
+.navigation1 .prev1, .navigation1 .next1 {
+    background: none; /* 배경 제거 */
+    font-size: 3rem; /* 텍스트 크기 50% 증가 */
+    color: #ccc; /* 밝은 회색으로 텍스트 색상 설정 */
+    padding: 0; /* 패딩 제거 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer;
     position: absolute;
     top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
     transform: translateY(-50%);
+    z-index: 1;
 }
 
-.navigation button {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
+.navigation1 .prev1 {
+    left: 10px; /* 좌측 버튼 위치 */
 }
 
-.navigation button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+.navigation1 .next1 {
+    right: 10px; /* 우측 버튼 위치 */
+}
+
+.navigation1 .prev1:hover, .navigation1 .next1:hover {
+    color: #aaa; /* 호버 시 색상을 조금 더 진하게 설정 */
 }
 
 .dots {

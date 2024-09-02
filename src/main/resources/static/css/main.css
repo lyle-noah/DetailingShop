@@ -1,0 +1,7 @@
+/* 메인 컨테이너 */
+main.container {
+    max-width: 1200px; /* 예시 페이지와 같은 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 20px; /* 패딩 추가 */
+}
+

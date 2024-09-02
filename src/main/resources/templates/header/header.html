@@ -1,7 +1,7 @@
 <header class="header" th:fragment="header">
     <nav class="bg-white">
         <!-- 사용자 메뉴 텍스트 박스: 상단에 배치, PC에서만 보임 -->
-        <div class="user-menu hidden md:flex justify-end w-full space-x-4 user-menu-text">
+        <div class="user-menu hidden md:flex justify-end w-full user-menu-text">
             <!-- 사용자 메뉴 텍스트 버튼들 -->
             <a href="/user/signup" class="text-gray-700 hover:text-blue-500" th:if="${not #authorization.expression('isAuthenticated()')}">회원 가입</a>
             <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
