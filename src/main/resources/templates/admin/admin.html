@@ -29,10 +29,6 @@
 
     <!-- 대시보드 페이지일 때만 차트를 보여줌 -->
     <div th:if="${view == 'dashboard'}">
-        <!-- 일 접속자수 차트를 위한 캔버스 추가 -->
-        <div>
-            <canvas id="dailyVisitorsChart"></canvas>
-        </div>
 
         <!-- 총 접속자수 차트를 위한 캔버스 추가 -->
         <div>
@@ -40,36 +36,14 @@
         </div>
 
         <script th:inline="javascript">
-            // 대시보드 페이지에서만 JavaScript 코드 실행
             document.addEventListener("DOMContentLoaded", function() {
-                // 서버에서 전달된 실제 데이터로 변경
+                // Thymeleaf 변수를 JavaScript 변수에 할당
                 var dailyLoginUsers = /*[[${dailyLoginUsers}]]*/ 0;
                 var totalUsers = /*[[${totalUsers}]]*/ 0;
 
-                // 일별 로그인한 유저 수 차트
-                var dailyLoginUsersCtx = document.getElementById('dailyVisitorsChart').getContext('2d');
-                var dailyLoginUsersChart = new Chart(dailyLoginUsersCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['월', '화', '수', '목', '금', '토', '일'],
-                        datasets: [{
-                            label: '일별 접속자 수',
-                            data: [dailyLoginUsers],
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                stepSize:1,
-                                suggestedMax: 10 // y축 최대값을 10으로 설정
-                            }
-                        }
-                    }
-                });
+                // 콘솔에서 변수 값 확인
+                console.log("Daily Login Users:", dailyLoginUsers);
+                console.log("Total Users:", totalUsers);
 
                 // 총 유저 수 차트
                 var totalUsersCtx = document.getElementById('totalVisitorsChart').getContext('2d');
@@ -79,18 +53,20 @@
                         labels: ['1주차', '2주차', '3주차', '4주차'],
                         datasets: [{
                             label: '총 유저 수',
-                            data: [totalUsers],
+                            data: [5,10,15,totalUsers],
                             backgroundColor: 'rgba(153, 102, 255, 0.2)',
                             borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
+                            borderWidth: 1,
+                            fill: false,
+                            tension: 0.1
                         }]
                     },
                     options: {
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                stepSize:1,
-                                suggestedMax: 10 // y축 최대값을 10으로 설정
+                                stepSize: 5,
+                                suggestedMax: 20 // y축 최대값을 10으로 설정
                             }
                         }
                     }

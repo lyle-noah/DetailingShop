@@ -23,9 +23,7 @@ public class AdminController {
 
     @GetMapping
     public String adminHome(Model model) {
-        int dailyLoginUsers = userService.getTodayLoginUsers();
         int totalUsers = userService.getTotalUsers();
-        model.addAttribute("dailyLoginUsers", dailyLoginUsers);
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("view", "dashboard");
         return "admin/admin";

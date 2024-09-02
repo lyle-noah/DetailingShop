@@ -84,12 +84,6 @@ public class UserService {
         }
     }
 
-    // 관리자 페이지 유저 일 로그인 수
-    public int getTodayLoginUsers() {
-        LocalDate today = LocalDate.now();
-        return userRepository.countByLastLoginDate(today);
-    }
-
     // 관리자 페이지 총 유저 수
     public int getTotalUsers() {
         return  (int) userRepository.count();
