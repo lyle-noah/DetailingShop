@@ -23,6 +23,14 @@
     margin: 0 auto;
 }
 
+.user-menu-text span {
+    color: #999; /* 구분선 색상 설정 */
+}
+
+.user-menu-text a {
+    display: inline-block;
+}
+
 /* 로고, 네비게이션 메뉴, 사용자 아이콘 박스 */
 .header-main {
     width: 100%;

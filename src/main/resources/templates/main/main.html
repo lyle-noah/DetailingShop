@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<title>Car Detailing Shop</title>
 	<link rel="stylesheet" href="/css/output.css">
 	<link rel="stylesheet" href="/css/font_form01.css">
 	<link rel="stylesheet" href="/css/header.css">
-	<link rel="stylesheet" href="/css/Slide_form01.css">
+	<link rel="stylesheet" href="/css/slide_form01.css">
 	<link rel="stylesheet" href="/css/tapList_form01.css">
-	<link rel="stylesheet" href="/css/Slide_form02.css">
+	<link rel="stylesheet" href="/css/slide_form02.css">
 	<link rel="stylesheet" href="/css/dropDown_form01.css">
     <link rel="stylesheet" href="/css/aside_form01.css">
 	<link rel="stylesheet" href="/css/dropDownMobile_form01.css">
@@ -28,10 +28,11 @@
 <main class="container mx-auto px-4">
 	<div class="text-center">
 		<div th:replace="~{forms/Slide_form01.html :: Slide_form01}"></div>
-		<h1 class="text-4xl font-bold text-blue-600 mb-8">BEST! SELLER</h1>
-		<p class="text-lg mb-4 text-gray-700">베스트 셀러를 만나보세요.</p>
-		<a href="/products" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Shop Now</a>
+		<h1 class="text-4xl font-bold text-black mb-4">BEST! SELLER</h1> <!-- 제목 스타일 1.5rem, 검은색 -->
+		<p class="text-base text-gray-400 mb-4">베스트 셀러를 만나보세요.</p> <!-- 설명문 스타일 1rem, 회색 -->
 		<div th:replace="~{forms/tapList_form01.html :: tapList}"></div>
+		<h1 class="text-4xl font-bold text-black mb-4">RESTOCK</h1> <!-- 제목 스타일 1.5rem, 검은색 -->
+		<p class="text-base text-gray-400 mb-4">재입고된 상품을 알려드립니다.</p> <!-- 설명문 스타일 1rem, 회색 -->
 		<div th:replace="~{forms/Slide_form02.html :: Slide_form02}"></div>
 	</div>
 </main>
@@ -40,9 +41,9 @@
 <div th:replace="~{footer/footer.html :: footer}"></div>
 
 <script src="/js/header.js"></script>
-<script src="/js/Slide_form01.js"></script>
+<script src="/js/slide_form01.js"></script>
 <script src="/js/tapList_form01.js"></script>
-<script src="/js/Slide_form02.js"></script>
+<script src="/js/slide_form02.js"></script>
 <script src="/js/dropDown_form01.js"></script>
 <script src="/js/aside_form01.js"></script>
 <script src="/js/dropDownMobile_form01.js"></script>
