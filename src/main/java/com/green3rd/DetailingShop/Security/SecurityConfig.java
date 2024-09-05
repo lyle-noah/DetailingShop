@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // H2 콘솔 접근 허용
                         .requestMatchers(new AntPathRequestMatcher("/uploads/profileImages/**")).permitAll() // 프로필 이미지 경로에 대한 접근 허용
                         .requestMatchers(new AntPathRequestMatcher("/user/profile/uploadImage")).authenticated() // 프로필 이미지 업로드는 인증 필요
+                        .requestMatchers(new AntPathRequestMatcher("/product/category")).permitAll()  // 이 경로 접근 허용 추가
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() // 전체 페이지 접근 허용
                         .anyRequest().authenticated()) // 그 외의 경로는 인증 필요
 
@@ -40,7 +41,8 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/h2-console/**"),
                                 new AntPathRequestMatcher("/user/logout"),
                                 new AntPathRequestMatcher("/user/forgot-password"), // 비밀번호 재설정 경로에 대해 CSRF 비활성화
-                                new AntPathRequestMatcher("/user/profile/uploadImage") // 프로필 이미지 업로드에 대해 CSRF 비활성화
+                                new AntPathRequestMatcher("/user/profile/uploadImage"), // 프로필 이미지 업로드에 대해 CSRF 비활성화
+                                new AntPathRequestMatcher("/product/category")  // CSRF 보호 비활성화 추가
                         ))
 
                 .sessionManagement((sessionManagement) -> sessionManagement

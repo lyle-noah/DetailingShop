@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
     Page<Product> findAll(Specification<Product> spec, Pageable pageable);
 
     Optional<Product> findByIndexId(int indexId);
+
+    @Query("SELECT p FROM Product p LEFT JOIN p.likes l ON l.likeState = true WHERE p.firstCategory = :category GROUP BY p.indexId, p.productId, p.productName, p.productPrice, p.imgurl, p.cartState, p.likeState, p.firstCategory, p.secondCategory, p.thirdCategory, p.registrationDate ORDER BY COUNT(l.id) DESC, p.indexId ASC")
+    List<Product> findTop4ByCategoryWithMostLikes(@Param("category") String category);
 
     // 관리자 페이지 상품아이디 문자열로 검색
     Optional<Product> findByProductId(String productId);

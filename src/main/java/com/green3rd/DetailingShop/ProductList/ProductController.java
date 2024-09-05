@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -127,6 +128,13 @@ public class ProductController {
         } else {
             return "category/firstCategory";
         }
+    }
+
+    // 카테고리별로 상위 4개의 좋아요 상품을 반환
+    @PostMapping("/product/category")
+    @ResponseBody
+    public List<ProductDto> getProductsByCategory(@RequestParam("category") String category) {
+        return productService.getTopLikedProductsByCategory(category);
     }
 
     // 상세 페이지 조회
