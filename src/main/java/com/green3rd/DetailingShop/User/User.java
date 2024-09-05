@@ -1,5 +1,6 @@
 package com.green3rd.DetailingShop.User;
 
+import com.green3rd.DetailingShop.UserCreate.UserRole;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Set;
+
 
 @Getter
 @Setter
@@ -38,5 +40,7 @@ public class User {
 
 	//마지막 로그인 날짜 필드 추가
 	private LocalDate lastLoginDate;
+
 }
+
 

@@ -1,6 +1,7 @@
 package com.green3rd.DetailingShop.User;
 
 import com.green3rd.DetailingShop.Security.UserNotFoundException;
+import com.green3rd.DetailingShop.UserCreate.UserRole;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -95,6 +96,14 @@ public class UserService {
         user.setLastLoginDate(LocalDate.now());
         userRepository.save(user);
     }
+
+//    // 관리자 페이지 기능 권한
+//    public void updateUserRole(Long userId, UserRole role) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+//        user.setRole(role);
+//        userRepository.save(user);
+//    }
 
     public void updateProfileImage(String username, String imagePath) {
         User user = getUser(username);

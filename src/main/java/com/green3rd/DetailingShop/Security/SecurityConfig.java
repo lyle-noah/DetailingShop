@@ -25,7 +25,8 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN") // 관리자 페이지 접근은 ADMIN 권한 필요
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).permitAll() // 관리자 페이지 접근 허용
+//                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 페이지의 기능은 ADMIN 권한이 필요
                         .requestMatchers(new AntPathRequestMatcher("/products/best/**")).permitAll() // 이 경로 접근 허용
                         .requestMatchers(new AntPathRequestMatcher("/user/forgot-password")).permitAll() // 비밀번호 재설정 경로 접근 허용
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // H2 콘솔 접근 허용

@@ -11,7 +11,6 @@
 <form th:action="@{/admin/users/edit/{id}(id=${user.id})}" method="post">
     <input type="text" name="username" th:value="${user.username}" required/>
     <input type="email" name="email" th:value="${user.email}" required/>
-    <input type="password" name="password" required/>
     <button type="submit">수정</button>
 </form>
 <a th:href="@{/admin/users}">취소</a>
