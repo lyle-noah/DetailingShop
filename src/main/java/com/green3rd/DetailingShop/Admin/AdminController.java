@@ -4,7 +4,9 @@ import com.green3rd.DetailingShop.ProductList.Product;
 import com.green3rd.DetailingShop.ProductList.ProductService;
 import com.green3rd.DetailingShop.User.User;
 import com.green3rd.DetailingShop.User.UserService;
+import com.green3rd.DetailingShop.UserCreate.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +72,7 @@ public class AdminController {
         userService.save(user); // 유저 저장 로직
         return "redirect:/admin/users";
     }
+
     // 유저 삭제 처리
     @PostMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
@@ -144,4 +147,5 @@ public class AdminController {
         model.addAttribute("view", "products");
         return "admin/admin";
     }
+
 }
