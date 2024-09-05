@@ -10,9 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,9 +74,38 @@ public class ProductService {
         }
     }
 
-    // 사용자들이 누른 좋아요 수 세기.
+    // 각 상품의 좋아요 수를 계산하는 기존 메서드 유지
     public int getLikesCountForProduct(int productIndexId) {
         return userLikesRepository.countByProductIndexIdAndLikeState(productIndexId, true);
+    }
+
+    // 카테고리별로 상위 4개의 좋아요 수가 많은 상품을 반환
+    public List<ProductDto> getTopLikedProductsByCategory(String category) {
+        List<Product> products = productRepository.findTop4ByCategoryWithMostLikes(category);
+
+        // 좋아요 수를 저장할 Map 생성
+        Map<Integer, Integer> likesCountMap = new HashMap<>();
+
+        // 각 상품의 좋아요 수를 계산하여 likesCountMap에 저장
+        for (Product product : products) {
+            int indexId = product.getIndexId();
+            int likesCount = getLikesCountForProduct(indexId);  // 기존 메서드 활용
+            likesCountMap.put(indexId, likesCount);
+        }
+
+        // 좋아요 수를 기준으로 상위 4개의 상품을 필터링하여 반환
+        return products.stream()
+                .sorted((p1, p2) -> Integer.compare(likesCountMap.get(p2.getIndexId()), likesCountMap.get(p1.getIndexId())))  // 좋아요 수로 정렬
+                .limit(4)  // 상위 4개만 가져옴
+                .map(product -> new ProductDto(
+                        product.getIndexId(),
+                        product.getProductId(),
+                        product.getProductName(),
+                        product.getProductPrice(),
+                        product.getImgurl(),
+                        product.getFirstCategory()
+                ))
+                .collect(Collectors.toList());
     }
 
     // 관리자 페이지 상품 목록

@@ -16,7 +16,7 @@
                 <a th:href="@{/user/login}" class="text-gray-700 hover:text-blue-500" sec:authorize="isAnonymous()">로그인</a>
                 <a href="/user/logout" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">로그아웃</a>
                 <a href="/question/list" class="text-gray-700 hover:text-blue-500">게시판</a>
-                <a href="/user/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
+                <a href="/wishlist" class="text-gray-700 hover:text-blue-500" sec:authorize="isAuthenticated()">위시리스트</a>
             </div>
         </div>
 

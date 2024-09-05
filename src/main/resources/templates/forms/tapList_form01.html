@@ -1,11 +1,14 @@
 <div th:fragment="tapList" class="container">
     <!-- 카테고리 버튼 -->
-    <div class="category-buttons">
-        <button class="category-btn" data-category="external">외부관리BEST</button>
-        <button class="category-btn" data-category="internal">내부관리BEST</button>
-        <button class="category-btn" data-category="wheel">휠&타이어BEST</button>
-        <button class="category-btn" data-category="towel">타월&도구BEST</button>
-    </div>
+    <form id="categoryForm" method="POST">
+        <div class="category-buttons">
+            <button type="submit" class="category-btn" data-category="외부관리">외부관리BEST</button>
+            <button type="submit" class="category-btn" data-category="내부관리">내부관리BEST</button>
+            <button type="submit" class="category-btn" data-category="휠&타이어">휠&타이어BEST</button>
+            <button type="submit" class="category-btn" data-category="타월&도구">타월&도구BEST</button>
+        </div>
+        <input type="hidden" id="selectedCategory" name="category" value=""/>
+    </form>
 
     <!-- 상품 목록 -->
     <div id="product-container" class="product-container">
