@@ -3,14 +3,12 @@ package com.green3rd.DetailingShop.ProductList;
 import com.green3rd.DetailingShop.Cart.Cart;
 import com.green3rd.DetailingShop.UserLike.UserLikes;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
